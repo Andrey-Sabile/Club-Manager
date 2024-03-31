@@ -1,0 +1,14 @@
+﻿using System.Data.Common;
+
+namespace Club_Manager.Application.FunctionalTests;
+
+public interface ITestDatabase
+{
+    Task InitialiseAsync();
+
+    DbConnection GetConnection();
+
+    Task ResetAsync();
+
+    Task DisposeAsync();
+}
