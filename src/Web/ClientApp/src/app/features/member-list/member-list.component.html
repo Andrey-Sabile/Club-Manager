@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="grid grid-cols-1 gap-4">
+        <div class="flex flex-row justify-center">
+            <h1 class="text-center flex-1">Member List</h1>
+            <button class="btn btn-primary flex-none">Add New Member</button>    
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Fresher?</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (member of membersList; track member) {
+                    <tr>
+                        <th>{{ member.firstName }}</th>
+                        <th>{{ member.lastName }}</th>
+                        <th>{{ member.emailAddress }}</th>
+                        <th>{{ member.isFresher }}</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    
+    </div>
+</div>
