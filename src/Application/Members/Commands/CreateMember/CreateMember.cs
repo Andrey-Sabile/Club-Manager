@@ -1,0 +1,50 @@
+using Club_Manager.Application.Common.Interfaces;
+using Club_Manager.Domain.Entities;
+
+namespace Club_Manager.Application.Members.Commands.CreateMember;
+
+public record CreateMemberCommand : IRequest<int>
+{
+    public string? FirstName { get; set; }
+
+    public string? LastName { get; set; }
+
+    public string? EmailAddress { get; set; }
+
+    public Boolean IsFresher { get; set; }
+}
+
+public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, int>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly TimeProvider _dateTime;
+
+    public CreateMemberCommandHandler(IApplicationDbContext context, TimeProvider dateTime)
+    {
+        _context = context;
+        _dateTime = dateTime;
+    }
+
+    public async Task<int> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+    {
+        var newMember = new Member
+        {
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            EmailAddress = request.EmailAddress,
+            IsFresher = request.IsFresher
+        };
+        _context.Members.Add(newMember);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        var newSubcsription = new Subscription
+        {
+            Renewed = _dateTime.GetUtcNow(),
+            MemberId = newMember.Id
+        };
+        _context.Subscriptions.Add(newSubcsription);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return newMember.Id;
+    }
+}
