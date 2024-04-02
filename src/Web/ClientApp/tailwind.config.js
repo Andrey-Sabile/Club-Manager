@@ -4,6 +4,9 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
+    container: {
+      padding: '2rem',
+    },
     extend: {},
   },
   plugins: [
