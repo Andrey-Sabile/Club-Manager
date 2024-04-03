@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MembersClient, MemberDto } from 'src/app/web-api-client';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-member-list',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './member-list.component.html',
   styles: ``
 })

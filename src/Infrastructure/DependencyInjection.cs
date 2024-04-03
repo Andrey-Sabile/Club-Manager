@@ -15,8 +15,10 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
+
+        var mailgunSettings = configuration.GetSection("MailgunSettings");
+        Guard.Against.Null(mailgunSettings, message: "Mailgun settings not found");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
