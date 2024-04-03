@@ -4,12 +4,12 @@ using Club_Manager.Infrastructure.Data;
 using Club_Manager.Infrastructure.Data.Interceptors;
 using Club_Manager.Infrastructure.Identity;
 using Club_Manager.Infrastructure.Email;
+using Club_Manager.Infrastructure.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
-using FluentEmail.Core;
-using FluentEmail.Mailgun;
+using Stripe;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +22,9 @@ public static class DependencyInjection
 
         var mailgunSettings = configuration.GetSection("MailgunSettings");
         Guard.Against.Null(mailgunSettings, message: "Mailgun settings not found");
+
+        var stripeSettings = configuration.GetSection("StripeSettings");
+        Guard.Against.Null(stripeSettings, message: "Stripe settings not found");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
@@ -53,6 +56,10 @@ public static class DependencyInjection
             .AddMailGunSender(mailgunSettings["Domain"], mailgunSettings["ApiKey"]);
         
         services.AddTransient<IEmailService, EmailService>();
+
+        StripeConfiguration.ApiKey = stripeSettings["SecretKey"];
+
+        services.AddTransient<ICheckoutService, CheckoutService>();
         
         return services;
     }
