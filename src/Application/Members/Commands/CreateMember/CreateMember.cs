@@ -1,5 +1,6 @@
 using Club_Manager.Application.Common.Interfaces;
 using Club_Manager.Domain.Entities;
+using Club_Manager.Domain.Events;
 
 namespace Club_Manager.Application.Members.Commands.CreateMember;
 
@@ -36,6 +37,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, i
         };
         _context.Members.Add(newMember);
         await _context.SaveChangesAsync(cancellationToken);
+        newMember.AddDomainEvent(new MemberCreatedEvent(newMember));
 
         var newSubcsription = new Subscription
         {
