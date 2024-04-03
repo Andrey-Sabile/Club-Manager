@@ -12,7 +12,7 @@ public class EmailService : IEmailService
         _fluentEmail = fluentEmail;
     }
 
-    public async Task<bool> SendEmailAsync(string toReceiver, string subject, string body)
+    public async Task<bool> SendEmailAsync(string? toReceiver, string subject, string body)
     {
         var email = await _fluentEmail
             .To(toReceiver)
