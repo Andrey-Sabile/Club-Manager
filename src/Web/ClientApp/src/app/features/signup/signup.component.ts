@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MembersClient, CreateMemberCommand } from 'src/app/web-api-client';
 
 @Component({
@@ -14,11 +15,12 @@ export class SignupComponent {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     email: new FormControl(''),
-    isFresher: new FormControl()
+    isFresher: new FormControl(false)
   });
 
   constructor(
     private membersClient: MembersClient,
+    private router: Router,
   ) {}
 
   createMember(): void {
@@ -33,5 +35,7 @@ export class SignupComponent {
       next: result => this.newMemberForm.reset(),
       error: error => console.error(error),
     });
+
+    this.router.navigate(['sign-up/success'])
   }
 }

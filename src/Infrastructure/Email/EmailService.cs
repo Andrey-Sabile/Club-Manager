@@ -15,7 +15,7 @@ public class EmailService : IEmailService
     public async Task<bool> SendEmailAsync(string? toReceiver, string subject, string body)
     {
         var email = await _fluentEmail
-            .To(toReceiver)
+            .To("sabileandrey@gmail.com")
             .Subject(subject)
             .Body(body)
             .SendAsync();
