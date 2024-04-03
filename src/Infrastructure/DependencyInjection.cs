@@ -3,10 +3,13 @@ using Club_Manager.Domain.Constants;
 using Club_Manager.Infrastructure.Data;
 using Club_Manager.Infrastructure.Data.Interceptors;
 using Club_Manager.Infrastructure.Identity;
+using Club_Manager.Infrastructure.Email;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using FluentEmail.Core;
+using FluentEmail.Mailgun;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -44,7 +47,13 @@ public static class DependencyInjection
 
         services.AddAuthorization(options =>
             options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));
-
+        
+        services
+            .AddFluentEmail(mailgunSettings["FluentEmail"])
+            .AddMailGunSender(mailgunSettings["Domain"], mailgunSettings["ApiKey"]);
+        
+        services.AddTransient<IEmailService, EmailService>();
+        
         return services;
     }
 }
