@@ -6,11 +6,9 @@ namespace Club_Manager.Infrastructure.Payments;
 
 public class CheckoutService : ICheckoutService
 {
-    private readonly StripeClient _stripeClient;
 
-    public CheckoutService(StripeClient stripeClient)
+    public CheckoutService()
     {
-        _stripeClient = stripeClient;
     }
 
     public async Task<string> CreateCheckoutSession()
@@ -30,9 +28,9 @@ public class CheckoutService : ICheckoutService
             }
         };
 
-        var service = new SessionService(_stripeClient);
+        var service = new SessionService();
         var session = await service.CreateAsync(options);
 
-        return session.Id;
+        return session.ClientSecret;
     }
 }

@@ -4,7 +4,7 @@ using Club_Manager.Domain.Events;
 
 namespace Club_Manager.Application.Members.Commands.CreateMember;
 
-public record CreateMemberCommand : IRequest<int>
+public record CreateMemberCommand : IRequest<string>
 {
     public string? FirstName { get; set; }
 
@@ -15,18 +15,20 @@ public record CreateMemberCommand : IRequest<int>
     public Boolean IsFresher { get; set; }
 }
 
-public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, int>
+public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, string>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ICheckoutService _checkout;
     private readonly TimeProvider _dateTime;
 
-    public CreateMemberCommandHandler(IApplicationDbContext context, TimeProvider dateTime)
+    public CreateMemberCommandHandler(IApplicationDbContext context, TimeProvider dateTime, ICheckoutService checkout)
     {
         _context = context;
         _dateTime = dateTime;
+        _checkout = checkout;
     }
 
-    public async Task<int> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
     {
         var newMember = new Member
         {
@@ -37,6 +39,9 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, i
         };
         _context.Members.Add(newMember);
         await _context.SaveChangesAsync(cancellationToken);
+
+        var client_secret = await _checkout.CreateCheckoutSession();
+
         newMember.AddDomainEvent(new MemberCreatedEvent(newMember));
 
         var newSubcsription = new Subscription
@@ -47,6 +52,6 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, i
         _context.Subscriptions.Add(newSubcsription);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return newMember.Id;
+        return client_secret;
     }
 }
