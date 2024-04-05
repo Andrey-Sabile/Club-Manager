@@ -38,7 +38,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-          include-prerelease: true
       
       - name: Restore solution
         run: dotnet restore
