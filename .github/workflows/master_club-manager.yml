@@ -93,12 +93,11 @@ jobs:
     permissions:
       id-token: write #This is required for requesting the JWT
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
+    steps:      
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
+        with:
+          name: website
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -113,5 +112,5 @@ jobs:
         with:
           app-name: 'Club-Manager'
           slot-name: 'Production'
-          package: .
+          package: website/publish.zip
           
