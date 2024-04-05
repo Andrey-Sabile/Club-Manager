@@ -44,14 +44,15 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
+        if: ${{ inputs.build-artifacts == true }}
         run: |
-          dotnet publish --configuration Release --runtime win-x86 --self-contained 
-          --output ./publish
+          dotnet publish --configuration Release --runtime win-x86 --self-contained --output ./publish
           cd publish
           zip -r ./publish.zip .
         working-directory: ./src/Web/
 
       - name: Upload artifact for deployment job
+        if: ${{ inputs.build-artifacts == true }}
         uses: actions/upload-artifact@v4
         with:
           name: website
@@ -59,18 +60,21 @@ jobs:
           if-no-files-found: error
         
       - name: Create EF Core migrations bundle - Install tool-manifest
+        if: ${{ inputs.build-artifacts == true }}
         run: |
           dotnet new tool-manifest
         env:
           SkipNSwag: True
         
       - name: Create EF Core migrations bundle - Install dotnet-ef
+        if: ${{ inputs.build-artifacts == true }}
         run: |
           dotnet tool install dotnet-ef --version 8.0.1
         env:
           SkipNSwag: True
   
       - name: Create EF Core migrations bundle - bundle migrations
+        if: ${{ inputs.build-artifacts == true }}
         run: |
           dotnet ef migrations bundle --configuration Release -p ./src/Infrastructure/ -s ./src/Web/ -o efbundle.exe
         env:
