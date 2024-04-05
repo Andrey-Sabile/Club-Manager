@@ -49,14 +49,13 @@ jobs:
         run: |
           dotnet publish --configuration Release --runtime win-x86 --self-contained --output ./publish
           cd publish
-          Compress-Archive -r ./publish.zip .
         working-directory: ./src/Web/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: website
-          path: ./src/Web/publish/publish.zip
+          path: ./src/Web/publish/
           if-no-files-found: error
         
       - name: Create EF Core migrations bundle - Install tool-manifest
@@ -77,17 +76,11 @@ jobs:
         env:
           SkipNSwag: True
       
-      - name: Create EF Core migrations bundle - zip migrations bundle
-        run: |
-          Compress-Archive -r ./efbundle.zip efbundle.exe
-        env:
-          SkipNSwag: True
-      
       - name: Upload EF Core migrations bundle artifact (efbundle)
         uses: actions/upload-artifact@v4
         with:
           name: efbundle
-          path: ./efbundle.zip
+          path: ./efbundle.exe
           if-no-files-found: error
 
   
