@@ -49,7 +49,7 @@ jobs:
         run: |
           dotnet publish --configuration Release --runtime win-x86 --self-contained --output ./publish
           cd publish
-          zip -r ./publish.zip .
+          Compress-Archive -r ./publish.zip .
         working-directory: ./src/Web/
 
       - name: Upload artifact for deployment job
@@ -79,7 +79,7 @@ jobs:
       
       - name: Create EF Core migrations bundle - zip migrations bundle
         run: |
-          zip -r ./efbundle.zip efbundle.exe
+          Compress-Archive -r ./efbundle.zip efbundle.exe
         env:
           SkipNSwag: True
       
@@ -101,10 +101,11 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: .net-app
+        uses: actions/download-artifact@v4
       
       - name: Login to Azure
         uses: azure/login@v1
