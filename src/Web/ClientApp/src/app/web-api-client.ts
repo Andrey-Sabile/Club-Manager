@@ -725,6 +725,7 @@ export class MemberDto implements IMemberDto {
     lastName?: string | undefined;
     emailAddress?: string | undefined;
     isFresher?: boolean;
+    subscription?: SubscriptionDto | undefined;
 
     constructor(data?: IMemberDto) {
         if (data) {
@@ -742,6 +743,7 @@ export class MemberDto implements IMemberDto {
             this.lastName = _data["lastName"];
             this.emailAddress = _data["emailAddress"];
             this.isFresher = _data["isFresher"];
+            this.subscription = _data["subscription"] ? SubscriptionDto.fromJS(_data["subscription"]) : <any>undefined;
         }
     }
 
@@ -759,6 +761,7 @@ export class MemberDto implements IMemberDto {
         data["lastName"] = this.lastName;
         data["emailAddress"] = this.emailAddress;
         data["isFresher"] = this.isFresher;
+        data["subscription"] = this.subscription ? this.subscription.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -769,6 +772,43 @@ export interface IMemberDto {
     lastName?: string | undefined;
     emailAddress?: string | undefined;
     isFresher?: boolean;
+    subscription?: SubscriptionDto | undefined;
+}
+
+export class SubscriptionDto implements ISubscriptionDto {
+    paid?: boolean;
+
+    constructor(data?: ISubscriptionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.paid = _data["paid"];
+        }
+    }
+
+    static fromJS(data: any): SubscriptionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubscriptionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["paid"] = this.paid;
+        return data;
+    }
+}
+
+export interface ISubscriptionDto {
+    paid?: boolean;
 }
 
 export class CreateMemberCommand implements ICreateMemberCommand {

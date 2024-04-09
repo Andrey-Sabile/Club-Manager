@@ -399,6 +399,23 @@
           },
           "isFresher": {
             "type": "boolean"
+          },
+          "subscription": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubscriptionDto"
+              }
+            ]
+          }
+        }
+      },
+      "SubscriptionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paid": {
+            "type": "boolean"
           }
         }
       },

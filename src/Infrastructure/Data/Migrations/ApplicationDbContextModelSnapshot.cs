@@ -73,8 +73,8 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Renewed")
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Paid")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

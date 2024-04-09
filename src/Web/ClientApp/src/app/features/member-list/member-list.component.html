@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 gap-4">
         <div class="flex flex-row justify-center">
             <h1 class="text-center flex-1">Member List</h1>
-            <a [routerLink]="['/sign-up']" ><button class="btn btn-primary flex-none">Add New Member</button></a>    
+            <a [routerLink]="['/sign-up']" ><button class="btn btn-primary flex-none">Add New Member</button></a>
         </div>
         <table class="table">
             <thead>
@@ -11,6 +11,7 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Fresher?</th>
+                    <th>Paid?</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,10 +21,11 @@
                         <th>{{ member.lastName }}</th>
                         <th>{{ member.emailAddress }}</th>
                         <th>{{ member.isFresher }}</th>
+                        <th>{{ member.subscription.paid }}</th>
                     </tr>
                 }
             </tbody>
         </table>
-    
+
     </div>
 </div>

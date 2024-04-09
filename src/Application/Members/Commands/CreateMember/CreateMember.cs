@@ -43,7 +43,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, i
 
         var newSubcsription = new Subscription
         {
-            Renewed = _dateTime.GetUtcNow(),
+            Paid = false,
             MemberId = newMember.Id
         };
         _context.Subscriptions.Add(newSubcsription);

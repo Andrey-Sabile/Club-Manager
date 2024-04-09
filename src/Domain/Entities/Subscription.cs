@@ -2,7 +2,7 @@ namespace Club_Manager.Domain.Entities;
 
 public class Subscription : BaseAuditableEntity 
 {
-    public DateTimeOffset Renewed { get; set; }
+    public Boolean Paid { get; set; }
 
     public int MemberId { get; set; }
 

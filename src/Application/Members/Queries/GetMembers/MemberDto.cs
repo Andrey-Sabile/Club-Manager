@@ -13,6 +13,8 @@ public class MemberDto
     public string? EmailAddress { get; set; }
 
     public Boolean IsFresher { get; set; }
+    
+    public SubscriptionDto? Subscription { get; init; }
 
     private class Mapping : Profile
     {
