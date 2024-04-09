@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MembersClient, CreateMemberCommand } from 'src/app/web-api-client';
-import { StripeService } from 'ngx-stripe';
-import { StripeEmbeddedCheckoutOptions } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +21,7 @@ export class SignupComponent implements OnInit{
 
   constructor(
     private membersClient: MembersClient,
-    private stripeService: StripeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,12 +36,8 @@ export class SignupComponent implements OnInit{
     } as CreateMemberCommand
 
     this.membersClient.createMember(newMember).subscribe({
-      next: result => this.mountCheckout(result),
+      next: result => this.router.navigateByUrl('sign-up/success'),
       error: error => console.error(error),
     });
-  }
-
-  mountCheckout(clientSecret: string){
-    this.stripeService.initEmbeddedCheckout({clientSecret});
   }
 }

@@ -17,7 +17,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IMembersClient {
     getMembers(): Observable<MemberDto[]>;
-    createMember(command: CreateMemberCommand): Observable<string>;
+    createMember(command: CreateMemberCommand): Observable<number>;
 }
 
 @Injectable({
@@ -88,7 +88,7 @@ export class MembersClient implements IMembersClient {
         return _observableOf(null as any);
     }
 
-    createMember(command: CreateMemberCommand): Observable<string> {
+    createMember(command: CreateMemberCommand): Observable<number> {
         let url_ = this.baseUrl + "/api/Members";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -111,14 +111,14 @@ export class MembersClient implements IMembersClient {
                 try {
                     return this.processCreateMember(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<number>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<number>;
         }));
     }
 
-    protected processCreateMember(response: HttpResponseBase): Observable<string> {
+    protected processCreateMember(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :

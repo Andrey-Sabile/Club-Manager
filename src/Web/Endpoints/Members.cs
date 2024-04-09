@@ -18,7 +18,7 @@ public class Members : EndpointGroupBase
         return sender.Send(query);
     }
 
-    public Task<string> CreateMember(ISender sender, CreateMemberCommand command)
+    public Task<int> CreateMember(ISender sender, CreateMemberCommand command)
     {
         return sender.Send(command);
     }
