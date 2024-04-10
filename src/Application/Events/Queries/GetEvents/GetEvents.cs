@@ -1,6 +1,6 @@
 using Club_Manager.Application.Common.Interfaces;
 
-namespace Microsoft.Extensions.DependencyInjection.Events.Queries.GetEvents;
+namespace Club_Manager.Application.Events.Queries.GetEvents;
 
 public record GetEventsQuery : IRequest<IList<EventDto>>;
 
