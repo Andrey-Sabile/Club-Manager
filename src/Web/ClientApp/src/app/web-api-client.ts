@@ -15,6 +15,133 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
+export interface IEventsClient {
+    getEvents(): Observable<EventDto[]>;
+    createEvents(command: CreateEventCommand): Observable<number>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class EventsClient implements IEventsClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    getEvents(): Observable<EventDto[]> {
+        let url_ = this.baseUrl + "/api/Events";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEvents(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEvents(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<EventDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<EventDto[]>;
+        }));
+    }
+
+    protected processGetEvents(response: HttpResponseBase): Observable<EventDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(EventDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    createEvents(command: CreateEventCommand): Observable<number> {
+        let url_ = this.baseUrl + "/api/Events";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateEvents(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateEvents(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processCreateEvents(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IMembersClient {
     getMembers(): Observable<MemberDto[]>;
     createMember(command: CreateMemberCommand): Observable<number>;
@@ -717,6 +844,98 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
         }
         return _observableOf(null as any);
     }
+}
+
+export class EventDto implements IEventDto {
+    id?: number;
+    name?: string | undefined;
+    when?: Date;
+    location?: string | undefined;
+
+    constructor(data?: IEventDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
+            this.location = _data["location"];
+        }
+    }
+
+    static fromJS(data: any): EventDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EventDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["when"] = this.when ? this.when.toISOString() : <any>undefined;
+        data["location"] = this.location;
+        return data;
+    }
+}
+
+export interface IEventDto {
+    id?: number;
+    name?: string | undefined;
+    when?: Date;
+    location?: string | undefined;
+}
+
+export class CreateEventCommand implements ICreateEventCommand {
+    name?: string | undefined;
+    when?: Date;
+    location?: string | undefined;
+
+    constructor(data?: ICreateEventCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
+            this.location = _data["location"];
+        }
+    }
+
+    static fromJS(data: any): CreateEventCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateEventCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["when"] = this.when ? this.when.toISOString() : <any>undefined;
+        data["location"] = this.location;
+        return data;
+    }
+}
+
+export interface ICreateEventCommand {
+    name?: string | undefined;
+    when?: Date;
+    location?: string | undefined;
 }
 
 export class MemberDto implements IMemberDto {

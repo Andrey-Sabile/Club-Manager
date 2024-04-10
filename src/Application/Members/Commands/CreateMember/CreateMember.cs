@@ -18,14 +18,10 @@ public record CreateMemberCommand : IRequest<int>
 public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, int>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ICheckoutService _checkout;
-    private readonly TimeProvider _dateTime;
 
-    public CreateMemberCommandHandler(IApplicationDbContext context, TimeProvider dateTime, ICheckoutService checkout)
+    public CreateMemberCommandHandler(IApplicationDbContext context)
     {
         _context = context;
-        _dateTime = dateTime;
-        _checkout = checkout;
     }
 
     public async Task<int> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
