@@ -13,5 +13,8 @@ public interface IApplicationDbContext
     DbSet<Subscription> Subscriptions { get; }
     
     DbSet<Event> Events { get; }
+    
+    DbSet<Ticket> Tickets { get; }
+    
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

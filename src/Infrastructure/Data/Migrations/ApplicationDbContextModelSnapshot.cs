@@ -116,6 +116,41 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                     b.ToTable("Subscriptions");
                 });
 
+            modelBuilder.Entity("Club_Manager.Domain.Entities.Ticket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .IsUnique();
+
+                    b.ToTable("Tickets");
+                });
+
             modelBuilder.Entity("Club_Manager.Domain.Entities.TodoItem", b =>
                 {
                     b.Property<int>("Id")
@@ -396,6 +431,17 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                     b.Navigation("Member");
                 });
 
+            modelBuilder.Entity("Club_Manager.Domain.Entities.Ticket", b =>
+                {
+                    b.HasOne("Club_Manager.Domain.Entities.Event", "Event")
+                        .WithOne("Ticket")
+                        .HasForeignKey("Club_Manager.Domain.Entities.Ticket", "EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("Club_Manager.Domain.Entities.TodoItem", b =>
                 {
                     b.HasOne("Club_Manager.Domain.Entities.TodoList", "List")
@@ -479,6 +525,11 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Club_Manager.Domain.Entities.Event", b =>
+                {
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Club_Manager.Domain.Entities.Member", b =>

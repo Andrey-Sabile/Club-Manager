@@ -7,4 +7,6 @@ public class Event : BaseAuditableEntity
     public DateTimeOffset When { get; set; }
 
     public string? Location { get; set; }
+
+    public Ticket? Ticket { get; set; }
 }
