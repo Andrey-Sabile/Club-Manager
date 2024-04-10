@@ -1,1 +1,21 @@
-<p>new-event works!</p>
+<div class="mt-3">
+    <h1 class="text-2xl text-center mb-3">Create an event</h1>
+    <form [formGroup]="newEventForm">
+        <label for="name" class="input input-bordered flex items-center gap-2">
+            Name
+            <input id="name" formControlName="name" class="grow" type="text">
+        </label>
+
+        <label for="location" class="input input-bordered flex items-center gap-2">
+            Location
+            <input id="location" formControlName="location" class="grow" type="text">
+        </label>
+
+        <label for="when" class="input input-bordered flex items-center gap-2">
+            When
+            <input id="when" formControlName="when" class="grow" type="datetime-local">
+        </label>
+
+        <button class="btn btn-primary" (click)="createEvent()" >Create Event</button>
+    </form>
+</div>

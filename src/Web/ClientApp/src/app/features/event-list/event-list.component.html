@@ -1,7 +1,10 @@
 <h1 class="text-2xl text-center">Events</h1>
-
+<a [routerLink]="['/new-event']"><button class="btn btn-primary">Create Event</button></a>
 <ul>
   @for (event of eventsList; track event){
-    <li>{{ event.name }}</li>
+    <li>
+        {{ event.name }}
+        {{ event.when }}
+    </li>
   }
 </ul>

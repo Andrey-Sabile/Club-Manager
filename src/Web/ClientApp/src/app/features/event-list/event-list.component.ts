@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsClient, EventDto } from "../../web-api-client";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './event-list.component.html',
   styles: ``
 })

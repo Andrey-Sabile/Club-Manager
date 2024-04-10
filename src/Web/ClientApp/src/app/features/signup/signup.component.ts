@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MembersClient, CreateMemberCommand } from 'src/app/web-api-client';
@@ -10,8 +10,7 @@ import { MembersClient, CreateMemberCommand } from 'src/app/web-api-client';
   templateUrl: './signup.component.html',
   styles: ``
 })
-export class SignupComponent implements OnInit{
-  public memberSecret: string;
+export class SignupComponent {
   public newMemberForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
@@ -23,9 +22,6 @@ export class SignupComponent implements OnInit{
     private membersClient: MembersClient,
     private router: Router
   ) {}
-
-  ngOnInit(): void {
-  }
 
   createMember(): void {
     const newMember = {
