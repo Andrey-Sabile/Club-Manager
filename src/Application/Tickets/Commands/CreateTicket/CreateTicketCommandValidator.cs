@@ -1,4 +1,4 @@
-namespace Club_Manager.Application.Tickets.Commands.CreateTickets;
+namespace Club_Manager.Application.Tickets.Commands.CreateTicket;
 
 public class CreateTicketCommandValidator : AbstractValidator<CreateTicketCommand>
 {

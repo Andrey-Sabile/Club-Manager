@@ -8,11 +8,11 @@ public class TicketDto
     
     public int EventId { get; init; }
     
-    public string? FirstName { get; set; }
+    public string? FirstName { get; init; }
     
-    public string? LastName { get; set; }
+    public string? LastName { get; init; }
     
-    public string? Email { get; set; }
+    public string? Email { get; init; }
 
     private class Mapping : Profile
     {

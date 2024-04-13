@@ -1,4 +1,4 @@
-using Club_Manager.Application.Tickets.Commands.CreateTickets;
+using Club_Manager.Application.Tickets.Commands.CreateTicket;
 using Club_Manager.Application.Tickets.Queries;
 using Club_Manager.Application.Tickets.Queries.GetTicketById;
 using Club_Manager.Application.Tickets.Queries.GetTickets;
@@ -17,9 +17,9 @@ public class Tickets : EndpointGroupBase
             .MapPost(CreateTicket);
     }
 
-    private static Task<IList<TicketDto>> GetTickets(ISender sender, [AsParameters] GetTicketsQuery command)
+    private static Task<IList<TicketDto>> GetTickets(ISender sender, [AsParameters] GetTicketsQuery query)
     {
-        return sender.Send(command);
+        return sender.Send(query);
     }
 
     private static Task<TicketDto> GetTicketById(ISender sender, int id)

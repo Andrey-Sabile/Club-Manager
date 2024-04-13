@@ -1,7 +1,7 @@
 using Club_Manager.Application.Common.Interfaces;
 using Club_Manager.Domain.Entities;
 
-namespace Club_Manager.Application.Tickets.Commands.CreateTickets;
+namespace Club_Manager.Application.Tickets.Commands.CreateTicket;
 
 public record CreateTicketCommand : IRequest<int>
 {

@@ -2,10 +2,7 @@ using Club_Manager.Application.Common.Interfaces;
 
 namespace Club_Manager.Application.Tickets.Queries.GetTickets;
 
-public class GetTicketsQuery : IRequest<IList<TicketDto>>
-{
-    public int EventId { get; init; }
-}
+public record GetTicketsQuery(int EventId) : IRequest<IList<TicketDto>>;
 
 public class GetTicketsQueryHandler : IRequestHandler<GetTicketsQuery, IList<TicketDto>>
 {
