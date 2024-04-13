@@ -25,21 +25,27 @@ public class TodoItems : EndpointGroupBase
         return sender.Send(query);
     }
 
-    public Task<int> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
+    private static Task<int> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
     {
         return sender.Send(command);
     }
 
     public async Task<IResult> UpdateTodoItem(ISender sender, int id, UpdateTodoItemCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
         await sender.Send(command);
         return Results.NoContent();
     }
 
     public async Task<IResult> UpdateTodoItemDetail(ISender sender, int id, UpdateTodoItemDetailCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
         await sender.Send(command);
         return Results.NoContent();
     }

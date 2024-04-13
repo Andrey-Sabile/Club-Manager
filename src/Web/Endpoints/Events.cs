@@ -15,17 +15,17 @@ public class Events : EndpointGroupBase
             .MapPost(CreateEvents);
     }
 
-    public Task<IList<EventDto>> GetEvents(ISender sender, [AsParameters] GetEventsQuery query)
+    private static Task<IList<EventDto>> GetEvents(ISender sender, [AsParameters] GetEventsQuery query)
     {
         return sender.Send(query);
     }
 
-    public Task<EventDto> GetEventById(ISender sender, int id)
+    private static Task<EventDto> GetEventById(ISender sender, int id)
     {
         return sender.Send((new GetEventByIdQuery(id)));
     }
 
-    public Task<int> CreateEvents(ISender sender, CreateEventCommand command)
+    private static Task<int> CreateEvents(ISender sender, CreateEventCommand command)
     {
         return sender.Send(command);
     }

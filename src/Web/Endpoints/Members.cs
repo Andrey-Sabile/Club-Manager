@@ -13,12 +13,12 @@ public class Members : EndpointGroupBase
             .MapPost(CreateMember);
     }
 
-    public Task<IList<MemberDto>> GetMembers(ISender sender, [AsParameters] GetMembersQuery query)
+    private static Task<IList<MemberDto>> GetMembers(ISender sender, [AsParameters] GetMembersQuery query)
     {
         return sender.Send(query);
     }
 
-    public Task<int> CreateMember(ISender sender, CreateMemberCommand command)
+    private static Task<int> CreateMember(ISender sender, CreateMemberCommand command)
     {
         return sender.Send(command);
     }

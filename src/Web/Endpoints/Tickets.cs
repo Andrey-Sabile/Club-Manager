@@ -17,17 +17,17 @@ public class Tickets : EndpointGroupBase
             .MapPost(CreateTicket);
     }
 
-    public Task<IList<TicketDto>> GetTickets(ISender sender, [AsParameters] GetTicketsQuery command)
+    private static Task<IList<TicketDto>> GetTickets(ISender sender, [AsParameters] GetTicketsQuery command)
     {
         return sender.Send(command);
     }
 
-    public Task<TicketDto> GetTicketById(ISender sender, int id)
+    private static Task<TicketDto> GetTicketById(ISender sender, int id)
     {
         return sender.Send(new GetTicketByIdQuery(id));
     }
 
-    public Task<int> CreateTicket(ISender sender, CreateTicketCommand command)
+    private static Task<int> CreateTicket(ISender sender, CreateTicketCommand command)
     {
         return sender.Send(command);
     }
