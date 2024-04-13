@@ -3,6 +3,7 @@ using System;
 using Club_Manager.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Club_Manager.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413072528_Set proper relationship for tickets and events")]
+    partial class Setproperrelationshipforticketsandevents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -146,53 +149,11 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TicketTypeId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("TicketTypeId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("Club_Manager.Domain.Entities.TicketType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset>("LastModified")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("TicketTypes");
                 });
 
             modelBuilder.Entity("Club_Manager.Domain.Entities.TodoItem", b =>
@@ -483,25 +444,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Club_Manager.Domain.Entities.TicketType", "TicketType")
-                        .WithMany("Tickets")
-                        .HasForeignKey("TicketTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("TicketType");
-                });
-
-            modelBuilder.Entity("Club_Manager.Domain.Entities.TicketType", b =>
-                {
-                    b.HasOne("Club_Manager.Domain.Entities.Event", "Event")
-                        .WithMany("TicketTypes")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Event");
                 });
 
@@ -592,19 +534,12 @@ namespace Club_Manager.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Club_Manager.Domain.Entities.Event", b =>
                 {
-                    b.Navigation("TicketTypes");
-
                     b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Club_Manager.Domain.Entities.Member", b =>
                 {
                     b.Navigation("Subscription");
-                });
-
-            modelBuilder.Entity("Club_Manager.Domain.Entities.TicketType", b =>
-                {
-                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Club_Manager.Domain.Entities.TodoList", b =>

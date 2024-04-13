@@ -20,7 +20,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
 
     public DbSet<Event> Events => Set<Event>();
-    
+
+    public DbSet<TicketType> TicketTypes => Set<TicketType>();
+
     public DbSet<Ticket> Tickets => Set<Ticket>();
 
     protected override void OnModelCreating(ModelBuilder builder)

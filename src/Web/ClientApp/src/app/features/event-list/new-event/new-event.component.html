@@ -1,21 +1,61 @@
-<div class="container">
-    <h1 class="text-2xl text-center mb-3">Create an event</h1>
-    <form [formGroup]="newEventForm">
-        <label for="name" class="input input-bordered flex items-center gap-2">
-            Name
-            <input id="name" formControlName="name" class="grow" type="text">
-        </label>
+<div class="container grid gap-4 grid-cols-1">
+    <h1 class="text-2xl text-center">Create an event</h1>
 
-        <label for="location" class="input input-bordered flex items-center gap-2">
-            Location
-            <input id="location" formControlName="location" class="grow" type="text">
-        </label>
+    <div>
+        <h2 class="text-xl">Basic Info</h2>
+        <form [formGroup]="newEventForm" class="max-w-screen-sm">
+            <label for="name" class="input input-bordered flex items-center gap-2">
+                Name
+                <input id="name" formControlName="name" class="grow" type="text">
+            </label>
 
-        <label for="when" class="input input-bordered flex items-center gap-2">
-            When
-            <input id="when" formControlName="when" class="grow" type="datetime-local">
-        </label>
+            <label for="location" class="input input-bordered flex items-center gap-2">
+                Location
+                <input id="location" formControlName="location" class="grow" type="text">
+            </label>
 
+            <label for="when" class="input input-bordered flex items-center gap-2">
+                When
+                <input id="when" formControlName="when" class="grow" type="datetime-local">
+            </label>
+        </form>
+    </div>
+
+    <div>
+        <h2 class="text-xl">Ticket Info</h2>
+        <button class="btn btn-primary" onclick="ticket_type.showModal()">Create Ticket Type</button>
+    </div>
+
+    <div>
         <button class="btn btn-primary" (click)="createEvent()" >Create Event</button>
-    </form>
+    </div>
 </div>
+
+<dialog id="ticket_type" class="modal">
+    <form method="dialog" class="modal-backdrop">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-lg">Create Ticket Type</h3>
+        <form>
+            <label for="ticket-name" class="input input-bordered flex items-center gap-2">
+                Name
+                <input id="ticket-name" formControlName="name" class="grow" type="text">
+            </label>
+            <label for="ticket-price" class="input input-bordered flex items-center gap-2">
+                Price
+                <input id="ticket-price" formControlName="name" class="grow" type="text">
+            </label>
+            <label for="ticket-quantity" class="input input-bordered flex items-center gap-2">
+                Quantity
+                <input id="ticket-quantity" formControlName="name" class="grow" type="text">
+            </label>
+        </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button></button>
+    </form>
+</dialog>

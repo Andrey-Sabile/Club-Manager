@@ -11,4 +11,8 @@ public class Ticket : BaseAuditableEntity
     public int EventId { get; set; }
 
     public Event Event { get; set; } = null!;
+    
+    public int TicketTypeId { get; set; }
+
+    public TicketType TicketType { get; set; } = null!;
 }

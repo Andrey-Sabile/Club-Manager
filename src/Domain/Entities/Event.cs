@@ -8,5 +8,7 @@ public class Event : BaseAuditableEntity
 
     public string? Location { get; set; }
 
-    public Ticket? Ticket { get; set; }
+    public IList<Ticket> Tickets { get; private set; } = new List<Ticket>();
+    
+    public IList<TicketType> TicketTypes { get; private set; } = new List<TicketType>();
 }
