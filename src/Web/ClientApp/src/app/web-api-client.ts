@@ -1263,6 +1263,7 @@ export class CreateEventCommand implements ICreateEventCommand {
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
+    ticketTypes?: NewTicketTypeDto[];
 
     constructor(data?: ICreateEventCommand) {
         if (data) {
@@ -1278,6 +1279,11 @@ export class CreateEventCommand implements ICreateEventCommand {
             this.name = _data["name"];
             this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
             this.location = _data["location"];
+            if (Array.isArray(_data["ticketTypes"])) {
+                this.ticketTypes = [] as any;
+                for (let item of _data["ticketTypes"])
+                    this.ticketTypes!.push(NewTicketTypeDto.fromJS(item));
+            }
         }
     }
 
@@ -1293,6 +1299,11 @@ export class CreateEventCommand implements ICreateEventCommand {
         data["name"] = this.name;
         data["when"] = this.when ? this.when.toISOString() : <any>undefined;
         data["location"] = this.location;
+        if (Array.isArray(this.ticketTypes)) {
+            data["ticketTypes"] = [];
+            for (let item of this.ticketTypes)
+                data["ticketTypes"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -1301,6 +1312,51 @@ export interface ICreateEventCommand {
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
+    ticketTypes?: NewTicketTypeDto[];
+}
+
+export class NewTicketTypeDto implements INewTicketTypeDto {
+    name?: string | undefined;
+    quantity?: number;
+    price?: number;
+
+    constructor(data?: INewTicketTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.quantity = _data["quantity"];
+            this.price = _data["price"];
+        }
+    }
+
+    static fromJS(data: any): NewTicketTypeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewTicketTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["quantity"] = this.quantity;
+        data["price"] = this.price;
+        return data;
+    }
+}
+
+export interface INewTicketTypeDto {
+    name?: string | undefined;
+    quantity?: number;
+    price?: number;
 }
 
 export class MemberDto implements IMemberDto {
@@ -1596,10 +1652,8 @@ export interface ITicketTypeDto {
 }
 
 export class CreateTicketTypeCommand implements ICreateTicketTypeCommand {
-    name?: string | undefined;
-    quantity?: number;
-    price?: number;
     eventId?: number;
+    ticketTypes?: NewTicketTypeDto[];
 
     constructor(data?: ICreateTicketTypeCommand) {
         if (data) {
@@ -1612,10 +1666,12 @@ export class CreateTicketTypeCommand implements ICreateTicketTypeCommand {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.quantity = _data["quantity"];
-            this.price = _data["price"];
             this.eventId = _data["eventId"];
+            if (Array.isArray(_data["ticketTypes"])) {
+                this.ticketTypes = [] as any;
+                for (let item of _data["ticketTypes"])
+                    this.ticketTypes!.push(NewTicketTypeDto.fromJS(item));
+            }
         }
     }
 
@@ -1628,19 +1684,19 @@ export class CreateTicketTypeCommand implements ICreateTicketTypeCommand {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["quantity"] = this.quantity;
-        data["price"] = this.price;
         data["eventId"] = this.eventId;
+        if (Array.isArray(this.ticketTypes)) {
+            data["ticketTypes"] = [];
+            for (let item of this.ticketTypes)
+                data["ticketTypes"].push(item.toJSON());
+        }
         return data;
     }
 }
 
 export interface ICreateTicketTypeCommand {
-    name?: string | undefined;
-    quantity?: number;
-    price?: number;
     eventId?: number;
+    ticketTypes?: NewTicketTypeDto[];
 }
 
 export class PaginatedListOfTodoItemBriefDto implements IPaginatedListOfTodoItemBriefDto {

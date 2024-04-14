@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import { Router } from "@angular/router";
-import { CreateEventCommand, EventsClient } from "../../../web-api-client";
+import {
+  CreateEventCommand,
+  CreateTicketTypeCommand,
+  EventsClient, NewTicketTypeDto,
+  TicketTypeDto,
+  TicketTypesClient
+} from "../../../web-api-client";
 
 @Component({
   selector: 'app-new-event',
@@ -18,10 +24,18 @@ export class NewEventComponent {
     location: new FormControl(''),
     when: new FormControl()
   });
+  public ticketTypeForm = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(),
+    quantity: new FormControl()
+  });
+  public ticketTypes: TicketTypeDto[] = [];
+  public eventId: Number;
 
   constructor(
     private eventsClient: EventsClient,
     private router: Router,
+    private ticketTypesClient: TicketTypesClient,
   ) {}
 
   createEvent(): void {
@@ -29,10 +43,25 @@ export class NewEventComponent {
       name: this.newEventForm.controls.name.value,
       when: this.newEventForm.controls.when.value,
       location: this.newEventForm.controls.location.value,
+      ticketTypes: this.ticketTypes,
     } as CreateEventCommand
 
     this.eventsClient.createEvents(newEvent).subscribe({
-      next: result => this.router.navigateByUrl('events')
-    });
+      next: result => {
+        this.newEventForm.reset();
+        this.router.navigateByUrl('events');
+      }
+    })
+  }
+
+  addTicketType(): void {
+    const newTicketType = {
+      name: this.ticketTypeForm.controls.name.value,
+      price: this.ticketTypeForm.controls.price.value,
+      quantity: this.ticketTypeForm.controls.quantity.value
+    } as NewTicketTypeDto
+    this.ticketTypes.push(newTicketType);
+
+    this.ticketTypeForm.reset();
   }
 }

@@ -24,6 +24,24 @@
     <div>
         <h2 class="text-xl">Ticket Info</h2>
         <button class="btn btn-primary" onclick="ticket_type.showModal()">Create Ticket Type</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (ticketType of ticketTypes; track ticketType){
+                    <tr>
+                        <th>{{ ticketType.name }}</th>
+                        <th>{{ ticketType.price }}</th>
+                        <th>{{ ticketType.quantity }}</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
     <div>
@@ -40,19 +58,22 @@
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
         <h3 class="text-lg">Create Ticket Type</h3>
-        <form>
+        <form [formGroup]="ticketTypeForm">
             <label for="ticket-name" class="input input-bordered flex items-center gap-2">
                 Name
                 <input id="ticket-name" formControlName="name" class="grow" type="text">
             </label>
             <label for="ticket-price" class="input input-bordered flex items-center gap-2">
                 Price
-                <input id="ticket-price" formControlName="name" class="grow" type="text">
+                <input id="ticket-price" formControlName="price" class="grow" type="number">
             </label>
             <label for="ticket-quantity" class="input input-bordered flex items-center gap-2">
                 Quantity
-                <input id="ticket-quantity" formControlName="name" class="grow" type="text">
+                <input id="ticket-quantity" formControlName="quantity" class="grow" type="number">
             </label>
+            <div class="modal-action">
+                <button class="btn btn-primary" (click)="addTicketType()" onclick="ticket_type.close()" >Add Ticket Type</button>
+            </div>
         </form>
     </div>
     <form method="dialog" class="modal-backdrop">

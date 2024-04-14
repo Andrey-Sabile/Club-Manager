@@ -5,13 +5,9 @@ namespace Club_Manager.Application.TicketTypes.Commands.CreateTicketType;
 
 public record CreateTicketTypeCommand : IRequest<int>
 {
-    public string? Name { get; set; }
+    public int EventId { get; init; }
     
-    public int Quantity { get; set; }
-    
-    public decimal Price { get; set; }
-    
-    public int EventId { get; set; }
+    public required IEnumerable<NewTicketTypeDto>TicketTypes { get; init; }
 }
 
 public class CreateTicketTypeCommandHandler : IRequestHandler<CreateTicketTypeCommand, int>
@@ -25,18 +21,19 @@ public class CreateTicketTypeCommandHandler : IRequestHandler<CreateTicketTypeCo
 
     public async Task<int> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken)
     {
-        var entity = new TicketType
+        foreach (var ticketType in request.TicketTypes)
         {
-            EventId = request.EventId, 
-            Name = request.Name, 
-            Quantity = request.Quantity, 
-            Price = request.Price
-        };
-
-        _context.TicketTypes.Add(entity);
-
+            var entity = new TicketType
+            {
+                EventId = request.EventId, 
+                Name = ticketType.Name, 
+                Quantity = ticketType.Quantity, 
+                Price = ticketType.Price
+            };
+            _context.TicketTypes.Add(entity);
+        }
+        
         await _context.SaveChangesAsync(cancellationToken);
-
-        return entity.Id;
+        return request.EventId;
     }
 }
