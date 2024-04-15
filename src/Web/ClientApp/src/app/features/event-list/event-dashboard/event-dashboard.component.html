@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="grid grid-cols-1 gap-4">
+        <div>
+            <h1 class="text-center text-2xl">Dashboard</h1>
+        </div>
+
+        <div>
+            <div class="stats shadow">
+                <div class="stat">
+                    <div class="stat-title">Tickets Sold</div>
+                    <div class="stat-value">{{ ticketStats.ticketsSold }}/{{ ticketStats.totalTickets }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="collapse bg-base-200 collapse-arrow">
+                <input type="checkbox" />
+                <h2 class="collapse-title text-xl">Event Info</h2>
+                <div class="collapse-content">
+                    <p>Name: {{ event.name }}</p>
+                    <p>Location: {{ event.location }}</p>
+                    <p>Date: {{ event.when }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="collapse bg-base-200 collapse-arrow">
+                <input type="checkbox" />
+                <h2 class="collapse-title text-xl">Ticket Types</h2>
+                <div class="collapse-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (ticketType of ticketTypes; track ticketType){
+                                <tr>
+                                    <th>{{ ticketType.name }}</th>
+                                    <th>{{ ticketType.price }}</th>
+                                    <th>{{ ticketType.quantity }}</th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

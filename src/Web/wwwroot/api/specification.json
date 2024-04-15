@@ -244,6 +244,38 @@
         }
       }
     },
+    "/api/Tickets/sold/{eventId}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "operationId": "GetTicketsSold",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoldTicketsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TicketTypes/{eventId}": {
       "get": {
         "tags": [
@@ -782,11 +814,29 @@
           }
         }
       },
+      "SoldTicketsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ticketsSold": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalTickets": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "CreateTicketCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketTypeId": {
             "type": "integer",
             "format": "int32"
           },

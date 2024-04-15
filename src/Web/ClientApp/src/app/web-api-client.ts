@@ -325,6 +325,7 @@ export interface ITicketsClient {
     getTickets(eventId: number): Observable<TicketDto[]>;
     createTicket(command: CreateTicketCommand): Observable<number>;
     getTicketById(id: number): Observable<TicketDto>;
+    getTicketsSold(eventId: number): Observable<SoldTicketsDto>;
 }
 
 @Injectable({
@@ -493,6 +494,57 @@ export class TicketsClient implements ITicketsClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = TicketDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getTicketsSold(eventId: number): Observable<SoldTicketsDto> {
+        let url_ = this.baseUrl + "/api/Tickets/sold/{eventId}";
+        if (eventId === undefined || eventId === null)
+            throw new Error("The parameter 'eventId' must be defined.");
+        url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTicketsSold(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTicketsSold(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SoldTicketsDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SoldTicketsDto>;
+        }));
+    }
+
+    protected processGetTicketsSold(response: HttpResponseBase): Observable<SoldTicketsDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SoldTicketsDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1551,8 +1603,49 @@ export interface ITicketDto {
     email?: string | undefined;
 }
 
+export class SoldTicketsDto implements ISoldTicketsDto {
+    ticketsSold?: number;
+    totalTickets?: number;
+
+    constructor(data?: ISoldTicketsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ticketsSold = _data["ticketsSold"];
+            this.totalTickets = _data["totalTickets"];
+        }
+    }
+
+    static fromJS(data: any): SoldTicketsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SoldTicketsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ticketsSold"] = this.ticketsSold;
+        data["totalTickets"] = this.totalTickets;
+        return data;
+    }
+}
+
+export interface ISoldTicketsDto {
+    ticketsSold?: number;
+    totalTickets?: number;
+}
+
 export class CreateTicketCommand implements ICreateTicketCommand {
     eventId?: number;
+    ticketTypeId?: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
     email?: string | undefined;
@@ -1569,6 +1662,7 @@ export class CreateTicketCommand implements ICreateTicketCommand {
     init(_data?: any) {
         if (_data) {
             this.eventId = _data["eventId"];
+            this.ticketTypeId = _data["ticketTypeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
             this.email = _data["email"];
@@ -1585,6 +1679,7 @@ export class CreateTicketCommand implements ICreateTicketCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["eventId"] = this.eventId;
+        data["ticketTypeId"] = this.ticketTypeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
         data["email"] = this.email;
@@ -1594,6 +1689,7 @@ export class CreateTicketCommand implements ICreateTicketCommand {
 
 export interface ICreateTicketCommand {
     eventId?: number;
+    ticketTypeId?: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
     email?: string | undefined;

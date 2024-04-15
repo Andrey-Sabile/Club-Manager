@@ -7,6 +7,8 @@ public record CreateTicketCommand : IRequest<int>
 {
     public int EventId { get; init; }
     
+    public int TicketTypeId { get; init; }
+    
     public string? FirstName { get; set; }
     
     public string? LastName { get; set; }
@@ -28,7 +30,8 @@ public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, i
     {
         var entity = new Ticket
         {
-            EventId = request.EventId, 
+            EventId = request.EventId,
+            TicketTypeId = request.TicketTypeId,
             FirstName = request.FirstName, 
             LastName = request.LastName, 
             Email = request.Email

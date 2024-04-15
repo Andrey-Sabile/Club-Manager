@@ -5,7 +5,7 @@ import { MemberListComponent } from "./features/member-list/member-list.componen
 import { SignupComponent } from "./features/signup/signup.component";
 import { SignupSuccessComponent } from "./features/signup/signup-success/signup-success.component";
 import { EventListComponent} from "./features/event-list/event-list.component";
-import { EventComponent } from "./features/event-list/event/event.component";
+import { EventDashboardComponent} from "./features/event-list/event-dashboard/event-dashboard.component";
 import { NewEventComponent} from "./features/event-list/new-event/new-event.component";
 
 export const routes: Routes = [
@@ -15,6 +15,6 @@ export const routes: Routes = [
     { path: 'sign-up', component: SignupComponent },
     { path: 'sign-up/success', component: SignupSuccessComponent},
     { path: 'events', component: EventListComponent},
-    { path: 'events/:id', component: EventComponent},
+    { path: 'events/:id', component: EventDashboardComponent},
     { path: 'new-event', component: NewEventComponent},
 ]

@@ -49,7 +49,7 @@ export class NewEventComponent {
     this.eventsClient.createEvents(newEvent).subscribe({
       next: result => {
         this.newEventForm.reset();
-        this.router.navigateByUrl('events');
+        this.router.navigateByUrl('events/' +  result);
       }
     })
   }
