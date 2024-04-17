@@ -6,13 +6,16 @@ import {
   SoldTicketsDto,
   TicketsClient,
   TicketTypeDto,
-  TicketTypesClient
+  TicketTypesClient, UpdateEventCommand
 } from "../../../web-api-client";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-event',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule
+  ],
   templateUrl: './event-dashboard.component.html',
   styles: ``
 })
@@ -21,6 +24,12 @@ export class EventDashboardComponent implements OnInit{
   public ticketTypes: TicketTypeDto[] = [];
   public eventId: number;
   public ticketStats: SoldTicketsDto;
+  public editEventForm = new FormGroup({
+    id: new FormControl(),
+    name: new FormControl(''),
+    location: new FormControl(''),
+    when: new FormControl(),
+  });
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,5 +64,30 @@ export class EventDashboardComponent implements OnInit{
       next: result => this.ticketStats = result,
       error: err => console.log(err),
     });
+  }
+
+  editEvent(): void {
+    this.editEventForm.controls.id.setValue(this.eventId);
+    this.editEventForm.controls.name.setValue(this.event.name);
+    this.editEventForm.controls.location.setValue(this.event.location);
+    this.editEventForm.controls.when.setValue(this.event.when);
+  }
+
+  saveChangesToEvent(): void {
+    const updatedEvent = {
+      id: this.editEventForm.controls.id.value,
+      name: this.editEventForm.controls.name.value,
+      location: this.editEventForm.controls.location.value,
+      when: this.editEventForm.controls.when.value,
+    } as UpdateEventCommand
+
+    this.eventsClient.updateEvent(this.eventId, updatedEvent).subscribe({
+      next: value => this.editEventForm.reset(),
+      error: err => console.log(err),
+    });
+
+    this.event.name = updatedEvent.name;
+    this.event.location = updatedEvent.location;
+    this.event.when = updatedEvent.when;
   }
 }

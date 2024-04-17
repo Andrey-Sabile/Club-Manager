@@ -4,9 +4,6 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    container: {
-      padding: '2rem',
-    },
     extend: {},
   },
   plugins: [
@@ -14,6 +11,6 @@ module.exports = {
     require("daisyui"),
   ],
   daisyui: {
-    themes: ["emerald"],
+    themes: ["corporate"],
   },
 }
