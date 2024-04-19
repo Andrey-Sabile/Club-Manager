@@ -13,6 +13,8 @@ public class TicketTypeDto
     public decimal Price { get; init; }
     
     public int EventId { get; init; }
+    
+    public DateTimeOffset Created { get; init; }
 
     private class Mapping : Profile
     {

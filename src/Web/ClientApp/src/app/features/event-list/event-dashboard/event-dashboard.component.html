@@ -11,6 +11,7 @@
                     <div class="stat-value">{{ ticketStats.ticketsSold }}/{{ ticketStats.totalTickets }}</div>
                 </div>
             </div>
+            <a routerLink="/events/{{event.id}}/buy-tickets"><button class="btn">Ticket Page</button></a>
         </div>
 
         <div>
@@ -43,7 +44,7 @@
                             @for (ticketType of ticketTypes; track ticketType){
                                 <tr>
                                     <th>{{ ticketType.name }}</th>
-                                    <th>{{ ticketType.price }}</th>
+                                    <th>${{ ticketType.price }}</th>
                                     <th>{{ ticketType.quantity }}</th>
                                 </tr>
                             }

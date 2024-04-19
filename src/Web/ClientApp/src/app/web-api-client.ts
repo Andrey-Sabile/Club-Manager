@@ -1800,6 +1800,7 @@ export class TicketTypeDto implements ITicketTypeDto {
     quantity?: number;
     price?: number;
     eventId?: number;
+    created?: Date;
 
     constructor(data?: ITicketTypeDto) {
         if (data) {
@@ -1817,6 +1818,7 @@ export class TicketTypeDto implements ITicketTypeDto {
             this.quantity = _data["quantity"];
             this.price = _data["price"];
             this.eventId = _data["eventId"];
+            this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
         }
     }
 
@@ -1834,6 +1836,7 @@ export class TicketTypeDto implements ITicketTypeDto {
         data["quantity"] = this.quantity;
         data["price"] = this.price;
         data["eventId"] = this.eventId;
+        data["created"] = this.created ? this.created.toISOString() : <any>undefined;
         return data;
     }
 }
@@ -1844,6 +1847,7 @@ export interface ITicketTypeDto {
     quantity?: number;
     price?: number;
     eventId?: number;
+    created?: Date;
 }
 
 export class CreateTicketTypeCommand implements ICreateTicketTypeCommand {

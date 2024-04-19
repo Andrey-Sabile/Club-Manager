@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {
   CreateTicketTypeCommand,
   EventDto,
@@ -15,7 +15,8 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
   selector: 'app-event',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './event-dashboard.component.html',
   styles: ``

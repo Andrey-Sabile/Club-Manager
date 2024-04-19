@@ -932,6 +932,10 @@
           "eventId": {
             "type": "integer",
             "format": "int32"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

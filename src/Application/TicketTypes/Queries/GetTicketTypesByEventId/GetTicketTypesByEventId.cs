@@ -18,9 +18,13 @@ public class GetTicketTypesByEventIdQueryHandler : IRequestHandler<GetTicketType
 
     public async Task<IList<TicketTypeDto>> Handle(GetTicketTypesByEventIdQuery request, CancellationToken cancellationToken)
     {
-        return await _context.TicketTypes
+        var ticketTypes = await _context.TicketTypes
             .Where(ticketType => ticketType.EventId == request.EventId)
             .ProjectTo<TicketTypeDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
+
+        return ticketTypes
+            .OrderBy(t => t.Created)
+            .ToList();
     }
 }
