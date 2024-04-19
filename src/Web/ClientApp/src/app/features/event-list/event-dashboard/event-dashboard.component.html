@@ -49,6 +49,7 @@
                             }
                         </tbody>
                     </table>
+                    <button class="float-right btn btn-sm btn-outline" onclick="add_ticket_type.showModal()">Add</button>
                 </div>
             </div>
         </div>
@@ -56,6 +57,7 @@
     </div>
 </div>
 
+<!-- Modals -->
 <dialog id="edit_event" class="modal">
     <div class="modal-box">
         <form method="dialog">
@@ -84,6 +86,35 @@
         </form>
     </div>
 
+    <form method="dialog" class="modal-backdrop">
+        <button></button>
+    </form>
+</dialog>
+
+<dialog id="add_ticket_type" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-lg">Add Ticket Type</h3>
+        <form [formGroup]="newTicketTypeForm">
+            <label for="ticket-name" class="input input-bordered flex items-center gap-2">
+                Name
+                <input id="ticket-name" formControlName="name" class="grow" type="text">
+            </label>
+            <label for="ticket-price" class="input input-bordered flex items-center gap-2">
+                Price
+                <input id="ticket-price" formControlName="price" class="grow" type="number">
+            </label>
+            <label for="ticket-quantity" class="input input-bordered flex items-center gap-2">
+                Quantity
+                <input id="ticket-quantity" formControlName="quantity" class="grow" type="number">
+            </label>
+            <div class="modal-action">
+                <button class="btn btn-primary" (click)="addTicketType()" onclick="add_ticket_type.close()" >Add Ticket Type</button>
+            </div>
+        </form>
+    </div>
     <form method="dialog" class="modal-backdrop">
         <button></button>
     </form>

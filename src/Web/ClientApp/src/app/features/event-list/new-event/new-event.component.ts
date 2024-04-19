@@ -35,7 +35,6 @@ export class NewEventComponent {
   constructor(
     private eventsClient: EventsClient,
     private router: Router,
-    private ticketTypesClient: TicketTypesClient,
   ) {}
 
   createEvent(): void {

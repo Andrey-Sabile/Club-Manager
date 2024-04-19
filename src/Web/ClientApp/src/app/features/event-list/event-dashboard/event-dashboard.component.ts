@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {
+  CreateTicketTypeCommand,
   EventDto,
-  EventsClient,
+  EventsClient, NewTicketTypeDto,
   SoldTicketsDto,
   TicketsClient,
   TicketTypeDto,
@@ -24,11 +25,17 @@ export class EventDashboardComponent implements OnInit{
   public ticketTypes: TicketTypeDto[] = [];
   public eventId: number;
   public ticketStats: SoldTicketsDto;
+
   public editEventForm = new FormGroup({
     id: new FormControl(),
     name: new FormControl(''),
     location: new FormControl(''),
     when: new FormControl(),
+  });
+  public newTicketTypeForm = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(),
+    quantity: new FormControl()
   });
 
   constructor(
@@ -89,5 +96,30 @@ export class EventDashboardComponent implements OnInit{
     this.event.name = updatedEvent.name;
     this.event.location = updatedEvent.location;
     this.event.when = updatedEvent.when;
+  }
+
+  addTicketType(): void {
+    const newTicketType = {
+      name: this.newTicketTypeForm.controls.name.value,
+      price: this.newTicketTypeForm.controls.price.value,
+      quantity: this.newTicketTypeForm.controls.quantity.value
+    } as NewTicketTypeDto
+
+    const newTicketTypes: NewTicketTypeDto[] = [];
+    newTicketTypes.push(newTicketType);
+
+    const createTicketTypeCommand = {
+      eventId: this.eventId,
+      ticketTypes: newTicketTypes,
+    } as CreateTicketTypeCommand
+
+    this.ticketTypesClient.createTicketType(createTicketTypeCommand).subscribe({
+      next: value => {
+        this.ticketTypes.push(newTicketType);
+        this.newTicketTypeForm.reset();
+        this.getTicketStats(this.eventId);
+      },
+      error: err => console.log(err),
+    });
   }
 }
