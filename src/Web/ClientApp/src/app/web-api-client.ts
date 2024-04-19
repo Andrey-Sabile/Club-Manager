@@ -375,7 +375,7 @@ export class MembersClient implements IMembersClient {
 
 export interface ITicketsClient {
     getTickets(eventId: number): Observable<TicketDto[]>;
-    createTicket(command: CreateTicketCommand): Observable<number>;
+    createTicket(command: CreateTicketCommand): Observable<void>;
     getTicketById(id: number): Observable<TicketDto>;
     getTicketsSold(eventId: number): Observable<SoldTicketsDto>;
 }
@@ -452,7 +452,7 @@ export class TicketsClient implements ITicketsClient {
         return _observableOf(null as any);
     }
 
-    createTicket(command: CreateTicketCommand): Observable<number> {
+    createTicket(command: CreateTicketCommand): Observable<void> {
         let url_ = this.baseUrl + "/api/Tickets";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -464,7 +464,6 @@ export class TicketsClient implements ITicketsClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/json"
             })
         };
 
@@ -475,14 +474,14 @@ export class TicketsClient implements ITicketsClient {
                 try {
                     return this.processCreateTicket(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<number>;
+                    return _observableThrow(e) as any as Observable<void>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<number>;
+                return _observableThrow(response_) as any as Observable<void>;
         }));
     }
 
-    protected processCreateTicket(response: HttpResponseBase): Observable<number> {
+    protected processCreateTicket(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -491,11 +490,7 @@ export class TicketsClient implements ITicketsClient {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
-            return _observableOf(result200);
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -1749,6 +1744,7 @@ export class CreateTicketCommand implements ICreateTicketCommand {
     firstName?: string | undefined;
     lastName?: string | undefined;
     email?: string | undefined;
+    quantity?: number;
 
     constructor(data?: ICreateTicketCommand) {
         if (data) {
@@ -1766,6 +1762,7 @@ export class CreateTicketCommand implements ICreateTicketCommand {
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
             this.email = _data["email"];
+            this.quantity = _data["quantity"];
         }
     }
 
@@ -1783,6 +1780,7 @@ export class CreateTicketCommand implements ICreateTicketCommand {
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
         data["email"] = this.email;
+        data["quantity"] = this.quantity;
         return data;
     }
 }
@@ -1793,6 +1791,7 @@ export interface ICreateTicketCommand {
     firstName?: string | undefined;
     lastName?: string | undefined;
     email?: string | undefined;
+    quantity?: number;
 }
 
 export class TicketTypeDto implements ITicketTypeDto {

@@ -236,15 +236,7 @@
         },
         "responses": {
           "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
+            "description": ""
           }
         }
       }
@@ -910,6 +902,10 @@
           "email": {
             "type": "string",
             "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

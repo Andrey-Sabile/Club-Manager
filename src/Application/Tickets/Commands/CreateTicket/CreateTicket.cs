@@ -3,7 +3,7 @@ using Club_Manager.Domain.Entities;
 
 namespace Club_Manager.Application.Tickets.Commands.CreateTicket;
 
-public record CreateTicketCommand : IRequest<int>
+public record CreateTicketCommand : IRequest
 {
     public int EventId { get; init; }
     
@@ -15,9 +15,11 @@ public record CreateTicketCommand : IRequest<int>
     
     public string? Email { get; set; }
     
+    public int Quantity { get; set; }
+    
 }
 
-public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, int>
+public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand>
 {
     private readonly IApplicationDbContext _context;
 
@@ -26,21 +28,22 @@ public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, i
         _context = context;
     }
 
-    public async Task<int> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateTicketCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Ticket
+        for (int i = 0; i < request.Quantity; i++)
         {
-            EventId = request.EventId,
-            TicketTypeId = request.TicketTypeId,
-            FirstName = request.FirstName, 
-            LastName = request.LastName, 
-            Email = request.Email
-        };
+            var entity = new Ticket
+            {
+                EventId = request.EventId,
+                TicketTypeId = request.TicketTypeId,
+                FirstName = request.FirstName, 
+                LastName = request.LastName, 
+                Email = request.Email
+            };
 
-        _context.Tickets.Add(entity);
+            _context.Tickets.Add(entity);
+        }
 
         await _context.SaveChangesAsync(cancellationToken);
-
-        return entity.Id;
     }
 }

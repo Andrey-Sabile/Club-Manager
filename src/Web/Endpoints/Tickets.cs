@@ -34,8 +34,9 @@ public class Tickets : EndpointGroupBase
         return await sender.Send(new GetTicketsSoldQuery(eventId));
     }
 
-    private static Task<int> CreateTicket(ISender sender, CreateTicketCommand command)
+    private static async Task<IResult> CreateTicket(ISender sender, CreateTicketCommand command)
     {
-        return sender.Send(command);
+        await sender.Send(command);
+        return Results.NoContent();
     }
 }
