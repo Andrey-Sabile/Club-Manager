@@ -18,7 +18,6 @@ public class CreateTicketTypeCommandHandler : IRequestHandler<CreateTicketTypeCo
     {
         _context = context;
     }
-
     public async Task<int> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken)
     {
         foreach (var ticketType in request.TicketTypes)
