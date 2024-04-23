@@ -5,6 +5,8 @@ namespace Club_Manager.Application.Events.Queries.GetEvents;
 public class EventDto
 {
     public int Id { get; init; }
+
+    public int ClubId { get; init; }
     
     public string? Name { get; set; }
     

@@ -6,6 +6,8 @@ namespace Club_Manager.Application.Members.Commands.CreateMember;
 
 public record CreateMemberCommand : IRequest<int>
 {
+    public int ClubId { get; set; }
+
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
@@ -28,6 +30,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, i
     {
         var newMember = new Member
         {
+            ClubId = request.ClubId,
             FirstName = request.FirstName,
             LastName = request.LastName,
             EmailAddress = request.EmailAddress,

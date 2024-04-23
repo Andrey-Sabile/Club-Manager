@@ -3,6 +3,7 @@ using System;
 using Club_Manager.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Club_Manager.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423065921_Create Club entity")]
+    partial class CreateClubentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -58,9 +61,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ClubId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("TEXT");
 
@@ -84,8 +84,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClubId");
-
                     b.ToTable("Events");
                 });
 
@@ -93,9 +91,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ClubId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("Created")
@@ -123,8 +118,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClubId");
 
                     b.ToTable("Members");
                 });
@@ -509,28 +502,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Club_Manager.Domain.Entities.Event", b =>
-                {
-                    b.HasOne("Club_Manager.Domain.Entities.Club", "Club")
-                        .WithMany("Events")
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Club");
-                });
-
-            modelBuilder.Entity("Club_Manager.Domain.Entities.Member", b =>
-                {
-                    b.HasOne("Club_Manager.Domain.Entities.Club", "Club")
-                        .WithMany("Members")
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Club");
-                });
-
             modelBuilder.Entity("Club_Manager.Domain.Entities.Subscription", b =>
                 {
                     b.HasOne("Club_Manager.Domain.Entities.Member", "Member")
@@ -655,13 +626,6 @@ namespace Club_Manager.Infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Club_Manager.Domain.Entities.Club", b =>
-                {
-                    b.Navigation("Events");
-
-                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("Club_Manager.Domain.Entities.Event", b =>

@@ -4,6 +4,8 @@ namespace Club_Manager.Application.Events.Commands.CreateEvents;
 
 public class NewEventDto
 {
+    public int ClubId { get; set; }
+    
     public string? Name { get; set; }
 
     public DateTimeOffset When { get; set; }

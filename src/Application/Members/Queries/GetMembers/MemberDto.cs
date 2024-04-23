@@ -6,6 +6,8 @@ public class MemberDto
 {
     public int Id { get; init; }
 
+    public int ClubId { get; init; }
+
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }

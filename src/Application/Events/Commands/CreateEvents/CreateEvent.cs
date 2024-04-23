@@ -6,6 +6,8 @@ namespace Club_Manager.Application.Events.Commands.CreateEvents;
 
 public record CreateEventCommand : IRequest<int>
 {
+    public int ClubId { get; init; }
+
     public string? Name { get; set; }
 
     public DateTimeOffset When { get; set; }
@@ -28,6 +30,7 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, int
     {
         var newEvent = new Event
         {
+            ClubId = request.ClubId,
             Name = request.Name, 
             When = request.When, 
             Location = request.Location

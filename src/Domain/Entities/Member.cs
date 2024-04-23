@@ -2,6 +2,8 @@ namespace Club_Manager.Domain.Entities;
 
 public class Member : BaseAuditableEntity
 {
+    public int ClubId { get; set; }
+
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
@@ -11,4 +13,6 @@ public class Member : BaseAuditableEntity
     public Boolean IsFresher { get; set; }
 
     public Subscription? Subscription { get; set; }
+
+    public Club Club{ get; set; } = null!;
 }

@@ -17,6 +17,8 @@ public interface IApplicationDbContext
     DbSet<TicketType> TicketTypes { get; }
 
     DbSet<Ticket> Tickets { get; }
+
+    DbSet<Club> Clubs { get; }
     
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
