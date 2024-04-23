@@ -16,8 +16,9 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IClubsClient {
-    getClubById(id: number): Observable<ClubDto>;
+    getClubs(): Observable<ClubDto[]>;
     createClub(command: CreateClubCommand): Observable<number>;
+    getClubById(id: number): Observable<ClubDto>;
 }
 
 @Injectable({
@@ -33,11 +34,8 @@ export class ClubsClient implements IClubsClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getClubById(id: number): Observable<ClubDto> {
-        let url_ = this.baseUrl + "/api/Clubs/GetClub/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    getClubs(): Observable<ClubDto[]> {
+        let url_ = this.baseUrl + "/api/Clubs";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -49,20 +47,20 @@ export class ClubsClient implements IClubsClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetClubById(response_);
+            return this.processGetClubs(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetClubById(response_ as any);
+                    return this.processGetClubs(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ClubDto>;
+                    return _observableThrow(e) as any as Observable<ClubDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ClubDto>;
+                return _observableThrow(response_) as any as Observable<ClubDto[]>;
         }));
     }
 
-    protected processGetClubById(response: HttpResponseBase): Observable<ClubDto> {
+    protected processGetClubs(response: HttpResponseBase): Observable<ClubDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -73,7 +71,14 @@ export class ClubsClient implements IClubsClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ClubDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ClubDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -127,6 +132,57 @@ export class ClubsClient implements IClubsClient {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
     
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getClubById(id: number): Observable<ClubDto> {
+        let url_ = this.baseUrl + "/api/Clubs/GetClub/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetClubById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetClubById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ClubDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ClubDto>;
+        }));
+    }
+
+    protected processGetClubById(response: HttpResponseBase): Observable<ClubDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ClubDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {

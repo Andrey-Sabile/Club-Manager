@@ -11,8 +11,14 @@ public class Clubs : EndpointGroupBase
     {
         app.MapGroup(this)
             .RequireAuthorization()
+            .MapGet(GetClubs)
             .MapGet(GetClubById, "GetClub/{id}")
             .MapPost(CreateClub);
+    }
+
+    private static Task<IList<ClubDto>> GetClubs(ISender sender, [AsParameters] GetClubsQuery query)
+    {
+        return sender.Send(query);
     }
 
     private static Task<ClubDto> GetClubById(ISender sender, int id)

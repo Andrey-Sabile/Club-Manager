@@ -6,39 +6,28 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Clubs/GetClub/{id}": {
+    "/api/Clubs": {
       "get": {
         "tags": [
           "Clubs"
         ],
-        "operationId": "GetClubById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
+        "operationId": "GetClubs",
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClubDto"
+                  }
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/Clubs": {
+      },
       "post": {
         "tags": [
           "Clubs"
@@ -64,6 +53,38 @@
                 "schema": {
                   "type": "integer",
                   "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clubs/GetClub/{id}": {
+      "get": {
+        "tags": [
+          "Clubs"
+        ],
+        "operationId": "GetClubById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClubDto"
                 }
               }
             }

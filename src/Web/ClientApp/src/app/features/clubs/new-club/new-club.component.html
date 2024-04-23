@@ -1,0 +1,19 @@
+<div class="container">
+    <h1 class="text-2xl text-center mb-3">New Club</h1>
+    
+    <form [formGroup]="newClubForm">
+        <label for="name" class="input input-bordered flex items-center gap-2">
+            Name
+            <input id="name" formControlName="name" class="grow" type="text">
+        </label>
+
+        <textarea class="textarea textarea-bordered textarea-md w-full" placeholder="Description" formControlName="description"></textarea>
+
+        <label for="contactEmail" class="input input-bordered flex items-center gap-2">
+            Contact Email
+            <input id="contactEmail" formControlName="contactEmail" class="grow" type="text">
+        </label>
+
+        <button class="btn btn-primary" (click)="createClub()">Create Club</button>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+<div>
+    <h1 class="text-2xl text-center">Clubs</h1>
+    <a [routerLink]="['/clubs/new-club']"><button class="btn btn-primary">Create Club</button></a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>ContactEmail</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (club of clubList; track club) {
+            <tr>
+                <th>{{ club.name}}</th>
+                <th>{{ club.contactEmail}}</th>
+            </tr>
+        }
+    </tbody>
+</table>
