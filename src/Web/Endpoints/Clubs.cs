@@ -1,5 +1,6 @@
 
 using Club_Manager.Application.Clubs.Commands.CreateClub;
+using Club_Manager.Application.Clubs.Commands.UpdateClub;
 using Club_Manager.Application.Clubs.Queries.GetClubById;
 using Club_Manager.Application.Clubs.Queries.GetClubs;
 
@@ -13,7 +14,8 @@ public class Clubs : EndpointGroupBase
             .RequireAuthorization()
             .MapGet(GetClubs)
             .MapGet(GetClubById, "GetClub/{id}")
-            .MapPost(CreateClub);
+            .MapPost(CreateClub)
+            .MapPut(UpdateClub, "{id}");
     }
 
     private static Task<IList<ClubDto>> GetClubs(ISender sender, [AsParameters] GetClubsQuery query)
@@ -29,5 +31,16 @@ public class Clubs : EndpointGroupBase
     private static Task<int> CreateClub(ISender sender, CreateClubCommand command)
     {
         return sender.Send(command);
+    }
+
+    private static async Task<IResult> UpdateClub(ISender sender, int id, UpdateClubCommand command)
+    {
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
+
+        await sender.Send(command);
+        return Results.NoContent();
     }
 }
