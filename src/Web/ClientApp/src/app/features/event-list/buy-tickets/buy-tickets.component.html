@@ -1,5 +1,5 @@
 <div class="container flex justify-center">
-    <div class="flex flex-col max-w-md shadow-md p-2">
+    <div class="flex flex-col w-96 shadow-md p-2">
         <div class="mb-6">
             <h1 class="text-center text-4xl">{{event.name}}</h1>
         </div>
@@ -28,9 +28,13 @@
 
             <div class="mb-2">
                 <h2 class="text-xl mb-3">Tickets</h2>
-                <label for="ticketQuantity" class="input input-bordered flex flex-row items-center gap-2 mb-2">
-                    <input id="ticketQuantity" formControlName="ticketQuantity" type="number" placeholder="quantity" max=5>
-                </label>
+                <form [formGroup]="ticketTypeForm">
+                    <div formArrayName="ticketTypesFormArray">
+                        @for (ticketType of ticketTypesFormArray.controls; track $index) {
+                            
+                        }
+                    </div>
+                </form>
             </div>
 
             <div>
@@ -41,7 +45,7 @@
         @if (showBuyerForm) {
             <div>
                 <h2 class="text-xl mb-3">Attendee Information</h2>
-                <form [formGroup]="newTicketForm">
+                <form [formGroup]="ticketForm">
                     <label for="firstName" class="input input-bordered flex items-center gap-2 mb-2">
                         First Name
                         <input id="firstName" formControlName="firstName" class="grow" type="text">

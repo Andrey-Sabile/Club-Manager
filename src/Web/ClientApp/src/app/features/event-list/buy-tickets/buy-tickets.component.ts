@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EventDto, EventsClient, TicketsClient, TicketTypeDto, TicketTypesClient} from "../../../web-api-client";
 import {NgIf} from "@angular/common";
 
@@ -25,29 +25,31 @@ export class BuyTicketsComponent implements OnInit{
   public showBuyerForm: boolean = false;
   public showSummary: boolean = false;
 
-  public newTicketForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl('')
+  public ticketForm = this.formBuilder.group({
+    firstName: [''],
+    lastName: [''],
+    email: [''],
   });
+
+  public ticketTypeForm = this.formBuilder.group({
+    ticketTypesFormArray: this.formBuilder.array([this.formBuilder.control(0)])
+  });
+  get ticketTypesFormArray(): FormArray {
+    return this.ticketTypeForm.get("ticketTypesFormArray") as FormArray;
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventsClient: EventsClient,
     private ticketTypesClient: TicketTypesClient,
+    private formBuilder: FormBuilder,
   ) {}
 
   ngOnInit() {
     this.eventId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.getEvent(this.eventId);
+    this.getTicketTypes(this.eventId);
     this.showEventInformationPage();
-  }
-
-  getTicketTypes(id: number): void {
-    this.ticketTypesClient.getTicketTypesByEventId(id).subscribe({
-      next: result => this.ticketTypes = result,
-      error: err => console.log(err),
-    });
   }
 
   getEvent(id: number): void {
@@ -56,6 +58,19 @@ export class BuyTicketsComponent implements OnInit{
       error: err => console.log(err),
     });
   }
+
+  getTicketTypes(id: number): void {
+    this.ticketTypesClient.getTicketTypesByEventId(id).subscribe({
+      next: result => this.ticketTypes = result,
+      error: err => console.log(err),
+    });
+
+    this.ticketTypes.forEach(ticketType => {
+      this.ticketTypesFormArray.push(this.formBuilder.control(0));
+    });
+  }
+
+
 
   showEventInformationPage(): void {
     this.showEventInformation = true;
@@ -73,6 +88,6 @@ export class BuyTicketsComponent implements OnInit{
     this.showEventInformation = false;
     this.showBuyerForm = false;
     this.showSummary = true;
+    console.log(this.ticketForm);
   }
-
 }
