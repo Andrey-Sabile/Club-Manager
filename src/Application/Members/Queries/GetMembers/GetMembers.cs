@@ -2,7 +2,7 @@ using Club_Manager.Application.Common.Interfaces;
 
 namespace Club_Manager.Application.Members.Queries.GetMembers;
 
-public record GetMembersQuery : IRequest<IList<MemberDto>>;
+public record GetMembersQuery(int ClubId) : IRequest<IList<MemberDto>>;
 
 public class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, IList<MemberDto>>
 {
@@ -19,6 +19,7 @@ public class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, IList<Mem
     {
         return await _context.Members
             .AsNoTracking()
+            .Where(c => c.ClubId == request.ClubId)
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }

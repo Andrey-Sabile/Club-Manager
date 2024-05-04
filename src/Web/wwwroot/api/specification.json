@@ -258,6 +258,18 @@
           "Members"
         ],
         "operationId": "GetMembers",
+        "parameters": [
+          {
+            "name": "ClubId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",

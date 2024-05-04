@@ -478,7 +478,7 @@ export class EventsClient implements IEventsClient {
 }
 
 export interface IMembersClient {
-    getMembers(): Observable<MemberDto[]>;
+    getMembers(clubId: number): Observable<MemberDto[]>;
     createMember(command: CreateMemberCommand): Observable<number>;
 }
 
@@ -495,8 +495,12 @@ export class MembersClient implements IMembersClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getMembers(): Observable<MemberDto[]> {
-        let url_ = this.baseUrl + "/api/Members";
+    getMembers(clubId: number): Observable<MemberDto[]> {
+        let url_ = this.baseUrl + "/api/Members?";
+        if (clubId === undefined || clubId === null)
+            throw new Error("The parameter 'clubId' must be defined and cannot be null.");
+        else
+            url_ += "ClubId=" + encodeURIComponent("" + clubId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
