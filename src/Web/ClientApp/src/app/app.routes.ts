@@ -9,17 +9,19 @@ import { NewEventComponent} from "./features/event-list/new-event/new-event.comp
 import { BuyTicketsComponent } from "./features/event-list/buy-tickets/buy-tickets.component";
 import { ClubsComponent } from "./features/clubs/clubs.component";
 import { NewClubComponent } from "./features/clubs/new-club/new-club.component";
+import { ClubDetailComponent } from "./features/clubs/club-detail/club-detail.component";
 
 export const routes: Routes = [
     { path: '', component: EventListComponent, pathMatch: 'full' },
     { path: 'todo', component: TodoComponent },
     { path: 'members', component: MemberListComponent },
     { path: 'sign-up', component: SignupComponent },
-    { path: 'sign-up/success', component: SignupSuccessComponent},
-    { path: 'events', component: EventListComponent},
-    { path: 'events/:id', component: EventDashboardComponent},
-    { path: 'events/:id/buy-tickets', component: BuyTicketsComponent},
-    { path: 'new-event', component: NewEventComponent},
-    { path: 'clubs', component: ClubsComponent},
-    { path: 'clubs/new-club', component: NewClubComponent},
+    { path: 'sign-up/success', component: SignupSuccessComponent },
+    { path: 'events', component: EventListComponent },
+    { path: 'events/:id', component: EventDashboardComponent },
+    { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },
+    { path: 'new-event', component: NewEventComponent },
+    { path: 'clubs', component: ClubsComponent },
+    { path: 'clubs/new-club', component: NewClubComponent },
+    { path: 'clubs/:id', component: ClubDetailComponent }
 ]
