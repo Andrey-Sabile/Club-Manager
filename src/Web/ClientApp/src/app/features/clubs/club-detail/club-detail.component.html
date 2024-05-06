@@ -1,8 +1,9 @@
 <div class="container">
     <div class="grid grid-cols-1 gap-4">
         <h1 class="text-center text-3xl">{{ club.name }}</h1>
-        <a routerLink="/clubs/{{ club.id }}/sign-up" ><button class="btn btn-primary">Add New Member</button></a>
-
+        <div>
+            <a routerLink="/clubs/{{ club.id }}/sign-up" ><button class="btn btn-primary">Add New Member</button></a>
+        </div>
         <div>
             <div class="collapse bg-base-200 collapse-arrow">
                 <input type="checkbox"/>
