@@ -1,5 +1,4 @@
 using Club_Manager.Application.Common.Interfaces;
-using Club_Manager.Application.Events.Queries.GetEvents;
 using Club_Manager.Domain.Entities;
 
 namespace Club_Manager.Application.Events.Queries.GetEventById;

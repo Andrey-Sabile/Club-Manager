@@ -1,6 +1,6 @@
 using Club_Manager.Domain.Entities;
 
-namespace Club_Manager.Application.Events.Queries.GetEvents;
+namespace Club_Manager.Application.Events.Queries;
 
 public class EventDto
 {

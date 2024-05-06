@@ -250,6 +250,7 @@ export interface IEventsClient {
     getEvents(): Observable<EventDto[]>;
     createEvents(command: CreateEventCommand): Observable<number>;
     getEventById(id: number): Observable<EventDto>;
+    getEventsByClubId(clubId: number): Observable<EventDto[]>;
     updateEvent(id: number, command: UpdateEventCommand): Observable<void>;
 }
 
@@ -415,6 +416,64 @@ export class EventsClient implements IEventsClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = EventDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getEventsByClubId(clubId: number): Observable<EventDto[]> {
+        let url_ = this.baseUrl + "/api/Events/{clubId}";
+        if (clubId === undefined || clubId === null)
+            throw new Error("The parameter 'clubId' must be defined.");
+        url_ = url_.replace("{clubId}", encodeURIComponent("" + clubId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEventsByClubId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEventsByClubId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<EventDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<EventDto[]>;
+        }));
+    }
+
+    protected processGetEventsByClubId(response: HttpResponseBase): Observable<EventDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(EventDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
