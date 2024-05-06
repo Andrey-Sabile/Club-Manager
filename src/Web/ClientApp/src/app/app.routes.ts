@@ -1,6 +1,5 @@
 import { Routes } from "@angular/router";
 import { TodoComponent } from "./features/todo/todo.component";
-import { MemberListComponent } from "./features/member-list/member-list.component";
 import { SignupComponent } from "./features/signup/signup.component";
 import { SignupSuccessComponent } from "./features/signup/signup-success/signup-success.component";
 import { EventListComponent} from "./features/event-list/event-list.component";
@@ -19,7 +18,6 @@ export const routes: Routes = [
     { path: 'clubs/:id', component: ClubDetailComponent },
     { path: 'clubs/:id/sign-up', component: SignupComponent },
     { path: 'sign-up/success', component: SignupSuccessComponent },
-    { path: 'members', component: MemberListComponent },
     { path: 'events', component: EventListComponent },
     { path: 'events/:id', component: EventDashboardComponent },
     { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },

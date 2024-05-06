@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MembersClient, CreateMemberCommand } from 'src/app/web-api-client';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MembersClient, CreateMemberCommand, ClubDto, ClubsClient } from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +10,11 @@ import { MembersClient, CreateMemberCommand } from 'src/app/web-api-client';
   templateUrl: './signup.component.html',
   styles: ``
 })
-export class SignupComponent {
+export class SignupComponent  implements OnInit{
+  public clubId: number;
+  public club: ClubDto;
+  public hasSignedUp: boolean = false;
+
   public newMemberForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
@@ -20,11 +24,19 @@ export class SignupComponent {
 
   constructor(
     private membersClient: MembersClient,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private clubsClient: ClubsClient,
   ) {}
+
+  ngOnInit(): void {
+    this.clubId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.getClub(this.clubId);
+  }
 
   createMember(): void {
     const newMember = {
+      clubId: this.clubId,
       firstName: this.newMemberForm.controls.firstName.value,
       lastName: this.newMemberForm.controls.lastName.value,
       emailAddress: this.newMemberForm.controls.email.value,
@@ -32,8 +44,18 @@ export class SignupComponent {
     } as CreateMemberCommand
 
     this.membersClient.createMember(newMember).subscribe({
-      next: result => this.router.navigateByUrl('sign-up/success'),
+      next: result => {
+        this.router.navigateByUrl('sign-up/success');
+        this.hasSignedUp = true;
+      },
       error: error => console.error(error),
     });
+  }
+
+  getClub(clubId: number): void {
+    this.clubsClient.getClubById(clubId).subscribe({
+      next: result => this.club = result,
+      error: err => console.log(err),
+    })
   }
 }

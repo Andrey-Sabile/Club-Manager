@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClubDto, ClubsClient, MemberDto, MembersClient, UpdateClubCommand } from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-club-detail',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+  ],
   templateUrl: './club-detail.component.html',
   styles: ``
 })
