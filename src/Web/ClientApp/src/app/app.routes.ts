@@ -14,14 +14,14 @@ import { ClubDetailComponent } from "./features/clubs/club-detail/club-detail.co
 export const routes: Routes = [
     { path: '', component: EventListComponent, pathMatch: 'full' },
     { path: 'todo', component: TodoComponent },
-    { path: 'members', component: MemberListComponent },
-    { path: 'sign-up', component: SignupComponent },
+    { path: 'clubs', component: ClubsComponent },
+    { path: 'clubs/new-club', component: NewClubComponent },
+    { path: 'clubs/:id', component: ClubDetailComponent },
+    { path: 'clubs/:id/sign-up', component: SignupComponent },
     { path: 'sign-up/success', component: SignupSuccessComponent },
+    { path: 'members', component: MemberListComponent },
     { path: 'events', component: EventListComponent },
     { path: 'events/:id', component: EventDashboardComponent },
     { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },
     { path: 'new-event', component: NewEventComponent },
-    { path: 'clubs', component: ClubsComponent },
-    { path: 'clubs/new-club', component: NewClubComponent },
-    { path: 'clubs/:id', component: ClubDetailComponent }
 ]

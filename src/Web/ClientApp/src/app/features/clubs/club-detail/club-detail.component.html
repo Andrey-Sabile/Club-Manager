@@ -28,9 +28,18 @@
                                 <th>Last Name</th>
                                 <th>Email</th>
                                 <th>Fresher?</th>
-                                <th>Paid?</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @for (member of clubMembers; track member) {
+                                <tr>
+                                    <th>{{ member.firstName }}</th>
+                                    <th>{{ member.lastName }}</th>
+                                    <th>{{ member.emailAddress }}</th>
+                                    <th>{{ member.isFresher }}</th>            
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>    
