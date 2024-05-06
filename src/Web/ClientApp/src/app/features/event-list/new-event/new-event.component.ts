@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import {
   CreateEventCommand,
   CreateTicketTypeCommand,
@@ -18,7 +18,12 @@ import {
   templateUrl: './new-event.component.html',
   styles: ``
 })
-export class NewEventComponent {
+
+export class NewEventComponent implements OnInit{
+  public ticketTypes: TicketTypeDto[] = [];
+  public eventId: number;
+  public clubId: number;
+
   public newEventForm = new FormGroup({
     name: new FormControl(''),
     location: new FormControl(''),
@@ -29,16 +34,20 @@ export class NewEventComponent {
     price: new FormControl(),
     quantity: new FormControl()
   });
-  public ticketTypes: TicketTypeDto[] = [];
-  public eventId: Number;
 
   constructor(
     private eventsClient: EventsClient,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) {}
+
+  ngOnInit(): void {
+    this.clubId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+  }
 
   createEvent(): void {
     const newEvent = {
+      clubId: this.clubId,
       name: this.newEventForm.controls.name.value,
       when: this.newEventForm.controls.when.value,
       location: this.newEventForm.controls.location.value,

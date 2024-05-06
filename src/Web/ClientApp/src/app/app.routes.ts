@@ -16,8 +16,8 @@ export const routes: Routes = [
     { path: 'clubs/new-club', component: NewClubComponent },
     { path: 'clubs/:id', component: ClubDetailComponent },
     { path: 'clubs/:id/sign-up', component: SignupComponent },
+    { path: 'clubs/:id/new-event', component: NewEventComponent },
     { path: 'events', component: EventListComponent },
     { path: 'events/:id', component: EventDashboardComponent },
     { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },
-    { path: 'new-event', component: NewEventComponent },
 ]
