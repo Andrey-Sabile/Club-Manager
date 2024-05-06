@@ -1762,6 +1762,7 @@ export class EventDto implements IEventDto {
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
+    description?: string | undefined;
 
     constructor(data?: IEventDto) {
         if (data) {
@@ -1779,6 +1780,7 @@ export class EventDto implements IEventDto {
             this.name = _data["name"];
             this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
             this.location = _data["location"];
+            this.description = _data["description"];
         }
     }
 
@@ -1796,6 +1798,7 @@ export class EventDto implements IEventDto {
         data["name"] = this.name;
         data["when"] = this.when ? this.when.toISOString() : <any>undefined;
         data["location"] = this.location;
+        data["description"] = this.description;
         return data;
     }
 }
@@ -1806,6 +1809,7 @@ export interface IEventDto {
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
+    description?: string | undefined;
 }
 
 export class CreateEventCommand implements ICreateEventCommand {
@@ -1813,6 +1817,7 @@ export class CreateEventCommand implements ICreateEventCommand {
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
+    description?: string | undefined;
     ticketTypes?: NewTicketTypeDto[];
 
     constructor(data?: ICreateEventCommand) {
@@ -1830,6 +1835,7 @@ export class CreateEventCommand implements ICreateEventCommand {
             this.name = _data["name"];
             this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
             this.location = _data["location"];
+            this.description = _data["description"];
             if (Array.isArray(_data["ticketTypes"])) {
                 this.ticketTypes = [] as any;
                 for (let item of _data["ticketTypes"])
@@ -1851,6 +1857,7 @@ export class CreateEventCommand implements ICreateEventCommand {
         data["name"] = this.name;
         data["when"] = this.when ? this.when.toISOString() : <any>undefined;
         data["location"] = this.location;
+        data["description"] = this.description;
         if (Array.isArray(this.ticketTypes)) {
             data["ticketTypes"] = [];
             for (let item of this.ticketTypes)
@@ -1865,6 +1872,7 @@ export interface ICreateEventCommand {
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
+    description?: string | undefined;
     ticketTypes?: NewTicketTypeDto[];
 }
 

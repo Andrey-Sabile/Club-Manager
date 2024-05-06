@@ -957,6 +957,10 @@
           "location": {
             "type": "string",
             "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -977,6 +981,10 @@
             "format": "date-time"
           },
           "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
             "type": "string",
             "nullable": true
           },

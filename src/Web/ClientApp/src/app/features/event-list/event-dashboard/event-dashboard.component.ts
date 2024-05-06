@@ -32,6 +32,7 @@ export class EventDashboardComponent implements OnInit{
     name: new FormControl(''),
     location: new FormControl(''),
     when: new FormControl(),
+    description: new FormControl(''),
   });
   public newTicketTypeForm = new FormGroup({
     name: new FormControl(''),
@@ -79,6 +80,7 @@ export class EventDashboardComponent implements OnInit{
     this.editEventForm.controls.name.setValue(this.event.name);
     this.editEventForm.controls.location.setValue(this.event.location);
     this.editEventForm.controls.when.setValue(this.event.when);
+    this.editEventForm.controls.description.setValue(this.event.description);
   }
 
   saveChangesToEvent(): void {

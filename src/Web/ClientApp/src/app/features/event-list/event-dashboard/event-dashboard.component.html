@@ -22,6 +22,7 @@
                     <p>Name: {{ event.name }}</p>
                     <p>Location: {{ event.location }}</p>
                     <p>Date: {{ event.when }}</p>
+                    <p>Description: {{ event.description }}</p>
                     <button class="float-right btn btn-sm btn-outline" onclick="edit_event.showModal()" (click)="editEvent()">Edit</button>
                 </div>
             </div>
@@ -81,6 +82,9 @@
                 When
                 <input id="when" formControlName="when" class="grow" type="datetime-local">
             </label>
+
+            <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"></textarea>
+
             <div class="modal-action">
                 <button class="btn btn-primary" (click)="saveChangesToEvent()" onclick="edit_event.close()" >Save</button>
             </div>

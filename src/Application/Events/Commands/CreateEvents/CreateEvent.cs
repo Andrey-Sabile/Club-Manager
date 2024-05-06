@@ -14,6 +14,8 @@ public record CreateEventCommand : IRequest<int>
 
     public string? Location { get; set; }
 
+    public string? Description { get; set; }
+
     public required IEnumerable<NewTicketTypeDto>TicketTypes { get; init; }
 }
 
@@ -33,7 +35,8 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, int
             ClubId = request.ClubId,
             Name = request.Name, 
             When = request.When, 
-            Location = request.Location
+            Location = request.Location,
+            Description = request.Description,
         };
         
         _context.Events.Add(newEvent);

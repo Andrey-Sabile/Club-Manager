@@ -14,6 +14,8 @@ public class EventDto
     
     public string? Location { get; set; }
 
+    public string? Description { get; set; }
+
     private class Mapping : Profile
     {
         public Mapping()

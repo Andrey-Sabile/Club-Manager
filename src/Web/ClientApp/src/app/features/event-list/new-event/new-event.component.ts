@@ -27,7 +27,8 @@ export class NewEventComponent implements OnInit{
   public newEventForm = new FormGroup({
     name: new FormControl(''),
     location: new FormControl(''),
-    when: new FormControl()
+    when: new FormControl(),
+    description: new FormControl(''),
   });
   public ticketTypeForm = new FormGroup({
     name: new FormControl(''),
@@ -51,6 +52,7 @@ export class NewEventComponent implements OnInit{
       name: this.newEventForm.controls.name.value,
       when: this.newEventForm.controls.when.value,
       location: this.newEventForm.controls.location.value,
+      description: this.newEventForm.controls.description.value,
       ticketTypes: this.ticketTypes,
     } as CreateEventCommand
 

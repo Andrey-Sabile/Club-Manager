@@ -3,7 +3,7 @@
 
     <div>
         <h2 class="text-xl">Basic Info</h2>
-        <form [formGroup]="newEventForm" class="max-w-screen-sm">
+        <form [formGroup]="newEventForm">
             <label for="name" class="input input-bordered flex items-center gap-2">
                 Name
                 <input id="name" formControlName="name" class="grow" type="text">
@@ -18,10 +18,12 @@
                 When
                 <input id="when" formControlName="when" class="grow" type="datetime-local">
             </label>
+
+            <textarea class="textarea textarea-bordered textarea-md w-full" placeholder="Description" formControlName="description"></textarea>
         </form>
     </div>
 
-    <div>
+    <div class="mt-4">
         <h2 class="text-xl">Ticket Info</h2>
         <table class="table">
             <thead>
@@ -41,7 +43,7 @@
                 }
             </tbody>
         </table>
-        <button class="btn btn-primary" onclick="ticket_type.showModal()">Add Ticket Type</button>
+        <button class="btn btn-secondary" onclick="ticket_type.showModal()">Add Ticket Type</button>
     </div>
 
     <div>
