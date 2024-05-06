@@ -1,121 +1,121 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - Club-Manager
+# name: Build and deploy ASP.Net Core app to Azure Web App - Club-Manager
 
-on:
-  push:
-    branches: 
-      - master
-    paths-ignore:
-        - .gitignore
-        - CODE_OF_CONDUCT.md
-        - LICENSE
-        - README.md
+# on:
+#   push:
+#     branches: 
+#       - master
+#     paths-ignore:
+#         - .gitignore
+#         - CODE_OF_CONDUCT.md
+#         - LICENSE
+#         - README.md
     
-jobs:
-  build:
-    runs-on: windows-latest
+# jobs:
+#   build:
+#     runs-on: windows-latest
 
-    steps:
-      - uses: actions/checkout@v4
-        name: Checkout code
+#     steps:
+#       - uses: actions/checkout@v4
+#         name: Checkout code
       
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json')}}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
+#       - name: Cache NuGet packages
+#         uses: actions/cache@v4
+#         with:
+#           path: ~/.nuget/packages
+#           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json')}}
+#           restore-keys: |
+#             ${{ runner.os }}-nuget-
 
-      - name: Install Node & cache npm packages
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-          cache-dependency-path: src/Web/ClientApp/package-lock.json
+#       - name: Install Node & cache npm packages
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '20.x'
+#           cache: 'npm'
+#           cache-dependency-path: src/Web/ClientApp/package-lock.json
         
 
-      - name: Install .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
+#       - name: Install .NET Core
+#         uses: actions/setup-dotnet@v4
+#         with:
+#           dotnet-version: '8.x'
       
-      - name: Restore solution
-        run: dotnet restore
+#       - name: Restore solution
+#         run: dotnet restore
 
-      - name: Build with dotnet
-        run: dotnet build --no-restore --configuration Release
+#       - name: Build with dotnet
+#         run: dotnet build --no-restore --configuration Release
 
-      - name: dotnet publish
-        run: |
-          dotnet publish --configuration Release --runtime win-x86 --self-contained --output ./publish
-          cd publish
-        working-directory: ./src/Web/
+#       - name: dotnet publish
+#         run: |
+#           dotnet publish --configuration Release --runtime win-x86 --self-contained --output ./publish
+#           cd publish
+#         working-directory: ./src/Web/
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: website
-          path: ./src/Web/publish/
-          if-no-files-found: error
+#       - name: Upload artifact for deployment job
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: website
+#           path: ./src/Web/publish/
+#           if-no-files-found: error
         
-      - name: Create EF Core migrations bundle - Install tool-manifest
-        run: |
-          dotnet new tool-manifest
-        env:
-          SkipNSwag: True
+#       - name: Create EF Core migrations bundle - Install tool-manifest
+#         run: |
+#           dotnet new tool-manifest
+#         env:
+#           SkipNSwag: True
         
-      - name: Create EF Core migrations bundle - Install dotnet-ef
-        run: |
-          dotnet tool install dotnet-ef --version 8.0.1
-        env:
-          SkipNSwag: True
+#       - name: Create EF Core migrations bundle - Install dotnet-ef
+#         run: |
+#           dotnet tool install dotnet-ef --version 8.0.1
+#         env:
+#           SkipNSwag: True
   
-      - name: Create EF Core migrations bundle - bundle migrations
-        run: |
-          dotnet ef migrations bundle --configuration Release -p ./src/Infrastructure/ -s ./src/Web/ -o efbundle.exe
-        env:
-          SkipNSwag: True
+#       - name: Create EF Core migrations bundle - bundle migrations
+#         run: |
+#           dotnet ef migrations bundle --configuration Release -p ./src/Infrastructure/ -s ./src/Web/ -o efbundle.exe
+#         env:
+#           SkipNSwag: True
       
-      - name: Upload EF Core migrations bundle artifact (efbundle)
-        uses: actions/upload-artifact@v4
-        with:
-          name: efbundle
-          path: ./efbundle.exe
-          if-no-files-found: error
+#       - name: Upload EF Core migrations bundle artifact (efbundle)
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: efbundle
+#           path: ./efbundle.exe
+#           if-no-files-found: error
 
   
-#  deploy:
-#    runs-on: windows-latest
-#    needs: build
-#    environment:
-#      name: 'Development'
-#      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-#    permissions:
-#      id-token: write #This is required for requesting the JWT
-#      contents: read
-#      packages: write
-#
-#    steps:      
-#      - name: Download artifact from build job
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: website
-#      
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#      
-#      - name: Login to Azure
-#        uses: azure/login@v1
-#        with:
-#          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_510D4A32BFBE4EDAB4C99506C5EC5330 }}
-#          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_35865790A438429D93FBD6FBBD331BB8 }}
-#          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_02FC07B1613940D08A488E70FC8B0DF7 }}
-#
-#      - name: Deploy to Azure Web App
-#        id: deploy-to-webapp
-#        uses: azure/webapps-deploy@v2
-#        with:
-#          app-name: 'Club-Manager'
-#          slot-name: 'Production'
-#          package: website/publish.zip
-#          
+# #  deploy:
+# #    runs-on: windows-latest
+# #    needs: build
+# #    environment:
+# #      name: 'Development'
+# #      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+# #    permissions:
+# #      id-token: write #This is required for requesting the JWT
+# #      contents: read
+# #      packages: write
+# #
+# #    steps:      
+# #      - name: Download artifact from build job
+# #        uses: actions/download-artifact@v4
+# #        with:
+# #          name: website
+# #      
+# #      - name: Checkout code
+# #        uses: actions/checkout@v4
+# #      
+# #      - name: Login to Azure
+# #        uses: azure/login@v1
+# #        with:
+# #          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_510D4A32BFBE4EDAB4C99506C5EC5330 }}
+# #          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_35865790A438429D93FBD6FBBD331BB8 }}
+# #          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_02FC07B1613940D08A488E70FC8B0DF7 }}
+# #
+# #      - name: Deploy to Azure Web App
+# #        id: deploy-to-webapp
+# #        uses: azure/webapps-deploy@v2
+# #        with:
+# #          app-name: 'Club-Manager'
+# #          slot-name: 'Production'
+# #          package: website/publish.zip
+# #          
