@@ -1,6 +1,5 @@
 <div>
     <h1 class="text-3xl text-center">Events</h1>
-    <a [routerLink]="['/new-event']"><button class="btn btn-primary">Create Event</button></a>
 </div>
 
 <table class="table">
@@ -13,7 +12,7 @@
     </thead>
     <tbody>
         @for (event of eventsList; track event){
-            <tr class="hover:bg-base-200 hover:cursor-pointer" routerLink="/events/{{event.id}}">
+            <tr>
                 <th>{{ event.name }}</th>
                 <th>{{ event.when }}</th>
                 <th>{{ event.location }}</th>

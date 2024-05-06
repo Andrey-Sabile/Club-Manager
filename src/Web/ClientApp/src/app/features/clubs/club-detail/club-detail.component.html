@@ -45,6 +45,33 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="collapse bg-base-200 collapse-arrow">
+                <input type="checkbox"/>
+                <h2 class="collapse-title text-xl">Events</h2>
+                <div class="collapse-content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Time and date</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (event of eventsList; track event) {
+                                <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/{{event.id}}">
+                                    <th>{{ event.name }}</th>
+                                    <th>{{ event.when }}</th>
+                                    <th>{{ event.location }}</th>                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>                    
+                </div>
             </div>    
         </div>
     </div>

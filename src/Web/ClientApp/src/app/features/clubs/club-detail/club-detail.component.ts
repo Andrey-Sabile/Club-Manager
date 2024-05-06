@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ClubDto, ClubsClient, MemberDto, MembersClient, UpdateClubCommand } from 'src/app/web-api-client';
+import { ClubDto, ClubsClient, MemberDto, MembersClient, UpdateClubCommand, EventDto, EventsClient } from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-club-detail',
@@ -17,6 +17,7 @@ export class ClubDetailComponent implements OnInit{
   public clubId: number;
   public club: ClubDto;
   public clubMembers: MemberDto[] = [];
+  public eventsList: EventDto[] = [];
 
   public editClubForm = new FormGroup({
     name: new FormControl(''),
@@ -28,12 +29,14 @@ export class ClubDetailComponent implements OnInit{
     private activatedRoute: ActivatedRoute,
     private clubsClient: ClubsClient,
     private membersClient: MembersClient,
+    private eventsClient: EventsClient,
   ){}
 
   ngOnInit(): void {
     this.clubId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.getClub(this.clubId);
     this.getClubMembers(this.clubId);
+    this.getClubEvents(this.clubId);
   }
 
   getClub(id: number): void {
@@ -48,6 +51,13 @@ export class ClubDetailComponent implements OnInit{
       next: result => this.clubMembers = result,
       error: err => console.log(err),
     });
+  }
+
+  getClubEvents(clubId: number): void {
+    this.eventsClient.getEventsByClubId(clubId).subscribe({
+      next: result => this.eventsList = result,
+      error: error => console.log(error),
+    })
   }
 
   populateClubDetailFormWithCurrentValues(): void {
