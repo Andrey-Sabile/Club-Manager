@@ -1,61 +1,53 @@
-<div class="container">
-    <div class="grid grid-cols-1 gap-4">
-        <div>
-            <h1 class="text-center text-3xl">Dashboard</h1>
-        </div>
+<h1 class="text-center text-3xl">Dashboard</h1>
 
-        <div>
-            <div class="stats shadow">
-                <div class="stat">
-                    <div class="stat-title">Tickets Sold</div>
-                    <div class="stat-value">{{ ticketStats.ticketsSold }}/{{ ticketStats.totalTickets }}</div>
-                </div>
-            </div>
-            <a routerLink="/events/{{event.id}}/buy-tickets"><button class="btn">Ticket Page</button></a>
+<div class="flex justify-start">
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-title">Tickets Sold</div>
+            <div class="stat-value">{{ ticketStats.ticketsSold }}/{{ ticketStats.totalTickets }}</div>
         </div>
+    </div>
+    <a routerLink="/events/{{event.id}}/buy-tickets"><button class="btn">Ticket Page</button></a>
+</div>
 
-        <div>
-            <div class="collapse bg-base-200 collapse-arrow">
-                <input type="checkbox" />
-                <h2 class="collapse-title text-xl">Event Info</h2>
-                <div class="collapse-content">
-                    <p>Name: {{ event.name }}</p>
-                    <p>Location: {{ event.location }}</p>
-                    <p>Date: {{ event.when }}</p>
-                    <p>Description: {{ event.description }}</p>
-                    <button class="float-right btn btn-sm btn-outline" onclick="edit_event.showModal()" (click)="editEvent()">Edit</button>
-                </div>
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 grid-rows-2">
+    <div class="card bg-base-200 h-72">
+        <div class="card-body">
+            <h2 class="card-title text-xl">Event Info</h2>
+            <p>Name: {{ event.name }}</p>
+            <p>Location: {{ event.location }}</p>
+            <p>Date: {{ event.when }}</p>
+            <p>Description: {{ event.description }}</p>
+            <div class="card-actions">
+                <button class="btn btn-block btn-sm btn-outline" onclick="edit_event.showModal()" (click)="editEvent()">Edit</button>
             </div>
         </div>
+    </div>
 
-        <div>
-            <div class="collapse bg-base-200 collapse-arrow">
-                <input type="checkbox" />
-                <h2 class="collapse-title text-xl">Ticket Types</h2>
-                <div class="collapse-content">
-                    <table class="table">
-                        <thead>
+    <div class="card bg-base-200 h-72">
+        <div class="card-body">
+            <h2 class="card-title text-xl">Ticket Types</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @for (ticketType of ticketTypes; track ticketType){
                         <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            <th>{{ ticketType.name }}</th>
+                            <th>${{ ticketType.price }}</th>
+                            <th>{{ ticketType.quantity }}</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                            @for (ticketType of ticketTypes; track ticketType){
-                                <tr>
-                                    <th>{{ ticketType.name }}</th>
-                                    <th>${{ ticketType.price }}</th>
-                                    <th>{{ ticketType.quantity }}</th>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <button class="float-right btn btn-sm btn-outline" onclick="add_ticket_type.showModal()">Add</button>
-                </div>
+                    }
+                </tbody>
+            </table>
+            <div class="card-actions">
+                <button class="btn btn-block btn-sm btn-outline" onclick="add_ticket_type.showModal()">Add</button>
             </div>
-        </div>
-
     </div>
 </div>
 
