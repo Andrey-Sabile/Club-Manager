@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClubsClient, EventDto, EventsClient, TicketTypeDto, TicketTypesClient } from 'src/app/web-api-client';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event-landing',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    FontAwesomeModule
   ],
   templateUrl: './event-landing.component.html',
   styles: ``
 })
 export class EventLandingComponent implements OnInit{
+  public faCalendar = faCalendar;
+  public faLocationDot = faLocationDot;
   public eventId: number;
   public event: EventDto;
   public ticketTypes: TicketTypeDto[] = [];
