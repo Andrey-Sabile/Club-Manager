@@ -8,6 +8,7 @@ import { BuyTicketsComponent } from "./features/event-list/buy-tickets/buy-ticke
 import { ClubsComponent } from "./features/clubs/clubs.component";
 import { NewClubComponent } from "./features/clubs/new-club/new-club.component";
 import { ClubDetailComponent } from "./features/clubs/club-detail/club-detail.component";
+import { EventLandingComponent } from "./features/event-landing/event-landing.component";
 
 export const routes: Routes = [
     { path: '', component: EventListComponent, pathMatch: 'full' },
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'clubs/:id/sign-up', component: SignupComponent },
     { path: 'clubs/:id/new-event', component: NewEventComponent },
     { path: 'events', component: EventListComponent },
-    { path: 'events/:id', component: EventDashboardComponent },
+    { path: 'events/:id', component: EventLandingComponent },
+    { path: 'events/dashboard/:id', component: EventDashboardComponent },
     { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },
 ]
