@@ -6,14 +6,16 @@
     <thead>
         <tr>
             <th>Event</th>
+            <th>Club Name</th>
             <th>Time and date</th>
             <th>Location</th>
         </tr>
     </thead>
     <tbody>
         @for (event of eventsList; track event){
-            <tr>
+            <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/{{event.id}}">
                 <th>{{ event.name }}</th>
+                <th>{{ event.club.name }}</th>
                 <th>{{ event.when }}</th>
                 <th>{{ event.location }}</th>
             </tr>

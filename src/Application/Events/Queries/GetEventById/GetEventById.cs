@@ -19,9 +19,10 @@ public class GetEventByIdQueryHandler : IRequestHandler<GetEventByIdQuery, Event
     public async Task<EventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
         var entity = await _context.Events
+            .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
             .SingleAsync(e => e.Id == request.Id, cancellationToken);
         Guard.Against.NotFound(request.Id, entity);
 
-        return _mapper.Map<Event, EventDto>(entity);
+        return entity;
     }
 }

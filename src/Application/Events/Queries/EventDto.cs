@@ -1,12 +1,13 @@
+using Club_Manager.Application.Clubs.Queries.GetClubs;
 using Club_Manager.Domain.Entities;
 
 namespace Club_Manager.Application.Events.Queries;
 
 public class EventDto
 {
-    public int Id { get; init; }
+    public required ClubDto Club{ get; init;}
 
-    public int ClubId { get; init; }
+    public int Id { get; init; }
     
     public string? Name { get; set; }
     
@@ -20,7 +21,8 @@ public class EventDto
     {
         public Mapping()
         {
-            CreateMap<Event, EventDto>();
+            CreateMap<Event, EventDto>().IncludeMembers(e => e.Club);
+            CreateMap<Club, EventDto>();
         }
     }
 }

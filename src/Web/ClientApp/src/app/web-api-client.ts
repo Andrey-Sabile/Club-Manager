@@ -1757,8 +1757,8 @@ export interface IUpdateClubCommand {
 }
 
 export class EventDto implements IEventDto {
+    club?: ClubDto;
     id?: number;
-    clubId?: number;
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
@@ -1775,8 +1775,8 @@ export class EventDto implements IEventDto {
 
     init(_data?: any) {
         if (_data) {
+            this.club = _data["club"] ? ClubDto.fromJS(_data["club"]) : <any>undefined;
             this.id = _data["id"];
-            this.clubId = _data["clubId"];
             this.name = _data["name"];
             this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
             this.location = _data["location"];
@@ -1793,8 +1793,8 @@ export class EventDto implements IEventDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["club"] = this.club ? this.club.toJSON() : <any>undefined;
         data["id"] = this.id;
-        data["clubId"] = this.clubId;
         data["name"] = this.name;
         data["when"] = this.when ? this.when.toISOString() : <any>undefined;
         data["location"] = this.location;
@@ -1804,8 +1804,8 @@ export class EventDto implements IEventDto {
 }
 
 export interface IEventDto {
+    club?: ClubDto;
     id?: number;
-    clubId?: number;
     name?: string | undefined;
     when?: Date;
     location?: string | undefined;
