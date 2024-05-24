@@ -1,0 +1,35 @@
+<div class="flex justify-between p-4">
+    <div>
+        <h1 class="text-3xl font-bold">{{ event.name }}</h1>
+        <p class="text-lg">{{ event.location }}</p>    
+    </div>
+    <div class="md:self-end">
+        <a routerLink="/events/{{event.id}}/buy-tickets"><button class="btn">Buy Tickets</button></a>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 gap-4">
+    <div class="card bg-base-200 max-h-72">
+        <div class="card-body">
+            <h2 class="card-title text-xl">Details</h2>
+            <p>Location: {{ event.location }}</p>
+            <p>Date: {{ event.when }}</p>
+            <p>Description: {{ event.description }}</p>
+        </div>
+    </div>
+
+    <div class="card bg-base-200 max-h-72">
+        <div class="card-body">
+            <h2 class="card-title text-xl">Location</h2>
+        </div>
+    </div>
+
+    <div class="card bg-base-200 max-h-72">
+        <div class="card-body">
+            <h2 class="card-title text-xl">Hosted By</h2>
+            <p>Name: {{ event.club.name }}</p>
+            <p>Description: {{ event.club.description }}</p>
+            <p>Contact Email: {{ event.club.contactEmail }}</p>
+        </div>
+    </div>
+</div>
