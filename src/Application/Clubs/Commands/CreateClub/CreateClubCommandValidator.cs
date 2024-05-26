@@ -15,6 +15,12 @@ public class CreateClubCommandValidator : AbstractValidator<CreateClubCommand>
             .MustAsync(BeUniqueName)
                 .WithMessage("'{PropertyName}' must be unique.")
                 .WithErrorCode("Unique");
+
+        RuleFor(c => c.ContactEmail)
+            .NotEmpty();
+
+        RuleFor(c => c.Description)
+            .NotEmpty();
     }
 
     public async Task<bool> BeUniqueName(string? name, CancellationToken cancellationToken)

@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClubsClient, CreateClubCommand } from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-new-club',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './new-club.component.html',
   styles: ``
 })
 export class NewClubComponent {
   public newClubForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    contactEmail: new FormControl(''),
+    name: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    contactEmail: new FormControl('', Validators.required),
     logoUrl: new FormControl(''),
   })
 

@@ -1,19 +1,46 @@
-<div class="container">
-    <h1 class="text-3xl text-center mb-3">New Club</h1>
-    
+<div class="flex flex-col gap-4 p-4">
+    <h1 class="text-3xl text-center font-bold">Create a Club</h1>
+
     <form [formGroup]="newClubForm">
-        <label for="name" class="input input-bordered flex items-center gap-2">
-            Name
-            <input id="name" formControlName="name" class="grow" type="text">
+        <label class="form-control" for="name">
+            <div class="label">
+                <span class="label-text">Name</span>
+            </div>
+            <input type="text" id="name" formControlName="name" class="input input-bordered" 
+                [ngClass]="{'input-error': newClubForm.controls.name.invalid && newClubForm.controls.name.dirty}"/>
+            @if (newClubForm.controls.name.invalid && newClubForm.controls.name.dirty) {
+                <div class="label">
+                    <span class="label-text-alt">Name cannot be empty</span>
+                </div>
+            }
         </label>
 
-        <textarea class="textarea textarea-bordered textarea-md w-full" placeholder="Description" formControlName="description"></textarea>
-
-        <label for="contactEmail" class="input input-bordered flex items-center gap-2">
-            Contact Email
-            <input id="contactEmail" formControlName="contactEmail" class="grow" type="text">
+        <label class="form-control" for="contactEmail">
+            <div class="label">
+                <span class="label-text">Contact Email</span>
+            </div>
+            <input type="text" id="contactEmail" formControlName="contactEmail" class="input input-bordered"
+            [ngClass]="{'input-error': newClubForm.controls.contactEmail.invalid && newClubForm.controls.contactEmail.dirty}"/>
+            @if (newClubForm.controls.contactEmail.invalid && newClubForm.controls.contactEmail.dirty) {
+                <div class="label">
+                    <span class="label-text-alt">Email cannot be empty</span>
+                </div>
+            }
         </label>
 
-        <button class="btn btn-primary" (click)="createClub()">Create Club</button>
+        <label class="form-control">
+            <div class="label">
+                <span class="label-text">Description</span>
+            </div>
+            <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"></textarea>
+            @if (newClubForm.controls.description.invalid && newClubForm.controls.description.dirty) {
+                <div class="label">
+                    <span class="label-text-alt">Email cannot be empty</span>
+                </div>
+            }
+        </label>
+
+        <button type="submit" class="btn btn-primary float-end mt-4" (click)="createClub()" [disabled]="newClubForm.invalid">Create Club</button>
+
     </form>
 </div>
