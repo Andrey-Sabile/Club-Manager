@@ -11,7 +11,7 @@ import { ClubDetailComponent } from "./features/clubs/club-detail/club-detail.co
 import { EventLandingComponent } from "./features/event-landing/event-landing.component";
 
 export const routes: Routes = [
-    { path: '', component: EventListComponent, pathMatch: 'full' },
+    { path: '', component: ClubsComponent, pathMatch: 'full' },
     { path: 'todo', component: TodoComponent },
     { path: 'clubs', component: ClubsComponent },
     { path: 'clubs/new-club', component: NewClubComponent },
