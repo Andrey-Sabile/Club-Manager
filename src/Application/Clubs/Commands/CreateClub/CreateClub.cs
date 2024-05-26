@@ -29,7 +29,7 @@ public class CreateClubCommandCommandHandler : IRequestHandler<CreateClubCommand
         {
             Name = request.Name,
             Description = request.Description,
-            LogoUrl = request.LogoUrl,
+            LogoUrl = " ",
             ContactEmail = request.ContactEmail,
         };
 

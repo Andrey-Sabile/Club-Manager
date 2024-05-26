@@ -11,11 +11,8 @@ public class UpdateClubCommandValidator : AbstractValidator<UpdateClubCommand>
         _context = context;
 
         RuleFor(c => c.Name)
-        .NotEmpty()
-        .MustAsync(BeUniqueName)
-            .WithMessage("'{PropertyName}' must be unique.")
-            .WithErrorCode("Unique");
-        
+        .NotEmpty();
+                
         RuleFor(c => c.Id)
             .NotEmpty().WithMessage("Club id cannot be empty");
         
