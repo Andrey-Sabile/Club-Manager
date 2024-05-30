@@ -1,29 +1,41 @@
-<div class="container grid gap-4 grid-cols-1">
-    <h1 class="text-3xl text-center">Create an event</h1>
+<div class="grid grid-cols-1 gap-4 p-4">
+    <h1 class="text-3xl text-center font-bold">Create an event</h1>
 
-    <div>
+    <div class="flex flex-col">
         <h2 class="text-xl">Basic Info</h2>
         <form [formGroup]="newEventForm">
-            <label for="name" class="input input-bordered flex items-center gap-2">
-                Name
-                <input id="name" formControlName="name" class="grow" type="text">
+            <label class="form-control" for="name">
+                <div class="label">
+                    <span class="label-text">Name</span>
+                </div>
+                <input type="text" id="name" formControlName="name" class="input input-bordered" required/>
             </label>
 
-            <label for="location" class="input input-bordered flex items-center gap-2">
-                Location
-                <input id="location" formControlName="location" class="grow" type="text">
+            <label class="form-control" for="location">
+                <div class="label">
+                    <span class="label-text">Location</span>
+                </div>
+                <input type="text" id="location" formControlName="location" class="input input-bordered" required/>
             </label>
 
-            <label for="when" class="input input-bordered flex items-center gap-2">
-                When
-                <input id="when" formControlName="when" class="grow" type="datetime-local">
-            </label>
+            <label class="form-control" for="when">
+                <div class="label">
+                    <span class="label-text">When</span>
+                </div>
+                <input type="datetime-local" id="when" formControlName="when" class="input input-bordered" required/>
+            </label>            
 
-            <textarea class="textarea textarea-bordered textarea-md w-full" placeholder="Description" formControlName="description"></textarea>
+            <label class="form-control">
+                <div class="label">
+                    <span class="label-text">Description</span>
+                </div>
+                <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"></textarea>
+            </label>            
+
         </form>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-6">
         <h2 class="text-xl">Ticket Info</h2>
         <table class="table">
             <thead>
@@ -47,7 +59,7 @@
     </div>
 
     <div>
-        <button class="btn btn-primary" (click)="createEvent()" >Create Event</button>
+        <button class="btn btn-primary float-end" type="submit" (click)="createEvent()" >Create Event</button>
     </div>
 </div>
 

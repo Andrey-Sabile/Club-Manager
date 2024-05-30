@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
@@ -13,7 +14,8 @@ import {
   selector: 'app-new-event',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgClass,
   ],
   templateUrl: './new-event.component.html',
   styles: ``
