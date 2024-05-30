@@ -1,30 +1,54 @@
 @if (!hasSignedUp) {
-    <div class="mt-3">
-        <h1 class="text-3xl text-center mb-3">Sign Up for {{club.name}}</h1>
+    <div class="grid grid-cols-1 gap-4 p-4">
+        <h1 class="text-3xl text-center font-bold">Sign Up for {{club.name}}</h1>
         <form [formGroup]="newMemberForm">
-            <label for="first-name" class="input input-bordered flex items-center gap-2">
-                First Name
-                <input id="first-name" formControlName="firstName" class="grow" type="text">
+            <label class="form-control" for="first-name">
+                <div class="label">
+                    <span class="label-text">First Name</span>
+                </div>
+                <input type="text" id="first-name" formControlName="firstName" class="input input-bordered" required
+                [ngClass]="{'input-error': newMemberForm.controls.firstName.invalid && newMemberForm.controls.firstName.dirty}"/>
+                @if (newMemberForm.controls.firstName.invalid && newMemberForm.controls.firstName.dirty) {
+                    <div class="label">
+                        <span class="label-text-alt">First Name cannot be empty</span>
+                    </div>
+                }    
             </label>
     
-            <label for="last-name" class="input input-bordered flex items-center gap-2">
-                Last Name
-                <input  id="last-name" formControlName="lastName" class="grow" type="text">
+            <label class="form-control" for="last-name">
+                <div class="label">
+                    <span class="label-text">Last Name</span>
+                </div>
+                <input type="text" id="last-name" formControlName="lastName" class="input input-bordered" required
+                [ngClass]="{'input-error': newMemberForm.controls.lastName.invalid && newMemberForm.controls.lastName.dirty}"/>
+                @if (newMemberForm.controls.lastName.invalid && newMemberForm.controls.lastName.dirty) {
+                    <div class="label">
+                        <span class="label-text-alt">Last Name cannot be empty</span>
+                    </div>
+                }
             </label>
-    
-            <label for="email" class="input input-bordered flex items-center gap-2">
-                Email
-                <input id="email" formControlName="email" class="grow" type="email">
+
+            <label class="form-control" for="last-name">
+                <div class="label">
+                    <span class="label-text">Email</span>
+                </div>
+                <input type="email" id="email" formControlName="email" class="input input-bordered" required
+                [ngClass]="{'input-error': newMemberForm.controls.email.invalid && newMemberForm.controls.email.dirty}"/>
+                @if (newMemberForm.controls.email.invalid && newMemberForm.controls.email.dirty) {
+                    <div class="label">
+                        <span class="label-text-alt">Email cannot be empty or fix format</span>
+                    </div>
+                }
             </label>
     
             <div class="form-control">
-                <label for="is-fresher" class="label bordered flex items-center gap-2 cursor-pointer">
-                    Are you a first year?
-                    <input id="is-fresher" formControlName="isFresher" type="checkbox" class="checkbox checkbox-primary">
+                <label for="is-fresher" class="label cursor-pointer">
+                    <span class="label-text">Are you a fresher?</span>
+                    <input id="is-fresher" formControlName="isFresher" type="checkbox" class="checkbox">
                 </label>
             </div>
     
-            <button class="btn btn-primary" (click)="createMember()">Create Member</button>
+            <button class="btn btn-primary" (click)="createMember()" [disabled]="newMemberForm.invalid">Create Member</button>
         </form>
     </div>    
 }
