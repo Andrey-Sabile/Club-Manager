@@ -13,7 +13,9 @@ import { ClubsClient, CreateClubCommand } from 'src/app/web-api-client';
 })
 export class NewClubComponent {
   public newClubForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [
+      Validators.required,
+    ]),
     description: new FormControl('', Validators.required),
     contactEmail: new FormControl('', Validators.required),
     logoUrl: new FormControl(''),

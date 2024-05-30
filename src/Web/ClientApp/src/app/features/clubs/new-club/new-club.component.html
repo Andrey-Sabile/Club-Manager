@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-4 p-4">
+<div class="grid grid-cols-1 gap-4 p-4">
     <h1 class="text-3xl text-center font-bold">Create a Club</h1>
 
     <form [formGroup]="newClubForm">
@@ -6,7 +6,7 @@
             <div class="label">
                 <span class="label-text">Name</span>
             </div>
-            <input type="text" id="name" formControlName="name" class="input input-bordered" 
+            <input type="text" id="name" formControlName="name" class="input input-bordered" required 
                 [ngClass]="{'input-error': newClubForm.controls.name.invalid && newClubForm.controls.name.dirty}"/>
             @if (newClubForm.controls.name.invalid && newClubForm.controls.name.dirty) {
                 <div class="label">
@@ -32,7 +32,8 @@
             <div class="label">
                 <span class="label-text">Description</span>
             </div>
-            <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"></textarea>
+            <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description" 
+            [ngClass]="{'textarea-error': newClubForm.controls.description.invalid && newClubForm.controls.description.dirty}"></textarea>
             @if (newClubForm.controls.description.invalid && newClubForm.controls.description.dirty) {
                 <div class="label">
                     <span class="label-text-alt">Email cannot be empty</span>
