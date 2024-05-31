@@ -2214,11 +2214,10 @@ export interface ISoldTicketsDto {
 
 export class CreateTicketCommand implements ICreateTicketCommand {
     eventId?: number;
-    ticketTypeId?: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
     email?: string | undefined;
-    quantity?: number;
+    ticketTypes?: TicketTypeQuantityDto[];
 
     constructor(data?: ICreateTicketCommand) {
         if (data) {
@@ -2232,11 +2231,14 @@ export class CreateTicketCommand implements ICreateTicketCommand {
     init(_data?: any) {
         if (_data) {
             this.eventId = _data["eventId"];
-            this.ticketTypeId = _data["ticketTypeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
             this.email = _data["email"];
-            this.quantity = _data["quantity"];
+            if (Array.isArray(_data["ticketTypes"])) {
+                this.ticketTypes = [] as any;
+                for (let item of _data["ticketTypes"])
+                    this.ticketTypes!.push(TicketTypeQuantityDto.fromJS(item));
+            }
         }
     }
 
@@ -2250,22 +2252,64 @@ export class CreateTicketCommand implements ICreateTicketCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["eventId"] = this.eventId;
-        data["ticketTypeId"] = this.ticketTypeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
         data["email"] = this.email;
-        data["quantity"] = this.quantity;
+        if (Array.isArray(this.ticketTypes)) {
+            data["ticketTypes"] = [];
+            for (let item of this.ticketTypes)
+                data["ticketTypes"].push(item.toJSON());
+        }
         return data;
     }
 }
 
 export interface ICreateTicketCommand {
     eventId?: number;
-    ticketTypeId?: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
     email?: string | undefined;
-    quantity?: number;
+    ticketTypes?: TicketTypeQuantityDto[];
+}
+
+export class TicketTypeQuantityDto implements ITicketTypeQuantityDto {
+    ticketTypeId?: number;
+    ticketQuantity?: number;
+
+    constructor(data?: ITicketTypeQuantityDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ticketTypeId = _data["ticketTypeId"];
+            this.ticketQuantity = _data["ticketQuantity"];
+        }
+    }
+
+    static fromJS(data: any): TicketTypeQuantityDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TicketTypeQuantityDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ticketTypeId"] = this.ticketTypeId;
+        data["ticketQuantity"] = this.ticketQuantity;
+        return data;
+    }
+}
+
+export interface ITicketTypeQuantityDto {
+    ticketTypeId?: number;
+    ticketQuantity?: number;
 }
 
 export class TicketTypeDto implements ITicketTypeDto {

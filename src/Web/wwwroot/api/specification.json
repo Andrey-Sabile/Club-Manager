@@ -1158,10 +1158,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "ticketTypeId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "firstName": {
             "type": "string",
             "nullable": true
@@ -1174,7 +1170,23 @@
             "type": "string",
             "nullable": true
           },
-          "quantity": {
+          "ticketTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketTypeQuantityDto"
+            }
+          }
+        }
+      },
+      "TicketTypeQuantityDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ticketTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketQuantity": {
             "type": "integer",
             "format": "int32"
           }
