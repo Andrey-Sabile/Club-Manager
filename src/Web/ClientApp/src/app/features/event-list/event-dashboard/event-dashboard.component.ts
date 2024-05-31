@@ -89,6 +89,7 @@ export class EventDashboardComponent implements OnInit{
       name: this.editEventForm.controls.name.value,
       location: this.editEventForm.controls.location.value,
       when: this.editEventForm.controls.when.value,
+      description: this.editEventForm.controls.description.value
     } as UpdateEventCommand
 
     this.eventsClient.updateEvent(this.eventId, updatedEvent).subscribe({
@@ -99,6 +100,7 @@ export class EventDashboardComponent implements OnInit{
     this.event.name = updatedEvent.name;
     this.event.location = updatedEvent.location;
     this.event.when = updatedEvent.when;
+    this.event.description = updatedEvent.description;
   }
 
   addTicketType(): void {

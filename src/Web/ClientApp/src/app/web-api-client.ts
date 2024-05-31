@@ -1925,6 +1925,7 @@ export class UpdateEventCommand implements IUpdateEventCommand {
     name?: string | undefined;
     location?: string | undefined;
     when?: Date;
+    description?: string | undefined;
 
     constructor(data?: IUpdateEventCommand) {
         if (data) {
@@ -1941,6 +1942,7 @@ export class UpdateEventCommand implements IUpdateEventCommand {
             this.name = _data["name"];
             this.location = _data["location"];
             this.when = _data["when"] ? new Date(_data["when"].toString()) : <any>undefined;
+            this.description = _data["description"];
         }
     }
 
@@ -1957,6 +1959,7 @@ export class UpdateEventCommand implements IUpdateEventCommand {
         data["name"] = this.name;
         data["location"] = this.location;
         data["when"] = this.when ? this.when.toISOString() : <any>undefined;
+        data["description"] = this.description;
         return data;
     }
 }
@@ -1966,6 +1969,7 @@ export interface IUpdateEventCommand {
     name?: string | undefined;
     location?: string | undefined;
     when?: Date;
+    description?: string | undefined;
 }
 
 export class MemberDto implements IMemberDto {

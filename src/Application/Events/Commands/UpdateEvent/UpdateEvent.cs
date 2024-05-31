@@ -11,6 +11,8 @@ public record UpdateEventCommand : IRequest
     public string? Location { get; init; }
 
     public DateTimeOffset When { get; init; }
+
+    public string? Description { get; init; }
 }
 
 public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand>
@@ -31,6 +33,7 @@ public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand>
         entity.Name = request.Name;
         entity.Location = request.Location;
         entity.When = request.When;
+        entity.Description = request.Description;
 
         await _context.SaveChangesAsync(cancellationToken);
     }

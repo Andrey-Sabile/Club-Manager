@@ -1,54 +1,56 @@
-<h1 class="text-center text-3xl">Dashboard</h1>
-
-<div class="flex justify-start">
-    <div class="stats shadow">
+<div class="grid grid-cols-1 gap-4 p-4">
+    <div class="flex justify-between">
+        <h1 class="text-center text-3xl">Dashboard</h1>
+        <a routerLink="/events/{{event.id}}/buy-tickets"><button class="btn">Ticket Page</button></a>
+    </div>
+    
+    <div class="stats shadow w-40">
         <div class="stat">
             <div class="stat-title">Tickets Sold</div>
             <div class="stat-value">{{ ticketStats.ticketsSold }}/{{ ticketStats.totalTickets }}</div>
         </div>
     </div>
-    <a routerLink="/events/{{event.id}}/buy-tickets"><button class="btn">Ticket Page</button></a>
-</div>
-
-<div class="grid grid-cols-1 gap-4 md:grid-cols-2 grid-rows-2">
-    <div class="card bg-base-200 h-72">
-        <div class="card-body">
-            <h2 class="card-title text-xl">Event Info</h2>
-            <p>Name: {{ event.name }}</p>
-            <p>Location: {{ event.location }}</p>
-            <p>Date: {{ event.when }}</p>
-            <p>Description: {{ event.description }}</p>
-            <div class="card-actions">
-                <button class="btn btn-block btn-sm btn-outline" onclick="edit_event.showModal()" (click)="editEvent()">Edit</button>
+    
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 grid-rows-2">
+        <div class="card bg-base-200 h-72">
+            <div class="card-body">
+                <h2 class="card-title text-xl">Event Info</h2>
+                <p>Name: {{ event.name }}</p>
+                <p>Location: {{ event.location }}</p>
+                <p>Date: {{ event.when }}</p>
+                <p>Description: {{ event.description }}</p>
+                <div class="card-actions">
+                    <button class="btn btn-block btn-sm btn-outline" onclick="edit_event.showModal()" (click)="editEvent()">Edit</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="card bg-base-200 h-72">
-        <div class="card-body">
-            <h2 class="card-title text-xl">Ticket Types</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @for (ticketType of ticketTypes; track ticketType){
-                        <tr>
-                            <th>{{ ticketType.name }}</th>
-                            <th>${{ ticketType.price }}</th>
-                            <th>{{ ticketType.quantity }}</th>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div class="card-actions">
-                <button class="btn btn-block btn-sm btn-outline" onclick="add_ticket_type.showModal()">Add</button>
-            </div>
-    </div>
+    
+        <div class="card bg-base-200 h-72">
+            <div class="card-body overflow-auto">
+                <h2 class="card-title text-xl">Ticket Types</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (ticketType of ticketTypes; track ticketType){
+                            <tr>
+                                <th>{{ ticketType.name }}</th>
+                                <th>${{ ticketType.price }}</th>
+                                <th>{{ ticketType.quantity }}</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="card-actions">
+                    <button class="btn btn-block btn-sm btn-outline" onclick="add_ticket_type.showModal()">Add</button>
+                </div>
+        </div>
+    </div>    
 </div>
 
 <!-- Modals -->
@@ -60,22 +62,33 @@
 
         <h3 class="text-lg">Update Event Details</h3>
         <form [formGroup]="editEventForm">
-            <label for="name" class="input input-bordered flex items-center gap-2">
-                Name
-                <input id="name" formControlName="name" class="grow" type="text">
+            <label class="form-control" for="name">
+                <div class="label">
+                    <span class="label-text">Name</span>
+                </div>
+                <input type="text" id="name" formControlName="name" class="input input-bordered" required/>
             </label>
 
-            <label for="location" class="input input-bordered flex items-center gap-2">
-                Location
-                <input id="location" formControlName="location" class="grow" type="text">
+            <label class="form-control" for="location">
+                <div class="label">
+                    <span class="label-text">Location</span>
+                </div>
+                <input type="text" id="location" formControlName="location" class="input input-bordered" required/>
             </label>
 
-            <label for="when" class="input input-bordered flex items-center gap-2">
-                When
-                <input id="when" formControlName="when" class="grow" type="datetime-local">
-            </label>
+            <label class="form-control" for="when">
+                <div class="label">
+                    <span class="label-text">When</span>
+                </div>
+                <input type="datetime-local" id="when" formControlName="when" class="input input-bordered" required/>
+            </label>            
 
-            <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"></textarea>
+            <label class="form-control">
+                <div class="label">
+                    <span class="label-text">Description</span>
+                </div>
+                <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"></textarea>
+            </label>            
 
             <div class="modal-action">
                 <button class="btn btn-primary" (click)="saveChangesToEvent()" onclick="edit_event.close()" >Save</button>

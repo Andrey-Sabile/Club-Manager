@@ -1032,6 +1032,10 @@
           "when": {
             "type": "string",
             "format": "date-time"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
