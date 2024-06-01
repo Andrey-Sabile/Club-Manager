@@ -1,11 +1,11 @@
-<div class="p-4 flex flex-row justify-between">
-    <h1 class="text-3xl text-center font-bold">Clubs</h1>
-    <a [routerLink]="['/clubs/new-club']"><button class="btn btn-primary btn-sm">Create Club</button></a>
-</div>
-<div class="content-container p-4">    
+<div class="p-4">
+    <div class="flex flex-row justify-between mb-4">
+        <h1 class="text-3xl text-center font-bold">Clubs</h1>
+        <a [routerLink]="['/clubs/new-club']"><button class="btn btn-primary btn-sm">Create Club</button></a>
+    </div>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         @for (club of clubList; track club) {
-            <div class="card card-compact hover:cursor-pointer hover:bg-base-300" routerLink="/clubs/{{club.id}}">
+            <div class="card card-compact content-container hover:cursor-pointer hover:bg-base-300" routerLink="/clubs/{{club.id}}">
                 <div class="card-body">
                     <div class="flex">
                         <div class="avatar placeholder">
@@ -15,9 +15,9 @@
                         </div>
                         <div class="ml-4">
                             <h2 class="card-title text-center">{{ club.name }}</h2>
-                            <p>{{ club.description }}</p>
-                            <div class="flex gap-2">
-                                <fa-icon [icon]="faEnvelope"></fa-icon> <p>{{ club.contactEmail }}</p>
+                            <div class="flex gap-1">
+                                <fa-icon [icon]="faEnvelope"></fa-icon>
+                                <p class="font-light">{{ club.contactEmail }}</p>
                             </div>        
                         </div>
                     </div>
