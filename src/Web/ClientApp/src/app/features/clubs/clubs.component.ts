@@ -3,6 +3,7 @@ import { ClubDto, ClubsClient } from 'src/app/web-api-client';
 import { RouterLink } from "@angular/router";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { EventListComponent } from '../event-list/event-list.component';
 
 @Component({
   selector: 'app-clubs',
@@ -10,6 +11,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
   imports: [
     RouterLink,
     FontAwesomeModule,
+    EventListComponent,
   ],
   templateUrl: './clubs.component.html',
   styles: ``

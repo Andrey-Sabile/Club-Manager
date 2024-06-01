@@ -11,3 +11,9 @@
         -moz-appearance: textfield !important;
     }
 }
+
+@layer components {
+    .content-container {
+        @apply bg-base-100 border rounded-lg;
+    }
+}

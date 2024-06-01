@@ -8,13 +8,13 @@
         </div>        
         <div class="grid grid-cols-1 gap-4 p-4" formArrayName="ticketTypeQuantity">
             @for (ticketType of ticketTypes; track $index) {
-                <div class="card card-compact bg-base-200" [formGroupName]="$index">
+                <div class="card card-compact content-container" [formGroupName]="$index">
                     <div class="card-body">
                         <div class="flex flex-col">
                             <div class="card-title">{{ ticketType.name }}</div> 
                             <div class="flex justify-between items-center">
                                 <p class="text-md font-medium">${{ ticketType.price }}</p> 
-                                <select class="select select-sm select-bordered bg-base-200" formControlName="quantity">
+                                <select class="select select-sm select-bordered" formControlName="quantity">
                                     <option selected>0</option>
                                     <option>1</option>
                                     <option>2</option>
@@ -42,8 +42,8 @@
                 <li class="step">Complete</li>
             </ul>
 
-            <div class="flex flex-col mt-8">
-                <h2 class="text-xl font-bold">Buyer Information</h2>
+            <h2 class="text-xl font-bold mt-8">Buyer Information</h2>
+            <div class="flex flex-col content-container p-4">
                 <label class="form-control" for="firstName">
                     <div class="label">
                         <span class="label-text">First Name</span>
