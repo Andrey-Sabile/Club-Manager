@@ -13,7 +13,7 @@
         <div class="card-body">
             <h2 class="card-title text-xl">Details</h2>
             <p><fa-icon [icon]="faLocationDot"></fa-icon> {{ event.location }}</p>
-            <p><fa-icon [icon]="faCalendar"></fa-icon> {{ event.when }}</p>
+            <p><fa-icon [icon]="faCalendar"></fa-icon> {{ event.when | date:'medium'  }}</p>
             <p>{{ event.description }}</p>
         </div>
     </div>

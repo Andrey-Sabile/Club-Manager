@@ -4,13 +4,15 @@ import { ClubsClient, EventDto, EventsClient, TicketTypeDto, TicketTypesClient }
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-event-landing',
   standalone: true,
   imports: [
     RouterLink,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DatePipe
   ],
   templateUrl: './event-landing.component.html',
   styles: ``
