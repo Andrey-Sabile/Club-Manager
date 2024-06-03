@@ -19,34 +19,34 @@
             </div>
         </div>    
     
-        <div class="card content-container h-72">
-            <div class="card-body overflow-auto">
+        <div class="card content-container h-72 overflow-x-auto">
+            <div class="card-body">
                 <h2 class="card-title">Events</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Time and date</th>
-                            <th>Location</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (event of eventsList; track event) {
-                            <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/dashboard/{{event.id}}">
-                                <th>{{ event.name }}</th>
-                                <th>{{ event.when }}</th>
-                                <th>{{ event.location }}</th>                    
+                    <table class="table table-pin-rows">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Time and date</th>
+                                <th>Location</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @for (event of eventsList; track event) {
+                                <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/dashboard/{{event.id}}">
+                                    <th>{{ event.name }}</th>
+                                    <th>{{ event.when }}</th>
+                                    <th>{{ event.location }}</th>                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>    
             </div>
         </div>
 
-        <div class="card content-container h-72">
+        <div class="card content-container h-72 overflow-x-auto">
             <div class="card-body overflow-y-auto">
                 <h2 class="card-title">Members</h2>
-                <table class="table">
+                <table class="table table-pin-rows">
                     <thead>
                         <tr>
                             <th>First Name</th>
