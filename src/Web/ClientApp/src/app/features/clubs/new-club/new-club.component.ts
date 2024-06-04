@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClubsClient, CreateClubCommand } from 'src/app/web-api-client';
+import { ClubsClient, CreateClubCommand, FileParameter } from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-new-club',
@@ -20,6 +20,7 @@ export class NewClubComponent {
     contactEmail: new FormControl('', Validators.required),
     logoUrl: new FormControl(''),
   })
+  selectedFile: File | null = null;
 
   constructor(
     private clubsClient: ClubsClient,
@@ -27,10 +28,11 @@ export class NewClubComponent {
   ){}
 
   createClub(): void {
+    this.uploadFile();
     const newClub = {
       name: this.newClubForm.controls.name.value,
       description: this.newClubForm.controls.description.value,
-      logoUrl: this.newClubForm.controls.logoUrl.value,
+      logoUrl: this.selectedFile.name,
       contactEmail: this.newClubForm.controls.contactEmail.value,
     } as CreateClubCommand
 
@@ -40,5 +42,21 @@ export class NewClubComponent {
         this.router.navigate(['clubs']);
       }
     })
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  uploadFile(): void {
+    if(this.selectedFile) {
+      const fileParameter = {
+        fileName: this.selectedFile.name,
+        data: this.selectedFile,
+      } as FileParameter
+      this.clubsClient.uploadAvatar(fileParameter).subscribe({
+        error: error => console.error(error),
+      })
+    }
   }
 }

@@ -1,4 +1,3 @@
-
 using Club_Manager.Application.Clubs.Commands.CreateClub;
 using Club_Manager.Application.Clubs.Commands.UpdateClub;
 using Club_Manager.Application.Clubs.Queries.GetClubById;
@@ -11,10 +10,12 @@ public class Clubs : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
+            .DisableAntiforgery()
             .RequireAuthorization()
             .MapGet(GetClubs)
             .MapGet(GetClubById, "GetClub/{id}")
             .MapPost(CreateClub)
+            .MapPost(UploadAvatar, "UploadAvatar")
             .MapPut(UpdateClub, "{id}");
     }
 
@@ -42,5 +43,22 @@ public class Clubs : EndpointGroupBase
 
         await sender.Send(command);
         return Results.NoContent();
+    }
+
+    private static async Task<IResult> UploadAvatar(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+            return Results.BadRequest();     
+        }
+
+        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/uploads/clubs/avatar", file.FileName);
+
+        using (var stream = new FileStream(uploadPath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return Results.Ok(new { uploadPath });
     }
 }

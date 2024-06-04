@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { ClubDto, ClubsClient } from 'src/app/web-api-client';
 import { RouterLink } from "@angular/router";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { EventListComponent } from '../event-list/event-list.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-clubs',
@@ -19,13 +20,15 @@ import { EventListComponent } from '../event-list/event-list.component';
 export class ClubsComponent  implements OnInit{
   public faEnvelope = faEnvelope;
   public clubList: ClubDto[] = [];
+  public clubLogoPath: string;
 
   constructor(
-    private clubsClient: ClubsClient,
+    private clubsClient: ClubsClient
   ) {}
 
   ngOnInit(): void {
     this.getClubs();
+    this.clubLogoPath = environment.staticImagesUrL+ "clubs/avatar/"
   }
 
   getClubs(): void {

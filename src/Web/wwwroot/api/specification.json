@@ -92,6 +92,35 @@
         }
       }
     },
+    "/api/Clubs/UploadAvatar": {
+      "post": {
+        "tags": [
+          "Clubs"
+        ],
+        "operationId": "UploadAvatar",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/Clubs/{id}": {
       "put": {
         "tags": [
