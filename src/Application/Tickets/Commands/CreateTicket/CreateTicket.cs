@@ -1,5 +1,6 @@
 using Club_Manager.Application.Common.Interfaces;
 using Club_Manager.Domain.Entities;
+using Club_Manager.Domain.Events;
 
 namespace Club_Manager.Application.Tickets.Commands.CreateTicket;
 
@@ -40,6 +41,7 @@ public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand>
                     Email = request.Email,
                 };
                 _context.Tickets.Add(entity);
+                entity.AddDomainEvent(new TicketCreatedEvent(entity));
             }
         }
 
