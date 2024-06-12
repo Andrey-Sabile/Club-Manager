@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, RouterLink, Router} from "@angular/router";
-import {CreateTicketCommand, EventDto, EventsClient, TicketTypeDto, TicketTypeQuantityDto, TicketTypesClient, TicketsClient} from "../../../web-api-client";
+import {CreateTicketCommand, EventDto, EventsClient, TicketTypeDto, TicketTypeQuantityDto, TicketTypesClient, TicketsClient} from "../../../../web-api-client";
 import { ReactiveFormsModule, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({

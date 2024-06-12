@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
+import { DatePipe } from '@angular/common';
 import {
   CreateTicketTypeCommand,
   EventDto,
@@ -8,7 +9,7 @@ import {
   TicketsClient,
   TicketTypeDto,
   TicketTypesClient, UpdateEventCommand
-} from "../../../web-api-client";
+} from "../../../../web-api-client";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
@@ -16,7 +17,8 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    DatePipe,
   ],
   templateUrl: './event-dashboard.component.html',
   styles: ``

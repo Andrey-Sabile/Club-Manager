@@ -1,6 +1,6 @@
 @if (!hasSignedUp) {
-    <h1 class="text-3xl text-center font-bold p-4 mt-8">Sign Up for {{club.name}}</h1>
-    <div class="content-container mx-auto max-w-screen-md grid grid-cols-1 gap-4 p-4 mt-2">
+    <div class="content-container mx-auto max-w-screen-md grid grid-cols-1 gap-4 p-4 mt-8">
+        <h1 class="text-3xl text-center font-bold p-4">Sign Up for {{club.name}}</h1>
         <form [formGroup]="newMemberForm">
             <label class="form-control" for="first-name">
                 <div class="label">
@@ -48,7 +48,7 @@
                 </label>
             </div>
     
-            <button class="btn btn-primary" (click)="createMember()" [disabled]="newMemberForm.invalid">Create Member</button>
+            <button class="btn btn-primary float-end" (click)="createMember()" [disabled]="newMemberForm.invalid">Create Member</button>
         </form>
     </div>    
 }

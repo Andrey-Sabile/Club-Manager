@@ -17,7 +17,7 @@
                 <h2 class="card-title text-xl">Event Info</h2>
                 <p>Name: {{ event.name }}</p>
                 <p>Location: {{ event.location }}</p>
-                <p>Date: {{ event.when }}</p>
+                <p>Date: {{ event.when | date:'medium' }}</p>
                 <p>Description: {{ event.description }}</p>
                 <div class="card-actions">
                     <button class="btn btn-block btn-sm btn-outline" onclick="edit_event.showModal()" (click)="editEvent()">Edit</button>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsClient, EventDto } from "../../web-api-client";
+import { EventsClient, EventDto } from "../../../web-api-client";
 import { RouterLink } from "@angular/router";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';

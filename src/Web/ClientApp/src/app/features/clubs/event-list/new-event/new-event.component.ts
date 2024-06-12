@@ -8,7 +8,7 @@ import {
   EventsClient, NewTicketTypeDto,
   TicketTypeDto,
   TicketTypesClient
-} from "../../../web-api-client";
+} from "../../../../web-api-client";
 
 @Component({
   selector: 'app-new-event',
@@ -32,6 +32,7 @@ export class NewEventComponent implements OnInit{
     when: new FormControl(),
     description: new FormControl(''),
   });
+  
   public ticketTypeForm = new FormGroup({
     name: new FormControl(''),
     price: new FormControl(),

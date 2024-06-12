@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClubDto, ClubsClient, MemberDto, MembersClient, UpdateClubCommand, EventDto, EventsClient } from 'src/app/web-api-client';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-club-detail',
@@ -9,6 +10,7 @@ import { ClubDto, ClubsClient, MemberDto, MembersClient, UpdateClubCommand, Even
   imports: [
     ReactiveFormsModule,
     RouterLink,
+    DatePipe,
   ],
   templateUrl: './club-detail.component.html',
   styles: ``

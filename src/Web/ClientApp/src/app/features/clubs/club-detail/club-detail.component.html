@@ -41,7 +41,7 @@
                             @for (event of eventsList; track event) {
                                 <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/dashboard/{{event.id}}">
                                     <th>{{ event.name }}</th>
-                                    <th>{{ event.when }}</th>
+                                    <th>{{ event.when | date:'medium' }}</th>
                                     <th>{{ event.location }}</th>                    
                                 </tr>
                             }
