@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
   CreateEventCommand,
@@ -27,16 +27,30 @@ export class NewEventComponent implements OnInit{
   public clubId: number;
 
   public newEventForm = new FormGroup({
-    name: new FormControl(''),
-    location: new FormControl(''),
-    when: new FormControl(),
-    description: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required,
+    ]),
+    location: new FormControl('', [
+      Validators.required,
+    ]),
+    when: new FormControl(null, [
+      Validators.required
+    ]),
+    description: new FormControl('', [
+      Validators.required,
+    ]),
   });
   
   public ticketTypeForm = new FormGroup({
-    name: new FormControl(''),
-    price: new FormControl(),
-    quantity: new FormControl()
+    name: new FormControl('',[
+      Validators.required
+    ]),
+    price: new FormControl(null,[
+      Validators.required,
+    ]),
+    quantity: new FormControl(null, [
+      Validators.required
+    ])
   });
 
   constructor(
