@@ -1,86 +1,82 @@
 <form [formGroup]="buyTicketsForm" class="mx-auto max-w-screen-md">
-    @if (ticketTypesSelectionPage) {
-        <div class="flex justify-between p-4">
-            <div>
-                <h1 class="text-3xl font-bold">{{ event.name }}</h1>
-                <p class="text-lg">{{ event.location }}</p>
-            </div>
-        </div>        
-        <div class="grid grid-cols-1 gap-4 p-4" formArrayName="ticketTypeQuantity">
-            @for (ticketType of ticketTypes; track $index) {
-                <div class="card card-compact content-container" [formGroupName]="$index">
-                    <div class="card-body">
-                        <div class="flex flex-col">
-                            <div class="card-title">{{ ticketType.name }}</div> 
-                            <div class="flex justify-between items-center">
-                                <p class="text-md font-medium">${{ ticketType.price }}</p> 
-                                <select class="select select-sm select-bordered" formControlName="quantity">
-                                    <option selected>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        
-            <div class="mt-8">
-                <button class="btn btn-primary float-end" (click)="toggleCheckout()" [disabled]="buyTicketsForm.controls.ticketTypeQuantity.invalid">Next</button>
-            </div>
-        </div>    
-    }
-
-    @if (checkoutPage) {
-        <div class="grid grid-cols-1 gap-4 p-4">
-            <ul class="steps">
-                <li class="step step-primary">Select</li>
-                <li class="step step-primary font-bold">Checkout</li>
-                <li class="step">Complete</li>
-            </ul>
-
-            <h2 class="text-xl font-bold mt-8">Buyer Information</h2>
-            <div class="flex flex-col content-container p-4">
-                <label class="form-control" for="firstName">
-                    <div class="label">
-                        <span class="label-text">First Name*</span>
-                    </div>
-                    <input type="text" id="firstName" formControlName="firstName" class="input input-bordered" required/>
-                </label>
-
-                <label class="form-control" for="lastName">
-                    <div class="label">
-                        <span class="label-text">Last Name</span>
-                    </div>
-                    <input type="text" id="lastName" formControlName="lastName" class="input input-bordered" required/>
-                </label>
-
-                <label class="form-control" for="email">
-                    <div class="label">
-                        <span class="label-text">Email*</span>
-                    </div>
-                    <input type="email" id="email" formControlName="email" class="input input-bordered" required/>
-                </label>
-
-                <div class="mt-8 flex flex-row justify-between">
-                    <button class="btn" (click)="toggleTicketTypes()">Back</button>
-                    <button class="btn btn-primary" (click)="submitTicketForm()" [disabled]="buyTicketsForm.invalid">Next</button>
-                </div>    
-            </div>
+  <div [ngSwitch]="viewState">
+    <ng-container *ngSwitchCase="BuyTicketsViewState.TicketTypesSelection">
+      <div class="flex justify-between p-4">
+        <div>
+          <h1 class="text-3xl font-bold">{{ event.name }}</h1>
+          <p class="text-lg">{{ event.location }}</p>
         </div>
+      </div>
+      <div class="grid grid-cols-1 gap-4 p-4" formArrayName="ticketTypeQuantity">
+        <ng-container *ngFor="let ticketType of ticketTypes; let i = index">
+          <div class="card card-compact content-container" [formGroupName]="i">
+            <div class="card-body">
+              <div class="flex flex-col">
+                <div class="card-title">{{ ticketType.name }}</div>
+                <div class="flex justify-between items-center">
+                  <p class="text-md font-medium">${{ ticketType.price }}</p>
+                  <select class="select select-sm select-bordered" formControlName="quantity">
+                    <option selected>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="mt-8">
+          <button class="btn btn-primary float-end" (click)="toggleCheckout()" [disabled]="buyTicketsForm.controls.ticketTypeQuantity.invalid">Next</button>
+        </div>
+      </div>
+    </ng-container>
 
-}
-</form>
+    <ng-container *ngSwitchCase="BuyTicketsViewState.Checkout">
+      <div class="grid grid-cols-1 gap-4 p-4">
+        <ul class="steps">
+          <li class="step step-primary">Select</li>
+          <li class="step step-primary font-bold">Checkout</li>
+          <li class="step">Complete</li>
+        </ul>
+        <h2 class="text-xl font-bold mt-8">Buyer Information</h2>
+        <div class="flex flex-col content-container p-4">
+          <label class="form-control" for="firstName">
+            <div class="label">
+              <span class="label-text">First Name*</span>
+            </div>
+            <input type="text" id="firstName" formControlName="firstName" class="input input-bordered" required/>
+          </label>
+          <label class="form-control" for="lastName">
+            <div class="label">
+              <span class="label-text">Last Name</span>
+            </div>
+            <input type="text" id="lastName" formControlName="lastName" class="input input-bordered" required/>
+          </label>
+          <label class="form-control" for="email">
+            <div class="label">
+              <span class="label-text">Email*</span>
+            </div>
+            <input type="email" id="email" formControlName="email" class="input input-bordered" required/>
+          </label>
+          <div class="mt-8 flex flex-row justify-between">
+            <button class="btn" (click)="toggleTicketTypes()">Back</button>
+            <button class="btn btn-primary" (click)="submitTicketForm()" [disabled]="buyTicketsForm.invalid">Next</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
 
-@if (confirmationPage) {
-    <article class="prose lg:prose-xl">
+    <ng-container *ngSwitchCase="BuyTicketsViewState.Confirmation">
+      <article class="prose lg:prose-xl">
         <h2>Thank You!</h2>
         <p>A confirmation email has been sent to your address.</p>
-    </article>
-    <div class="mt-8 flex flex-row justify-between">
+      </article>
+      <div class="mt-8 flex flex-row justify-between">
         <a routerLink="/events/{{event.id}}"><button class="btn">Ticket Page</button></a>
-    </div>
-}
+      </div>
+    </ng-container>
+  </div>
+</form>

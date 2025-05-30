@@ -2,11 +2,19 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, RouterLink, Router} from "@angular/router";
 import {CreateTicketCommand, EventDto, EventsClient, TicketTypeDto, TicketTypeQuantityDto, TicketTypesClient, TicketsClient} from "../../../../web-api-client";
 import { ReactiveFormsModule, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+// Add enum for view state
+enum BuyTicketsViewState {
+  TicketTypesSelection,
+  Checkout,
+  Confirmation
+}
 
 @Component({
   selector: 'app-buy-tickets',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './buy-tickets.component.html',
   styles: ``
 })
@@ -15,9 +23,9 @@ export class BuyTicketsComponent implements OnInit{
   public event: EventDto;
   public ticketTypes: TicketTypeDto[] = [];
 
-  public ticketTypesSelectionPage = false;
-  public checkoutPage = false;
-  public confirmationPage = false;
+  // Use a single view state
+  viewState = BuyTicketsViewState.TicketTypesSelection;
+  BuyTicketsViewState = BuyTicketsViewState; // Expose enum to template
 
   public buyTicketsForm = this.formBuilder.group({
     firstName: ['', Validators.required],
@@ -46,7 +54,7 @@ export class BuyTicketsComponent implements OnInit{
     this.eventId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.getEvent(this.eventId);
     this.getTicketTypes(this.eventId);
-    this.ticketTypesSelectionPage = true;
+    this.viewState = BuyTicketsViewState.TicketTypesSelection;
   }
 
   getEvent(id: number): void {
@@ -106,22 +114,15 @@ export class BuyTicketsComponent implements OnInit{
   }
 
   toggleTicketTypes(): void {
-    this.ticketTypesSelectionPage = true;
-    this.checkoutPage = false;
-    this.confirmationPage = false;
+    this.viewState = BuyTicketsViewState.TicketTypesSelection;
   }
 
   toggleCheckout(): void {
-    // this.ticketTypesSelectionPage = false;
-    // this.checkoutPage = true;
-    // this.confirmationPage = false;
+    this.viewState = BuyTicketsViewState.Checkout;
     console.log(this.ticketTypeQuantity);
   }
 
   toggleConfirmation(): void {
-    this.ticketTypesSelectionPage = false;
-    this.checkoutPage = false;
-    this.confirmationPage = true;
+    this.viewState = BuyTicketsViewState.Confirmation;
   }
-
 }
