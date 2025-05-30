@@ -4,6 +4,7 @@ import { EventDto, EventsClient } from 'src/app/web-api-client';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { RouterLink } from "@angular/router";
+import { EventFilterService } from 'src/app/shared/event-filter.service';
 
 
 @Component({
@@ -19,14 +20,17 @@ import { RouterLink } from "@angular/router";
 })
 export class EventDiscoveryComponent implements OnInit{
   public eventsList: EventDto[] = [];
+  public filteredEventsList: EventDto[] = [];
   public eventLocationDot = faLocationDot;
 
   constructor(
     private eventsClient: EventsClient,
+    private eventFilterService: EventFilterService,
   ) {}
 
   ngOnInit(): void {
       this.getEvents();
+      this.getEventsForNextWeekend();
   }
 
   getEvents(): void {
@@ -34,5 +38,9 @@ export class EventDiscoveryComponent implements OnInit{
       next: result => this.eventsList = result,
       error: error => console.error(error),
     })
+  }
+
+  getEventsForNextWeekend(): void {
+    this.eventsList = this.eventFilterService.filterEventsForNextWeekend(this.eventsList);
   }
 }

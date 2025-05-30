@@ -26,7 +26,7 @@ export class BuyTicketsComponent implements OnInit{
       Validators.email,
       Validators.required,
     ]],
-    ticketTypeQuantity: this.formBuilder.array([]),
+    ticketTypeQuantity: this.formBuilder.array([], Validators.required),
   });
 
   get ticketTypeQuantity() {
@@ -71,7 +71,9 @@ export class BuyTicketsComponent implements OnInit{
       this.ticketTypeQuantity.push(
         this.formBuilder.group({
           id: [ticketType.id, Validators.required],
-          quantity: [0, Validators.required],
+          quantity: [0, [
+            Validators.required,
+          ]],
       }));
     })
   };
@@ -110,9 +112,10 @@ export class BuyTicketsComponent implements OnInit{
   }
 
   toggleCheckout(): void {
-    this.ticketTypesSelectionPage = false;
-    this.checkoutPage = true;
-    this.confirmationPage = false;
+    // this.ticketTypesSelectionPage = false;
+    // this.checkoutPage = true;
+    // this.confirmationPage = false;
+    console.log(this.ticketTypeQuantity);
   }
 
   toggleConfirmation(): void {

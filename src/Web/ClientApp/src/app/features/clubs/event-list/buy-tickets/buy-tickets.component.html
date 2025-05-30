@@ -29,7 +29,7 @@
             }
         
             <div class="mt-8">
-                <button class="btn btn-primary float-end" (click)="toggleCheckout()">Next</button>
+                <button class="btn btn-primary float-end" (click)="toggleCheckout()" [disabled]="buyTicketsForm.controls.ticketTypeQuantity.invalid">Next</button>
             </div>
         </div>    
     }
@@ -46,7 +46,7 @@
             <div class="flex flex-col content-container p-4">
                 <label class="form-control" for="firstName">
                     <div class="label">
-                        <span class="label-text">First Name</span>
+                        <span class="label-text">First Name*</span>
                     </div>
                     <input type="text" id="firstName" formControlName="firstName" class="input input-bordered" required/>
                 </label>
@@ -60,14 +60,14 @@
 
                 <label class="form-control" for="email">
                     <div class="label">
-                        <span class="label-text">Email</span>
+                        <span class="label-text">Email*</span>
                     </div>
                     <input type="email" id="email" formControlName="email" class="input input-bordered" required/>
                 </label>
 
                 <div class="mt-8 flex flex-row justify-between">
                     <button class="btn" (click)="toggleTicketTypes()">Back</button>
-                    <button class="btn btn-primary" (click)="submitTicketForm()">Next</button>
+                    <button class="btn btn-primary" (click)="submitTicketForm()" [disabled]="buyTicketsForm.invalid">Next</button>
                 </div>    
             </div>
         </div>
