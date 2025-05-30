@@ -3,6 +3,9 @@ import {ActivatedRoute, RouterLink, Router} from "@angular/router";
 import {CreateTicketCommand, EventDto, EventsClient, TicketTypeDto, TicketTypeQuantityDto, TicketTypesClient, TicketsClient} from "../../../../web-api-client";
 import { ReactiveFormsModule, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TicketTypesSelectionComponent } from './ticket-types-selection.component';
+import { CheckoutComponent } from './checkout.component';
+import { ConfirmationComponent } from './confirmation.component';
 
 // Add enum for view state
 enum BuyTicketsViewState {
@@ -14,7 +17,7 @@ enum BuyTicketsViewState {
 @Component({
   selector: 'app-buy-tickets',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TicketTypesSelectionComponent, CheckoutComponent, ConfirmationComponent],
   templateUrl: './buy-tickets.component.html',
   styles: ``
 })
@@ -85,6 +88,18 @@ export class BuyTicketsComponent implements OnInit{
       }));
     })
   };
+
+  getTotalPrice(): number {
+    let totalPrice = 0;
+    const ticketTypeQuantities = this.buyTicketsForm.value.ticketTypeQuantity;
+    ticketTypeQuantities.forEach(ticketType => {
+      const ticketTypeId = ticketType['id'];
+      const ticketTypePrice = this.ticketTypes.find(t => t.id === ticketTypeId)?.price || 0;
+      const ticketQuantity = Number(ticketType['quantity']);
+      totalPrice += ticketTypePrice * ticketQuantity;
+    });
+    return totalPrice;
+  }
 
   submitTicketForm(): void {
     let ticketTypeQuantity = [];

@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1 gap-4 p-4">
+  <ul class="steps">
+    <li class="step step-primary">Select</li>
+    <li class="step step-primary font-bold">Checkout</li>
+    <li class="step">Complete</li>
+  </ul>
+  <h2 class="text-xl font-bold mt-8">Buyer Information</h2>
+  <div class="flex flex-col content-container p-4">
+    <label class="form-control" for="firstName">
+      <div class="label">
+        <span class="label-text">First Name*</span>
+      </div>
+      <input type="text" id="firstName" formControlName="firstName" class="input input-bordered" required/>
+    </label>
+    <label class="form-control" for="lastName">
+      <div class="label">
+        <span class="label-text">Last Name</span>
+      </div>
+      <input type="text" id="lastName" formControlName="lastName" class="input input-bordered" required/>
+    </label>
+    <label class="form-control" for="email">
+      <div class="label">
+        <span class="label-text">Email*</span>
+      </div>
+      <input type="email" id="email" formControlName="email" class="input input-bordered" required/>
+    </label>
+    <div class="mt-8 flex flex-row justify-between">
+      <button class="btn" (click)="back.emit()">Back</button>
+      <button class="btn btn-primary" (click)="next.emit()" [disabled]="buyTicketsForm.invalid">Next</button>
+    </div>
+  </div>
+</div>

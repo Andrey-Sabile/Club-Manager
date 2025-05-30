@@ -1,0 +1,36 @@
+<form [formGroup]="buyTicketsForm" class="mx-auto max-w-screen-md">
+  <div class="flex justify-between p-4">
+    <div>
+      <h1 class="text-3xl font-bold">{{ event.name }}</h1>
+      <p class="text-lg">{{ event.location }}</p>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 gap-4 p-4" formArrayName="ticketTypeQuantity">
+    <ng-container *ngFor="let ticketType of ticketTypes; let i = index">
+      <div class="card card-compact content-container" [formGroupName]="i">
+        <div class="card-body">
+          <div class="flex flex-col">
+            <div class="card-title">{{ ticketType.name }}</div>
+            <div class="flex justify-between items-center">
+              <p class="text-md font-medium">${{ ticketType.price }}</p>
+              <select class="select select-sm select-bordered" formControlName="quantity">
+                <option selected>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="mt-8">
+      <div class="mt-4 text-right font-bold text-lg">
+        Total: ${{ getTotalPrice() }}
+      </div>
+      <button class="btn btn-primary float-end" (click)="next.emit()" [disabled]="buyTicketsForm.controls.ticketTypeQuantity.invalid">Next</button>
+    </div>
+  </div>
+</form>
