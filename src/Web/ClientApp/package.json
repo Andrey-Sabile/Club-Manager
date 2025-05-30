@@ -32,8 +32,6 @@
     "@stripe/stripe-js": "^3.2.0",
     "bootstrap-icons": "^1.10.5",
     "jquery": "^3.6.4",
-    "ngx-bootstrap": "^12.0.0",
-    "ngx-stripe": "^17.1.1",
     "run-script-os": "^1.1.6",
     "rxjs": "~7.8.1",
     "tslib": "^2.5.0",

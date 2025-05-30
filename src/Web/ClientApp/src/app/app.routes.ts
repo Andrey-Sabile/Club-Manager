@@ -1,5 +1,4 @@
 import { Routes } from "@angular/router";
-import { TodoComponent } from "./features/todo/todo.component";
 import { SignupComponent } from "./features/clubs/signup/signup.component";
 import { EventDiscoveryComponent } from "./features/event-discovery/event-discovery.component";
 import { EventDashboardComponent} from "./features/clubs/event-list/event-dashboard/event-dashboard.component";
@@ -12,7 +11,6 @@ import { EventLandingComponent } from "./features/event-landing/event-landing.co
 
 export const routes: Routes = [
     { path: '', component: ClubsComponent, pathMatch: 'full' },
-    { path: 'todo', component: TodoComponent },
     { path: 'clubs', component: ClubsComponent },
     { path: 'clubs/new-club', component: NewClubComponent },
     { path: 'clubs/:id', component: ClubDetailComponent },
