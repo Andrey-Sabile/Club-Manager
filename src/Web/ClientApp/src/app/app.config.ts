@@ -3,10 +3,8 @@ import { APP_ID, ApplicationConfig, enableProdMode, importProvidersFrom } from '
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-// import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthorizeInterceptor } from './core/api-authorization/authorize.interceptor';
 import { routes } from './app.routes';
-// import { provideNgxStripe } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
 
 export function getBaseUrl() {

@@ -1,13 +1,11 @@
 @description('The location into which your Azure resources should be deployed.')
 param location string = resourceGroup().location
 
-@description('Select the type of environment you want to provision. Allowed values are Production, Staging, and Development.')
+@description('Select the type of environment you want to provision. Allowed value is Development.')
 @allowed([
-  'Production'
-  'Staging'
   'Development'
 ])
-param environmentName string
+param environmentName string = 'Development'
 
 @description('A unique suffix to add to resource names that need to be globally unique.')
 @maxLength(13)
@@ -25,46 +23,17 @@ param projectName string
 
 // Define the environment configuration map.
 var environmentConfigurationMap = {
-  Production: {
-    environmentAbbreviation: 'prd'
-    appServicePlan: {
-      sku: {
-        name: 'S1'
-        capacity: 1
-      }
-    }
-    sqlDatabase: {
-      sku: {
-        name: 'Standard'
-        tier: 'Standard'
-      }
-    }
-  }
-  Staging: {
-    environmentAbbreviation: 'stg'
-    appServicePlan: {
-      sku: {
-        name: 'B1'
-      }
-    }
-    sqlDatabase: {
-      sku: {
-        name: 'Standard'
-        tier: 'Standard'
-      }
-    }
-  }
   Development: {
     environmentAbbreviation: 'dev'
     appServicePlan: {
       sku: {
-        name: 'B1'
+        name: 'F1'
       }
     }
     sqlDatabase: {
       sku: {
-        name: 'Standard'
-        tier: 'Standard'
+        name: 'Basic'
+        tier: 'Basic'
       }
     }
   }
