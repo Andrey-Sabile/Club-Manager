@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterLink, Router} from "@angular/router";
-import {CreateTicketCommand, EventDto, EventsClient, TicketTypeDto, TicketTypeQuantityDto, TicketTypesClient, TicketsClient} from "../../../../web-api-client";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink, Router } from "@angular/router";
+import { CreateTicketCommand, EventDto, EventsClient, TicketTypeDto, TicketTypeQuantityDto, TicketTypesClient, TicketsClient } from "src/app/web-api-client";
 import { ReactiveFormsModule, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TicketTypesSelectionComponent } from './ticket-types-selection.component';
@@ -21,7 +21,7 @@ enum BuyTicketsViewState {
   templateUrl: './buy-tickets.component.html',
   styles: ``
 })
-export class BuyTicketsComponent implements OnInit{
+export class BuyTicketsComponent implements OnInit {
   public eventId: number;
   public event: EventDto;
   public ticketTypes: TicketTypeDto[] = [];
@@ -51,7 +51,7 @@ export class BuyTicketsComponent implements OnInit{
     private formBuilder: FormBuilder,
     private ticketsClient: TicketsClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.eventId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -85,7 +85,7 @@ export class BuyTicketsComponent implements OnInit{
           quantity: [0, [
             Validators.required,
           ]],
-      }));
+        }));
     })
   };
 

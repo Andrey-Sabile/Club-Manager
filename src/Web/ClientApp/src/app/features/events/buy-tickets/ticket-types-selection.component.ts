@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EventDto, TicketTypeDto } from '../../../../web-api-client';
+import { EventDto, TicketTypeDto } from "src/app/web-api-client";
 
 @Component({
   selector: 'app-ticket-types-selection',
