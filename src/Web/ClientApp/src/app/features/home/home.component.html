@@ -1,18 +1,48 @@
-<article class="prose-2xl">
-  <h1 class="text-3xl font-bold underline">Hello, world!</h1>
-  <p>Welcome to your new single-page application, built with:</p>
-  <ul>
-    <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-    <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-    <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-  </ul>
-  <p>To help you get started, we've also set up:</p>
-  <ul>
-    <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-    <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-    <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-  </ul>
-  <p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<div class="p-4">
+  <div class="flex flex-row justify-between mb-4">
+    <h1 class="text-3xl text-center font-bold">Clubs</h1>
+    <a [routerLink]="['/clubs/new-club']"><button class="btn btn-primary btn-sm">Create Club</button></a>
+  </div>
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    @for (club of clubList; track club) {
+    <div class="card card-compact content-container hover:cursor-pointer hover:bg-base-300"
+      routerLink="/clubs/{{club.id}}">
+      <div class="card-body">
+        <div class="flex">
+          <div class="avatar placeholder">
+            <div class="bg-base-200 rounded-full w-16">
+              <img src="{{ this.clubLogoPath + club.logoUrl }}">
+            </div>
+          </div>
+          <div class="ml-4">
+            <h2 class="card-title text-center">{{ club.name }}</h2>
+            <div class="flex gap-1">
+              <fa-icon [icon]="faEnvelope"></fa-icon>
+              <p class="font-light">{{ club.contactEmail }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+<div class="mt-12"></div>
 
-</article>
-z
+<div class="p-4">
+  <h1 class="text-3xl font-bold mb-4">Events</h1>
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    @for (event of eventsList; track event) {
+    <div class="card card-compact content-container hover:cursor-pointer hover:bg-base-200"
+      routerLink="/events/{{event.id}}">
+      <div class="card-body">
+        <h2 class="card-title">{{ event.name }}</h2>
+        <div class="flex gap-1">
+          <fa-icon [icon]="faLocationDot"></fa-icon>
+          <h3 class="font-light">{{event.location}}</h3>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

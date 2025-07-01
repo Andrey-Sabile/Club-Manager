@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EventDto, TicketTypeDto } from '../../../../web-api-client';
 
