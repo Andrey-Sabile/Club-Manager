@@ -7,6 +7,11 @@
         </div>
         <h1 class="text-center text-3xl font-bold">{{ club.name }}</h1>
     </div>
+    <div class="flex gap-4 justify-center">
+        <a routerLink="/clubs/{{ club.id }}/sign-up"><button class="btn btn-sm btn-primary">Become a
+                Member!</button></a>
+    </div>
+
 </div>
 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 grid-rows-2">
     <div class="card content-container h-72">
