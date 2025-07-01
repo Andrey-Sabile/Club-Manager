@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgClass } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
   CreateEventCommand,
-  CreateTicketTypeCommand,
   EventsClient, NewTicketTypeDto,
   TicketTypeDto,
-  TicketTypesClient
 } from "../../../../web-api-client";
 
 @Component({
@@ -15,13 +12,12 @@ import {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgClass,
   ],
   templateUrl: './new-event.component.html',
   styles: ``
 })
 
-export class NewEventComponent implements OnInit{
+export class NewEventComponent implements OnInit {
   public ticketTypes: TicketTypeDto[] = [];
   public eventId: number;
   public clubId: number;
@@ -40,12 +36,12 @@ export class NewEventComponent implements OnInit{
       Validators.required,
     ]),
   });
-  
+
   public ticketTypeForm = new FormGroup({
-    name: new FormControl('',[
+    name: new FormControl('', [
       Validators.required
     ]),
-    price: new FormControl(null,[
+    price: new FormControl(null, [
       Validators.required,
     ]),
     quantity: new FormControl(null, [
@@ -57,7 +53,7 @@ export class NewEventComponent implements OnInit{
     private eventsClient: EventsClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.clubId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -76,7 +72,7 @@ export class NewEventComponent implements OnInit{
     this.eventsClient.createEvents(newEvent).subscribe({
       next: result => {
         this.newEventForm.reset();
-        this.router.navigateByUrl('events/' +  result);
+        this.router.navigateByUrl('events/' + result);
       }
     })
   }

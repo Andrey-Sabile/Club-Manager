@@ -17,7 +17,7 @@ enum BuyTicketsViewState {
 @Component({
   selector: 'app-buy-tickets',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TicketTypesSelectionComponent, CheckoutComponent, ConfirmationComponent],
+  imports: [CommonModule, ReactiveFormsModule, TicketTypesSelectionComponent, CheckoutComponent, ConfirmationComponent],
   templateUrl: './buy-tickets.component.html',
   styles: ``
 })

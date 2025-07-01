@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClubsClient, CreateClubCommand, FileParameter } from 'src/app/web-api-client';
@@ -7,7 +6,7 @@ import { ClubsClient, CreateClubCommand, FileParameter } from 'src/app/web-api-c
 @Component({
   selector: 'app-new-club',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule],
   templateUrl: './new-club.component.html',
   styles: ``
 })
@@ -25,7 +24,7 @@ export class NewClubComponent {
   constructor(
     private clubsClient: ClubsClient,
     private router: Router,
-  ){}
+  ) { }
 
   createClub(): void {
     this.uploadFile();
@@ -49,7 +48,7 @@ export class NewClubComponent {
   }
 
   uploadFile(): void {
-    if(this.selectedFile) {
+    if (this.selectedFile) {
       const fileParameter = {
         fileName: this.selectedFile.name,
         data: this.selectedFile,
