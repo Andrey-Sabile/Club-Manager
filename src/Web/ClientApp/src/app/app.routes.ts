@@ -12,12 +12,13 @@ import { HomeComponent } from "./features/home/home.component";
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'clubs', redirectTo: '', pathMatch: 'full' },
-    { path: 'dashboard/clubs/new-club', component: NewClubComponent },
     { path: 'clubs/:id', component: ClubDetailComponent },
     { path: 'clubs/:id/sign-up', component: SignupComponent },
     { path: 'clubs/:id/new-event', component: NewEventComponent },
     { path: 'events', component: EventDiscoveryComponent },
     { path: 'events/:id', component: EventLandingComponent },
-    { path: 'events/dashboard/:id', component: EventDashboardComponent },
-    { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },
+    { path: 'dashboard/clubs/new-club', component: NewClubComponent },
+    { path: 'dashboard/events/:id', component: EventDashboardComponent },
+    { path: 'dashboard/events/:id/buy-tickets', component: BuyTicketsComponent },
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ]
