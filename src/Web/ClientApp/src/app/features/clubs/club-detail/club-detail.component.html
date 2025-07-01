@@ -3,111 +3,43 @@
         <div class="avatar placeholder">
             <div class="bg-base-200 rounded-full w-16 mx-auto">
                 <span class="text-3xl">P</span>
-              </div>
+            </div>
         </div>
         <h1 class="text-center text-3xl font-bold">{{ club.name }}</h1>
     </div>
-    <div class="flex gap-4 justify-center">
-        <a routerLink="/clubs/{{ club.id }}/sign-up" ><button class="btn btn-sm btn-primary">Add Member</button></a>
-        <a routerLink="/clubs/{{ club.id}}/new-event"><button class="btn btn-sm btn-secondary">Create Event</button></a>
-    </div>
 </div>
 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 grid-rows-2">
-        <div class="card content-container h-72">
-            <div class="card-body">
-                <h2 class="card-title">Club Details</h2>
-                <p>Name: {{ club.name }}</p>
-                <p>Description: {{ club.description }}</p>
-                <p>logo: {{ club.logoUrl }}</p>
-                <p>Contact Email: {{ club.contactEmail }}</p>
-                <div class="card-actions">
-                    <button class="btn btn-block btn-sm btn-outline" onclick="edit_club.showModal()" (click)="populateClubDetailFormWithCurrentValues()">Edit</button>
-                </div>
-            </div>
+    <div class="card content-container h-72">
+        <div class="card-body">
+            <h2 class="card-title">Club Details</h2>
+            <p>Name: {{ club.name }}</p>
+            <p>Description: {{ club.description }}</p>
+            <p>logo: {{ club.logoUrl }}</p>
+            <p>Contact Email: {{ club.contactEmail }}</p>
         </div>
-
-        <div class="card content-container h-72 overflow-x-auto">
-            <div class="card-body">
-                <h2 class="card-title">Events</h2>
-                    <table class="table table-pin-rows">
-                        <thead>
-                            <tr>
-                                <th>Event</th>
-                                <th>Time and date</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (event of eventsList; track event) {
-                                <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/dashboard/{{event.id}}">
-                                    <th>{{ event.name }}</th>
-                                    <th>{{ event.when | date:'medium' }}</th>
-                                    <th>{{ event.location }}</th>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-            </div>
-        </div>
-
-        <div class="card content-container h-72 overflow-x-auto">
-            <div class="card-body overflow-y-auto">
-                <h2 class="card-title">Members</h2>
-                <table class="table table-pin-rows">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Fresher?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (member of clubMembers; track member) {
-                            <tr>
-                                <th>{{ member.firstName }}</th>
-                                <th>{{ member.lastName }}</th>
-                                <th>{{ member.emailAddress }}</th>
-                                <th>{{ member.isFresher }}</th>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-</div>
-
-<!-- Modals -->
-<dialog id="edit_club" class="modal">
-    <div class="modal-box">
-        <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-        </form>
-
-        <h3 class="text-lg">Update Club Details</h3>
-        <form [formGroup]="editClubForm">
-            <label for="name" class="input input-bordered flex items-center gap-2">
-                Name
-                <input id="name" formControlName="name" class="grow" type="text">
-            </label>
-
-            <label for="description" class="input input-bordered flex items-center gap-2">
-                Description
-                <input id="description" formControlName="description" class="grow" type="text">
-            </label>
-
-            <label for="contactEmail" class="input input-bordered flex items-center gap-2">
-                Contact Email
-                <input id="contactEmail" formControlName="contactEmail" class="grow" type="text">
-            </label>
-
-            <div class="modal-action">
-                <button class="btn btn-primary" (click)="updateClubDetails()" onclick="edit_club.close()">Save</button>
-            </div>
-        </form>
     </div>
 
-    <form method="dialog" class="modal-backdrop">
-        <button></button>
-    </form>
-</dialog>
+    <div class="card content-container h-72 overflow-x-auto">
+        <div class="card-body">
+            <h2 class="card-title">Events</h2>
+            <table class="table table-pin-rows">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Time and date</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (event of eventsList; track event) {
+                    <tr class="hover:bg-base-300 hover:cursor-pointer" routerLink="/events/{{event.id}}">
+                        <th>{{ event.name }}</th>
+                        <th>{{ event.when | date:'medium' }}</th>
+                        <th>{{ event.location }}</th>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

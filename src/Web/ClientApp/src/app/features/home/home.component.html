@@ -1,7 +1,6 @@
 <div class="p-4">
   <div class="flex flex-row justify-between mb-4">
     <h1 class="text-3xl text-center font-bold">Clubs</h1>
-    <a [routerLink]="['/clubs/new-club']"><button class="btn btn-primary btn-sm">Create Club</button></a>
   </div>
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
     @for (club of clubList; track club) {
