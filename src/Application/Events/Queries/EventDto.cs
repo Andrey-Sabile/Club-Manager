@@ -21,8 +21,12 @@ public class EventDto
     {
         public Mapping()
         {
-            CreateMap<Event, EventDto>().IncludeMembers(e => e.Club);
-            CreateMap<Club, EventDto>();
+            CreateMap<Event, EventDto>()
+                .ForMember(d => d.Club, opt => opt.MapFrom(s => s.Club))
+                .ForMember(d => d.When, opt => opt.MapFrom(s => s.When))
+                .ForMember(d => d.Location, opt => opt.MapFrom(s => s.Location))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name));
         }
     }
 }
