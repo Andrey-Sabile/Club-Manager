@@ -8,6 +8,7 @@ import { NewClubComponent } from "./features/dashboard/clubs/new-club/new-club.c
 import { ClubDetailComponent } from "./features/clubs/club-detail/club-detail.component";
 import { EventLandingComponent } from "./features/events/event-landing/event-landing.component";
 import { HomeComponent } from "./features/home/home.component";
+import {DashboardComponent} from "./features/dashboard/dashboard.component";
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -17,6 +18,7 @@ export const routes: Routes = [
     { path: 'clubs/:id/new-event', component: NewEventComponent },
     { path: 'events', component: EventDiscoveryComponent },
     { path: 'events/:id', component: EventLandingComponent },
+    { path: 'dashboard', component: DashboardComponent },
     { path: 'dashboard/clubs/new-club', component: NewClubComponent },
     { path: 'dashboard/events/:id', component: EventDashboardComponent },
     { path: 'dashboard/events/:id/buy-tickets', component: BuyTicketsComponent },
