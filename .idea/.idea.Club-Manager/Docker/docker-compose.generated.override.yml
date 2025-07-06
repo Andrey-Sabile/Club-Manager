@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  web:
+    build:
+      context: "/Users/andreysabile/Dev/ExampleProjects/Club-Manager/src"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Club_Manager.Web.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/Club_Manager.Web.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "web:dev"
+    ports: []
+    volumes:
+    - "/Users/andreysabile/Dev/ExampleProjects/Club-Manager/src/Web:/app:rw"
+    - "/Users/andreysabile/Dev/ExampleProjects/Club-Manager:/src:rw"
+    - "/Users/andreysabile/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
