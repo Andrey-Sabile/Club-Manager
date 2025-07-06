@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  staticImagesUrL: "https://localhost:5001/uploads/"
+  staticImagesUrL: ""
 };
 
 /*
