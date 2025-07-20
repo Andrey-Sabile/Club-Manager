@@ -12,15 +12,27 @@ import {DashboardComponent} from "./features/dashboard/dashboard.component";
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'clubs', redirectTo: '', pathMatch: 'full' },
-    { path: 'clubs/:id', component: ClubDetailComponent },
-    { path: 'clubs/:id/sign-up', component: SignupComponent },
-    { path: 'clubs/:id/new-event', component: NewEventComponent },
-    { path: 'events', component: EventDiscoveryComponent },
-    { path: 'events/:id', component: EventLandingComponent },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'dashboard/clubs/new-club', component: NewClubComponent },
-    { path: 'dashboard/events/:id', component: EventDashboardComponent },
-    { path: 'dashboard/events/:id/buy-tickets', component: BuyTicketsComponent },
+    { path: 'clubs',
+      children: [
+        { path: '', component: HomeComponent },
+        { path: ':id', component: ClubDetailComponent },
+        { path: ':id/sign-up', component: SignupComponent },
+        { path: ':id/new-event', component: NewEventComponent },
+      ]
+    },
+    { path: 'events',
+      children: [
+        { path: '', component: EventDiscoveryComponent },
+        { path: ':id', component: EventLandingComponent },
+      ]
+    },
+    { path: 'dashboard',
+      children: [
+        { path: '', component: DashboardComponent },
+        { path: 'clubs/new-club', component: NewClubComponent },
+        { path: 'events/:id', component: EventDashboardComponent },
+        { path: 'events/:id/buy-tickets', component: BuyTicketsComponent },
+      ]
+    },
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ]
