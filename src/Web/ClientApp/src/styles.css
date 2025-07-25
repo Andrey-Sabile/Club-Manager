@@ -1,8 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "daisyui" {
+    themes: corporate;
+}
 
 @layer base {
+
     input[type='number']::-webkit-outer-spin-button,
     input[type='number']::-webkit-inner-spin-button,
     input[type='number'] {
@@ -12,8 +15,8 @@
     }
 }
 
-@layer components {
+/* @layer components {
     .content-container {
         @apply bg-base-100 border rounded-lg;
     }
-}
+} */

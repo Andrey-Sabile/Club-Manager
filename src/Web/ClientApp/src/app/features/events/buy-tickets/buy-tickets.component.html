@@ -1,4 +1,4 @@
-<form [formGroup]="buyTicketsForm" class="mx-auto max-w-screen-md">
+<form [formGroup]="buyTicketsForm" class="mx-auto max-w-(--breakpoint-md)">
   <div [ngSwitch]="viewState">
     <app-ticket-types-selection
       *ngSwitchCase="BuyTicketsViewState.TicketTypesSelection"

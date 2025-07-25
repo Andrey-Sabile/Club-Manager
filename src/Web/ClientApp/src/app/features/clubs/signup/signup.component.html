@@ -1,5 +1,5 @@
 @if (!hasSignedUp) {
-    <div class="content-container mx-auto max-w-screen-md grid grid-cols-1 gap-4 p-4 mt-8">
+    <div class="content-container mx-auto max-w-(--breakpoint-md) grid grid-cols-1 gap-4 p-4 mt-8">
         <h1 class="text-3xl text-center font-bold p-4">Sign Up for {{club.name}}</h1>
         <form [formGroup]="newMemberForm">
             <label class="form-control" for="first-name">
