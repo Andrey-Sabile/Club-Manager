@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-    themes: corporate;
+    themes: corporate --default;
 }
+
+@plugin "@tailwindcss/typography";
 
 @layer base {
 
@@ -15,8 +17,8 @@
     }
 }
 
-/* @layer components {
+@layer components {
     .content-container {
-        @apply bg-base-100 border rounded-lg;
+        @apply bg-base-100 rounded-lg;
     }
-} */
+}
