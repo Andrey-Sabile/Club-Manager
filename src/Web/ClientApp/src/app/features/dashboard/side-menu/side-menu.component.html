@@ -1,0 +1,29 @@
+<div class="flex flex-row">
+    <div class="drawer md:drawer-open">
+        <input id="side-menu-drawer" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content">
+            <label for="side-menu-drawer" class="btn btn-primary drawer-button md:hidden">Open drawer</label>
+            <router-outlet></router-outlet>
+        </div>
+        <div class="drawer-side">
+            <label for="side-menu-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+            <ul class="menu bg-gray-100 min-h-full w-60 p-3">
+                <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn m-1">Active Club</div>
+                    <p>{{activeClub()}}</p>
+                    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        @for (club of clubList; track club) {
+                            <li><a>{{ club.name }}</a></li>
+                        }
+                    </ul>
+                </div>
+                <li><a [routerLink]="['/dashboard']">Home</a></li>
+                <li><a [routerLink]="['clubs/events']">Events</a></li>
+                <li><a [routerLink]="['clubs/members']">Members</a></li>
+                <li><a [routerLink]="['clubs/finance']">Finance</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+    </div>
+</div>
