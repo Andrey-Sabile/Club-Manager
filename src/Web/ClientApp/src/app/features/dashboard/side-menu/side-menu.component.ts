@@ -1,6 +1,6 @@
-import {Component, OnInit, Signal} from '@angular/core';
-import {RouterLink, RouterOutlet} from "@angular/router";
-import {ClubDto, ClubsClient} from "../../../web-api-client";
+import { Component, OnInit, Signal } from '@angular/core';
+import { RouterLink, RouterOutlet } from "@angular/router";
+import { ClubDto, ClubsClient } from "../../../web-api-client";
 import { ActiveClubService } from "../../../core/services/active-club.service";
 
 @Component({
@@ -26,7 +26,7 @@ export class SideMenuComponent implements OnInit {
   ngOnInit(): void {
     this.getClubs();
     this.getActiveClub();
-    this.setActiveClub(this.clubList)
+    // this.setActiveClub(this.clubList[null])
   }
 
   getClubs(): void {
