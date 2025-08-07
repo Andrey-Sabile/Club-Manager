@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EventDto, EventsClient } from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-event-list',
@@ -7,6 +8,21 @@ import { Component } from '@angular/core';
   templateUrl: './event-list.component.html',
   styles: ``
 })
-export class EventListComponent {
+export class EventListComponent implements OnInit {
+  public eventsList: EventDto[] = [];
 
+  constructor(
+    private eventsClient: EventsClient
+  ) { }
+
+  ngOnInit(): void {
+    this.getEvents();
+  }
+
+  private getEvents(): void {
+    this.eventsClient.getEvents().subscribe({
+      next: result => this.eventsList = result,
+      error: error => console.log(error),
+    });
+  }
 }
