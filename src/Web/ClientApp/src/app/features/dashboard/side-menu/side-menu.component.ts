@@ -15,7 +15,7 @@ import { ActiveClubService } from "../../../core/services/active-club.service";
 })
 export class SideMenuComponent implements OnInit {
   public clubList: ClubDto[] = [];
-  public activeClub: Signal<ClubDto>
+  public activeClub: ClubDto;
 
   constructor(
     private clubsClient: ClubsClient,
@@ -24,23 +24,17 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getClubs();
-    this.getActiveClub();
-    // this.setActiveClub(this.clubList[null])
+    this.getAndSetActiveClub();
   }
 
-  getClubs(): void {
-    this.clubsClient.getClubs().subscribe({
-      next: result => this.clubList = result,
+  private getAndSetActiveClub(): void {
+    this.clubsClient.getClubById(1).subscribe({
+      next: result => {
+        this.activeClub = result;
+        this.activeClubService.setActiveClub(this.activeClub);
+      },
       error: error => console.log(error),
     })
-  }
+  };
 
-  getActiveClub(): void {
-    this.activeClub = this.activeClubService.activeClub;
-  }
-
-  setActiveClub(clubDto: ClubDto): void {
-    this.activeClubService.setActiveClub(clubDto);
-  }
 }

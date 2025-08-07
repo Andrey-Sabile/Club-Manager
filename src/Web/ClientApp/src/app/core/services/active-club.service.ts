@@ -1,5 +1,5 @@
-import {Injectable, signal, Signal} from '@angular/core';
-import {ClubDto} from "../../web-api-client";
+import { Injectable, signal, Signal } from '@angular/core';
+import { ClubDto } from "../../web-api-client";
 
 @Injectable({
   providedIn: 'root'
