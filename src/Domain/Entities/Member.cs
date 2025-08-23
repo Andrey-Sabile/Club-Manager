@@ -10,9 +10,9 @@ public class Member : BaseAuditableEntity
 
     public string? EmailAddress { get; set; }
 
-    public Boolean IsFresher { get; set; }
+    public bool IsFresher { get; set; }
 
     public Subscription? Subscription { get; set; }
 
-    public Club Club{ get; set; } = null!;
+    public Club Club { get; set; } = null!;
 }
