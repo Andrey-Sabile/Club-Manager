@@ -1,1 +1,25 @@
-<p>member-list works!</p>
+<div class="flex justify-between items-center">
+    <h1 class="text-xl mt-6">Members</h1>
+    <a>
+        <button class="btn btn-secondary" routerLink="/clubs/{{ clubId }}/sign-up">Add Member</button>
+    </a>
+</div>
+
+<table class="table table-pin-rows mt-6">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (member of memberList; track member) {
+        <tr>
+            <th>{{ member.firstName }}</th>
+            <th>{{ member.lastName }}</th>
+            <th> {{ member.emailAddress }}</th>
+        </tr>
+        }
+    </tbody>
+</table>
