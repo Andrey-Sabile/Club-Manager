@@ -12,10 +12,13 @@
                     <div tabindex="0" role="button" class="btn m-1">{{activeClub.name}}</div>
                     <p></p>
                 </div>
-                <li><a routerLink="/dashboard">Home</a></li>
-                <li><a routerLink="clubs/{{activeClub.id}}/events">Events</a></li>
-                <li><a routerLink="clubs/{{activeClub.id}}/members">Members</a></li>
-                <li><a routerLink="clubs/{{activeClub.id}}/finance">Finance</a></li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="text-primary"
+                        [routerLinkActiveOptions]="{exact: true}">Home</a>
+                </li>
+                <li><a routerLink="clubs/{{activeClub.id}}/events" routerLinkActive="text-primary">Events</a></li>
+                <li><a routerLink="clubs/{{activeClub.id}}/members" routerLinkActive="text-primary">Members</a></li>
+                <li><a routerLink="clubs/{{activeClub.id}}/finance" routerLinkActive="text-primary">Finance</a></li>
             </ul>
         </div>
     </div>

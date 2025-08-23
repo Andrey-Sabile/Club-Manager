@@ -1,5 +1,5 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from "@angular/router";
+import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 import { ClubDto, ClubsClient } from "../../../web-api-client";
 import { ActiveClubService } from "../../../core/services/active-club.service";
 
@@ -8,7 +8,8 @@ import { ActiveClubService } from "../../../core/services/active-club.service";
   standalone: true,
   imports: [
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './side-menu.component.html',
   styles: ``
