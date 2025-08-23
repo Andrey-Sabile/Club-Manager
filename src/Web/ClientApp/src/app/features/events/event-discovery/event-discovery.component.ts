@@ -18,7 +18,7 @@ import { EventFilterService } from 'src/app/shared/event-filter.service';
   templateUrl: './event-discovery.component.html',
   styles: ``
 })
-export class EventDiscoveryComponent implements OnInit{
+export class EventDiscoveryComponent implements OnInit {
   public eventsList: EventDto[] = [];
   public filteredEventsList: EventDto[] = [];
   public eventLocationDot = faLocationDot;
@@ -26,11 +26,11 @@ export class EventDiscoveryComponent implements OnInit{
   constructor(
     private eventsClient: EventsClient,
     private eventFilterService: EventFilterService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-      this.getEvents();
-      this.getEventsForNextWeekend();
+    this.getEvents();
+    this.getEventsForNextWeekend();
   }
 
   getEvents(): void {
