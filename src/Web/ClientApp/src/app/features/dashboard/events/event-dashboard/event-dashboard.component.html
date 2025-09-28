@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 gap-4 p-4">
     <div class="flex justify-between items-center">
-        <h1 class="text-center text-3xl font-bold">Dashboard</h1>
+        <h1 class="text-xl">{{event.name}}</h1>
         <a routerLink="/dashboard/events/{{event.id}}/buy-tickets"><button class="btn">Ticket Page</button></a>
     </div>
 
@@ -53,84 +53,84 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modals -->
-    <dialog id="edit_event" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-
-            <h3 class="text-lg">Update Event Details</h3>
-            <form [formGroup]="editEventForm">
-                <label class="form-control" for="name">
-                    <div class="label">
-                        <span class="label-text">Name</span>
-                    </div>
-                    <input type="text" id="name" formControlName="name" class="input input-bordered" required />
-                </label>
-
-                <label class="form-control" for="location">
-                    <div class="label">
-                        <span class="label-text">Location</span>
-                    </div>
-                    <input type="text" id="location" formControlName="location" class="input input-bordered" required />
-                </label>
-
-                <label class="form-control" for="when">
-                    <div class="label">
-                        <span class="label-text">When</span>
-                    </div>
-                    <input type="datetime-local" id="when" formControlName="when" class="input input-bordered"
-                        required />
-                </label>
-
-                <label class="form-control">
-                    <div class="label">
-                        <span class="label-text">Description</span>
-                    </div>
-                    <textarea class="textarea textarea-bordered textarea-md w-full"
-                        formControlName="description"></textarea>
-                </label>
-
-                <div class="modal-action">
-                    <button class="btn btn-primary" (click)="saveChangesToEvent()"
-                        onclick="edit_event.close()">Save</button>
-                </div>
-            </form>
-        </div>
-
-        <form method="dialog" class="modal-backdrop">
-            <button></button>
+<!-- Modals -->
+<dialog id="edit_event" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
-    </dialog>
 
-    <dialog id="add_ticket_type" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <h3 class="text-lg">Add Ticket Type</h3>
-            <form [formGroup]="newTicketTypeForm">
-                <label for="ticket-name" class="input input-bordered flex items-center gap-2">
-                    Name
-                    <input id="ticket-name" formControlName="name" class="grow" type="text">
-                </label>
-                <label for="ticket-price" class="input input-bordered flex items-center gap-2">
-                    Price
-                    <input id="ticket-price" formControlName="price" class="grow" type="number">
-                </label>
-                <label for="ticket-quantity" class="input input-bordered flex items-center gap-2">
-                    Quantity
-                    <input id="ticket-quantity" formControlName="quantity" class="grow" type="number">
-                </label>
-                <div class="modal-action">
-                    <button class="btn btn-primary" (click)="addTicketType()" onclick="add_ticket_type.close()">Add
-                        Ticket Type</button>
+        <h3 class="text-lg">Update Event Details</h3>
+        <form [formGroup]="editEventForm">
+            <label class="form-control" for="name">
+                <div class="label">
+                    <span class="label-text">Name</span>
                 </div>
-            </form>
-        </div>
-        <form method="dialog" class="modal-backdrop">
-            <button></button>
+                <input type="text" id="name" formControlName="name" class="input input-bordered" required />
+            </label>
+
+            <label class="form-control" for="location">
+                <div class="label">
+                    <span class="label-text">Location</span>
+                </div>
+                <input type="text" id="location" formControlName="location" class="input input-bordered" required />
+            </label>
+
+            <label class="form-control" for="when">
+                <div class="label">
+                    <span class="label-text">When</span>
+                </div>
+                <input type="datetime-local" id="when" formControlName="when" class="input input-bordered" required />
+            </label>
+
+            <label class="form-control">
+                <div class="label">
+                    <span class="label-text">Description</span>
+                </div>
+                <textarea class="textarea textarea-bordered textarea-md w-full"
+                    formControlName="description"></textarea>
+            </label>
+
+            <div class="modal-action">
+                <button class="btn btn-primary" (click)="saveChangesToEvent()"
+                    onclick="edit_event.close()">Save</button>
+            </div>
         </form>
-    </dialog>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button></button>
+    </form>
+</dialog>
+
+<dialog id="add_ticket_type" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-lg">Add Ticket Type</h3>
+        <form [formGroup]="newTicketTypeForm">
+            <label for="ticket-name" class="input input-bordered flex items-center gap-2">
+                Name
+                <input id="ticket-name" formControlName="name" class="grow" type="text">
+            </label>
+            <label for="ticket-price" class="input input-bordered flex items-center gap-2">
+                Price
+                <input id="ticket-price" formControlName="price" class="grow" type="number">
+            </label>
+            <label for="ticket-quantity" class="input input-bordered flex items-center gap-2">
+                Quantity
+                <input id="ticket-quantity" formControlName="quantity" class="grow" type="number">
+            </label>
+            <div class="modal-action">
+                <button class="btn btn-primary" (click)="addTicketType()" onclick="add_ticket_type.close()">Add
+                    Ticket Type</button>
+            </div>
+        </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button></button>
+    </form>
+</dialog>

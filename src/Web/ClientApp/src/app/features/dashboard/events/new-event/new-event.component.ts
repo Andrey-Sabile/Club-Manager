@@ -71,8 +71,9 @@ export class NewEventComponent implements OnInit {
 
     this.eventsClient.createEvents(newEvent).subscribe({
       next: result => {
+        console.log(newEvent);
         this.newEventForm.reset();
-        this.router.navigateByUrl('events/' + result);
+        this.router.navigateByUrl('/dashboard/events/' + result);
       }
     })
   }

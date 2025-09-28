@@ -10,13 +10,13 @@ public record CreateEventCommand : IRequest<int>
 
     public string? Name { get; set; }
 
-    public DateTimeOffset When { get; set; }
+    public DateTime When { get; set; }
 
     public string? Location { get; set; }
 
     public string? Description { get; set; }
 
-    public required IEnumerable<NewTicketTypeDto>TicketTypes { get; init; }
+    public required IEnumerable<NewTicketTypeDto> TicketTypes { get; init; }
 }
 
 public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, int>
@@ -33,22 +33,22 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, int
         var newEvent = new Event
         {
             ClubId = request.ClubId,
-            Name = request.Name, 
-            When = request.When, 
+            Name = request.Name,
+            When = request.When.ToUniversalTime(),
             Location = request.Location,
             Description = request.Description,
         };
-        
+
         _context.Events.Add(newEvent);
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         foreach (var ticketType in request.TicketTypes)
         {
             var ticketTypes = new TicketType
             {
-                EventId = newEvent.Id, 
-                Name = ticketType.Name, 
-                Quantity = ticketType.Quantity, 
+                EventId = newEvent.Id,
+                Name = ticketType.Name,
+                Quantity = ticketType.Quantity,
                 Price = ticketType.Price
             };
             _context.TicketTypes.Add(ticketTypes);

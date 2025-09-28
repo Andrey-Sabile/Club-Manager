@@ -1,44 +1,38 @@
 <h1 class="text-3xl text-center font-bold mt-8">Create an event</h1>
 <div class="content-container  mx-auto max-w-(--breakpoint-md) grid grid-cols-1 gap-4 p-4 mt-6">
-    <div class="flex flex-col">
-        <h2 class="text-xl">Basic Info</h2>
-        <form [formGroup]="newEventForm">
-            <label class="form-control mb-3" for="name">
-                <div class="label">
-                    <span class="label-text">Name</span>
-                </div>
+    <h2 class="text-xl">Basic Info</h2>
+    <form [formGroup]="newEventForm">
+        <div class="flex flex-col">
+            <label class="form-control mb-3 input" for="name">
+                <span class="label">Name</span>
                 <input type="text" id="name" formControlName="name" class="input input-bordered" required
-                [class.input-error]="newEventForm.controls.name.invalid && newEventForm.controls.name.dirty"/>
+                    [class.input-error]="newEventForm.controls.name.invalid && newEventForm.controls.name.dirty" />
                 @if (newEventForm.controls.name.invalid && newEventForm.controls.name.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Name cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Name cannot be empty</span>
+                </div>
                 }
             </label>
 
-            <label class="form-control mb-3" for="location">
-                <div class="label">
-                    <span class="label-text">Location</span>
-                </div>
+            <label class="form-control mb-3 input" for="location">
+                <span class="label">Location</span>
                 <input type="text" id="location" formControlName="location" class="input input-bordered" required
-                [class.input-error]="newEventForm.controls.location.invalid && newEventForm.controls.location.dirty"/>
+                    [class.input-error]="newEventForm.controls.location.invalid && newEventForm.controls.location.dirty" />
                 @if (newEventForm.controls.location.invalid && newEventForm.controls.location.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Location cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Location cannot be empty</span>
+                </div>
                 }
             </label>
 
-            <label class="form-control mb-3" for="when">
-                <div class="label">
-                    <span class="label-text">When</span>
-                </div>
+            <label class="form-control mb-3 input" for="when">
+                <span class="label">When</span>
                 <input type="datetime-local" id="when" formControlName="when" class="input input-bordered" required
-                [class.input-error]="newEventForm.controls.when.invalid && newEventForm.controls.when.dirty"/>
+                    [class.input-error]="newEventForm.controls.when.invalid && newEventForm.controls.when.dirty" />
                 @if (newEventForm.controls.when.invalid && newEventForm.controls.when.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Date cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Date cannot be empty</span>
+                </div>
                 }
             </label>
 
@@ -47,16 +41,16 @@
                     <span class="label-text">Description</span>
                 </div>
                 <textarea class="textarea textarea-bordered textarea-md w-full" formControlName="description"
-                [class.textarea-error]="newEventForm.controls.description.invalid && newEventForm.controls.description.dirty"></textarea>
+                    [class.textarea-error]="newEventForm.controls.description.invalid && newEventForm.controls.description.dirty"></textarea>
                 @if (newEventForm.controls.description.invalid && newEventForm.controls.description.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Description cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Description cannot be empty</span>
+                </div>
                 }
             </label>
+        </div>
 
-        </form>
-    </div>
+    </form>
 
     <div class="mt-6">
         <h2 class="text-xl">Ticket Info</h2>
@@ -70,11 +64,11 @@
             </thead>
             <tbody>
                 @for (ticketType of ticketTypes; track ticketType){
-                    <tr>
-                        <th>{{ ticketType.name }}</th>
-                        <th>{{ ticketType.price }}</th>
-                        <th>{{ ticketType.quantity }}</th>
-                    </tr>
+                <tr>
+                    <th>{{ ticketType.name }}</th>
+                    <th>{{ ticketType.price }}</th>
+                    <th>{{ ticketType.quantity }}</th>
+                </tr>
                 }
             </tbody>
         </table>
@@ -82,7 +76,8 @@
     </div>
 
     <div>
-        <button class="btn btn-primary float-end" type="submit" (click)="createEvent()" [disabled]="newEventForm.invalid">Create Event</button>
+        <button class="btn btn-primary float-end" type="submit" (click)="createEvent()"
+            [disabled]="newEventForm.invalid">Create Event</button>
     </div>
 </div>
 
@@ -97,11 +92,12 @@
                 <div class="label">
                     <span class="label-text">Name</span>
                 </div>
-                <input type="text" id="ticket-name" formControlName="name" class="input input-bordered" required [class.input-error]="ticketTypeForm.controls.name.invalid && ticketTypeForm.controls.name.dirty"/>
+                <input type="text" id="ticket-name" formControlName="name" class="input input-bordered" required
+                    [class.input-error]="ticketTypeForm.controls.name.invalid && ticketTypeForm.controls.name.dirty" />
                 @if (ticketTypeForm.controls.name.invalid && ticketTypeForm.controls.name.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Ticket Name cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Ticket Name cannot be empty</span>
+                </div>
                 }
             </label>
 
@@ -109,11 +105,12 @@
                 <div class="label">
                     <span class="label-text">Price</span>
                 </div>
-                <input type="number" id="ticket-price" formControlName="price" class="input input-bordered" required [class.input-error]="ticketTypeForm.controls.price.invalid && ticketTypeForm.controls.price.dirty"/>
+                <input type="number" id="ticket-price" formControlName="price" class="input input-bordered" required
+                    [class.input-error]="ticketTypeForm.controls.price.invalid && ticketTypeForm.controls.price.dirty" />
                 @if (ticketTypeForm.controls.price.invalid && ticketTypeForm.controls.price.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Ticket Price cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Ticket Price cannot be empty</span>
+                </div>
                 }
             </label>
 
@@ -121,16 +118,19 @@
                 <div class="label">
                     <span class="label-text">Quantity</span>
                 </div>
-                <input type="number" id="ticket-quantity" formControlName="quantity" class="input input-bordered" required [class.input-error]="ticketTypeForm.controls.quantity.invalid && ticketTypeForm.controls.quantity.dirty"/>
+                <input type="number" id="ticket-quantity" formControlName="quantity" class="input input-bordered"
+                    required
+                    [class.input-error]="ticketTypeForm.controls.quantity.invalid && ticketTypeForm.controls.quantity.dirty" />
                 @if (ticketTypeForm.controls.quantity.invalid && ticketTypeForm.controls.quantity.dirty) {
-                    <div class="label">
-                        <span class="label-text-alt">Ticket Quantity cannot be empty</span>
-                    </div>
+                <div class="label">
+                    <span class="label-text-alt">Ticket Quantity cannot be empty</span>
+                </div>
                 }
             </label>
-            
+
             <div class="modal-action">
-                <button class="btn btn-primary" (click)="addTicketType()" onclick="ticket_type.close()" [disabled]="ticketTypeForm.invalid">Add Ticket Type</button>
+                <button class="btn btn-primary" (click)="addTicketType()" onclick="ticket_type.close()"
+                    [disabled]="ticketTypeForm.invalid">Add Ticket Type</button>
             </div>
         </form>
     </div>
